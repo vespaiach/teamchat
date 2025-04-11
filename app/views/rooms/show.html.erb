@@ -1,0 +1,16 @@
+<div class="min-h-dvh flex items-stretch">
+	<aside class="shrink-0 grow-0 basis-sm bg-slate-300">
+		<h2><%= @room.name %></h2>
+		<hr />
+		<ul>
+			<% @room.users.each do |user| %>
+				<li><%= user.name %></li>
+			<% end %>
+		</ul>
+	</aside>
+	<main class="flex-1" id="room-<%= @room.id %>">
+		<% @room.chats.each do |chat| %>
+			<%= render "chats/simple_text", chat: %>
+		<% end %>
+	</main>
+</div>
