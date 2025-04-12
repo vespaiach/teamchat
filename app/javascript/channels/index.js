@@ -1,2 +1,2 @@
 // Import all the channels to be used by Action Cable
-import "channels/room_channel"
+export * as default from "channels/room_channel"
