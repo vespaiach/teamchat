@@ -11,6 +11,10 @@ Rails.application.routes.draw do
 
   resources :rooms, only: [ :show ]
 
+  get "signin" => "signin#new"
+  post "signin" => "signin#create"
+  delete "signout" => "signin#destroy"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
