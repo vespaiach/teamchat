@@ -53,7 +53,15 @@ users = [
   'Vin Diesel'
 ].map do |name|
   first_name, last_name = name.split(' ')
-  User.find_or_create_by(first_name: first_name, last_name: last_name, email: "#{first_name.downcase}.#{last_name.downcase}@example.com")
+  user = User.find_by(first_name: first_name, last_name: last_name, email: "#{first_name.downcase}.#{last_name.downcase}@example.com")
+  user = User.create!(
+    first_name: first_name,
+    last_name: last_name,
+    email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
+    password: '123456',
+    password_confirmation: '123456'
+  ) if user.nil?
+  user
 end
 
 [  'General Chat',

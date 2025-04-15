@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="flex flex-col gap-4">
+		<h2>My Rooms</h2>
+		<% @joined_rooms.each do |room| %>
+			<a href="<%= room_path(room) %>" class="block">
+				<%= room.name %>
+			</a>
+		<% end %>
+		<h2>Available Rooms</h2>
+		<% @not_joined_rooms.each do |room| %>
+			<a href="<%= room_path(room) %>" class="block">
+				<%= room.name %>
+			</a>
+		<% end %>
+	</div>
+</div>
