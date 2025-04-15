@@ -21,7 +21,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_202151) do
   create_table "chats", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "room_id", null: false
-    t.jsonb "message", default: {}, null: false
+    t.text "message"
+    t.jsonb "custom_data", default: {}, null: false
     t.enum "type", null: false, enum_type: "chat_type"
     t.timestamptz "deleted_at"
     t.datetime "created_at", null: false

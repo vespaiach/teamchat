@@ -44,17 +44,17 @@ class UserTest < ActiveSupport::TestCase
     assert_includes bob.joined_rooms, rooms(:random)
     alice = users(:alice)
     assert_includes alice.joined_rooms, rooms(:general)
-    assert_not_includes alice.joined_rooms, rooms(:random)
+    assert_includes alice.joined_rooms, rooms(:random)
   end
 
   test "should return user chats" do
     alice = users(:alice)
-    assert_includes alice.chats, chats(:alice_text_message)
-    assert_includes alice.chats, chats(:alice_link_message)
-    assert_not_includes alice.chats, chats(:bob_photo_message)
+    assert_includes alice.chats, chats(:alice_text_message1)
+    assert_includes alice.chats, chats(:alice_link_message1)
+    assert_not_includes alice.chats, chats(:bob_photo_message1)
     bob = users(:bob)
-    assert_includes bob.chats, chats(:bob_photo_message)
-    assert_not_includes bob.chats, chats(:alice_text_message)
+    assert_includes bob.chats, chats(:bob_photo_message1)
+    assert_not_includes bob.chats, chats(:alice_text_message1)
   end
 
   test "should return room created by" do
