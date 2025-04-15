@@ -1,31 +1,53 @@
-<div class="container is-fullhd columns h-dvh items-stretch">
-	<aside class="column is-one-third">
-		<section class="section"><p class="is-size-3"><%= @room.name %></p></section>
-		<section class="section">
-			<ul>
-				<% @room.users.each do |user| %>
-					<li><%= user.name %></li>
-				<% end %>
-			</ul>
-		</section>
-	</aside>
-	<main class="column flex! flex-col flex-nowrap" id="room-<%= @room.id %>">
-		<section class="section flex-1">
-			<% @room.chats.each do |chat| %>
-				<%= render "chats/simple_text", chat: %>
-			<% end %>
-		</section>
-		<section class="section shrink-0">
-			<div class="field">
-				<div class="control">
-					<textarea class="textarea" data-chat-input-target="input" placeholder="Type a message..." data-action="keyup->chat-input#keyup" placeholder="e.g. Hello world"></textarea>
-				</div>
-			</div>
-			<div class="field is-grouped">
-				<div class="control">
-					<button class="button is-primary">Send</button>
-				</div>
-			</div>
-		</section>
-	</main>
-</div>
+<% if @room %>
+	<% if @joined %>
+		<div class="container is-fullhd columns h-dvh items-stretch">
+			<aside class="column is-one-third">
+				<section class="section">
+					<p class="is-size-3">
+						<%= @room.name %>
+					</p>
+				</section>
+				<section class="section">
+					<ul>
+						<% @room.users.each do |user| %>
+							<li>
+								<%= user.name %>
+							</li>
+						<% end %>
+					</ul>
+				</section>
+			</aside>
+			<main class="column flex! flex-col flex-nowrap" id="room-<%= @room.id %>">
+				<section class="section flex-1">
+					<% @room.chats.each do |chat| %>
+						<% case chat.type
+						when "TextMessage" %>
+							<%= render "chats/text_message" , chat: chat %>
+						<% when "PhotoMessage" %>
+							<%= render "chats/photo_message" , chat: chat %>
+						<% when "LinkMessage" %>
+							<%= render "chats/link_message" , chat: chat %>
+						<% end %>
+					<% end %>
+				</section>
+				<section class="section shrink-0">
+					<div class="field">
+						<div class="control">
+							<textarea class="textarea" data-chat-input-target="input" placeholder="Type a message..."
+								data-action="keyup->chat-input#keyup" placeholder="e.g. Hello world"></textarea>
+						</div>
+					</div>
+					<div class="field is-grouped">
+						<div class="control">
+							<button class="button is-primary">Send</button>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+	<% else %>
+		<%= render "not_joined" %>
+	<% end %>
+<% else %>
+	<%= render "not_found" %>
+<% end %>
