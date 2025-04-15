@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :rooms, through: :room_users
+
+  has_many :room_users
   has_many :chats
+  has_many :created_rooms, class_name: "Room", foreign_key: "user_id"
+  has_many :joined_rooms, through: :room_users, source: :room
 
   scope :chats_by_room, ->(room_id) { joins(:chats).where(rooms: { id: room_id }) }
 

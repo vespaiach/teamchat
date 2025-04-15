@@ -1,0 +1,2 @@
+class LinkMessage < Chat
+end

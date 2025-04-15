@@ -8,6 +8,12 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def chat(data)
+    Chat.create!(
+      type: data["type"],
+      user: current_user,
+      room_id: data["room_id"],
+      message: data["message"]
+    )
     ActionCable.server.broadcast("room_channel", data)
   end
 end

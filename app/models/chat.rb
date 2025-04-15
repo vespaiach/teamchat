@@ -4,5 +4,5 @@ class Chat < ApplicationRecord
 
   validates :user, presence: true
   validates :room, presence: true
-  validates :message, presence: true
+  validates :type, presence: true
 end
