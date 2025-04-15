@@ -7,7 +7,13 @@ class RoomChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def message(data)
+  def chat(data)
+    Chat.create!(
+      type: data["type"],
+      user: current_user,
+      room_id: data["room_id"],
+      message: data["message"]
+    )
     ActionCable.server.broadcast("room_channel", data)
   end
 end

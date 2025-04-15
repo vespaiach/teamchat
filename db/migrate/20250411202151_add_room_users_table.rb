@@ -9,5 +9,7 @@ class AddRoomUsersTable < ActiveRecord::Migration[8.0]
       t.timestamptz :deleted_at
       t.timestamps
     end
+
+    add_index :room_users, [ :room_id, :user_id ], unique: true
   end
 end

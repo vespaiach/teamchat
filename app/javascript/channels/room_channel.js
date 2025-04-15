@@ -1,15 +1,48 @@
 import consumer from "channels/consumer"
 
-consumer.subscriptions.create("RoomChannel", {
+const callbacks = {
+  connected: [],
+  disconnected: [],
+  received: []
+};
+
+const roomSubscription = consumer.subscriptions.create("RoomChannel", {
   connected() {
-    // Called when the subscription is ready for use on the server
+    callbacks.connected.forEach(callback => callback());
   },
 
   disconnected() {
-    // Called when the subscription has been terminated by the server
+    callbacks.disconnected.forEach(callback => callback());
   },
 
   received(data) {
-    // Called when there's incoming data on the websocket for this channel
+    callbacks.received.forEach(callback => callback(data));
+  },
+
+  handleError(error) {
+    console.error("Error:", error);
+  },
+
+  chat(message) {
+    this.perform('chat', { message });
   }
 });
+
+export const startListenTo = (name, callback) => {
+  if (callbacks[name]) {
+    callbacks[name].push(callback);
+  }
+};
+
+export const stopListenTo = (name, callback) => {
+  if (callbacks[name]) {
+    const index = callbacks[name].indexOf(callback);
+    if (index !== -1) {
+      callbacks[name].splice(index, 1);
+    }
+  }
+}
+
+export const sendChat = (message) => {
+  roomSubscription.chat(message);
+}

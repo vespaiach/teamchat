@@ -14,10 +14,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_202151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "chat_type", ["TextMessage", "PhotoMessage", "LinkMessage"]
+
   create_table "chats", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "room_id", null: false
-    t.text "message", null: false
+    t.text "message"
+    t.jsonb "custom_data", default: {}, null: false
+    t.enum "type", null: false, enum_type: "chat_type"
     t.timestamptz "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -31,6 +37,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_202151) do
     t.timestamptz "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id", "user_id"], name: "index_room_users_on_room_id_and_user_id", unique: true
     t.index ["room_id"], name: "index_room_users_on_room_id"
     t.index ["user_id"], name: "index_room_users_on_user_id"
   end
@@ -48,6 +55,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_202151) do
     t.string "first_name"
     t.string "last_name"
     t.string "email", null: false
+    t.string "password_digest", null: false
+    t.timestamptz "last_login_at"
     t.timestamptz "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

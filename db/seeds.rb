@@ -53,7 +53,15 @@ users = [
   'Vin Diesel'
 ].map do |name|
   first_name, last_name = name.split(' ')
-  User.find_or_create_by(first_name: first_name, last_name: last_name, email: "#{first_name.downcase}.#{last_name.downcase}@example.com")
+  user = User.find_by(first_name: first_name, last_name: last_name, email: "#{first_name.downcase}.#{last_name.downcase}@example.com")
+  user = User.create!(
+    first_name: first_name,
+    last_name: last_name,
+    email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
+    password: '123456',
+    password_confirmation: '123456'
+  ) if user.nil?
+  user
 end
 
 [  'General Chat',
@@ -91,16 +99,28 @@ end
         created_by = users.sample
         room_users = [ created_by ]
         room = Room.create!(name: room_name, created_by:)
-        RoomUser.create!(room: room, user: created_by)
+
+        RoomUser.find_or_create_by!(room: room, user: created_by)
+
         users.sample((1..5).to_a.sample).each do |user|
           room_users << user
-          RoomUser.create!(room: room, user: user)
+          RoomUser.find_or_create_by!(room: room, user: user)
         end
 
         # Randomly create some chats
         rand(5..55).times do
-          user = room_users.sample
-          room.chats.create!(user:, message: Faker::Lorem.paragraph)
+          sender = room_users.sample
+          case rand(0..2)
+          when 0
+            # TextMessage
+            room.chats.create!(sender:, message: Faker::Lorem.paragraph, type: 'TextMessage')
+          when 1
+            # PhotoMessage
+            room.chats.create!(sender:, url: Faker::LoremFlickr.image(size: '50x60', search_terms: [ 'nature' ]), size: rand(1000..10000), type: 'PhotoMessage')
+          when 2
+            # LinkMessage
+            room.chats.create!(sender:, url: Faker::Internet.url, type: 'LinkMessage')
+          end
         end
       end
     end
