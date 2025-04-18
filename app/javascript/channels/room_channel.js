@@ -16,6 +16,7 @@ const roomSubscription = consumer.subscriptions.create("RoomChannel", {
   },
 
   received(data) {
+    debugger  
     callbacks.received.forEach(callback => callback(data));
   },
 
@@ -23,8 +24,8 @@ const roomSubscription = consumer.subscriptions.create("RoomChannel", {
     console.error("Error:", error);
   },
 
-  chat(message) {
-    this.perform('chat', { message });
+  sendChat({ message, type, room_id }) {
+    this.perform('send_chat', { message, type, room_id });
   }
 });
 
@@ -43,6 +44,6 @@ export const stopListenTo = (name, callback) => {
   }
 }
 
-export const sendChat = (message) => {
-  roomSubscription.chat(message);
+export const sendMessage = (message) => {
+  roomSubscription.sendChat({ message, type: 'TextMessage' });
 }

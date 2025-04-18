@@ -9,11 +9,15 @@ module ApplicationCable
     private
 
     def find_logged_in_user
-      if (user = User.find_by(id: cookies.signed[:user_id]))
+      if (user = User.find_by(id: encrypted_cookies["user_id"]))
         user
       else
         reject_unauthorized_connection
       end
+    end
+
+    def encrypted_cookies
+      cookies.encrypted[:_chat_chit_session]
     end
   end
 end

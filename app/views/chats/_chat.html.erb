@@ -1,0 +1,10 @@
+<% chat = local_assigns[:chat] || local_assigns[:text_message] || local_assigns[:link_message] || local_assigns[:photo_message] %>
+
+<% case chat.type
+when "TextMessage" %>
+	<%= render "chats/text_message" , chat: %>
+<% when "PhotoMessage" %>
+	<%= render "chats/photo_message" , chat: %>
+<% when "LinkMessage" %>
+	<%= render "chats/link_message" , chat: %>
+<% end %>
