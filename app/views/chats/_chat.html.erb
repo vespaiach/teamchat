@@ -1,10 +1,14 @@
-<% chat = local_assigns[:chat] || local_assigns[:text_message] || local_assigns[:link_message] || local_assigns[:photo_message] %>
+<% chat = local_assigns[:chat] || local_assigns[:text_message] || local_assigns[:video_message] || local_assigns[:photo_message] || local_assigns[:file_message] %>
 
-<% case chat.type
-when "TextMessage" %>
-	<%= render "chats/text_message" , chat: %>
-<% when "PhotoMessage" %>
-	<%= render "chats/photo_message" , chat: %>
-<% when "LinkMessage" %>
-	<%= render "chats/link_message" , chat: %>
-<% end %>
+<div data-chats-target="iAmTheLastChat">
+	<% case chat.type
+	when "TextMessage" %>
+		<%= render "chats/text_message" , chat: %>
+	<% when "PhotoMessage" %>
+		<%= render "chats/photo_message" , chat: %>
+	<% when "VideoMessage" %>
+		<%= render "chats/video_message" , chat: %>
+	<% when "FileMessage" %>
+		<%= render "chats/file_message" , chat: %>
+	<% end %>
+</div>

@@ -2,7 +2,7 @@
 
 class AddChatTable < ActiveRecord::Migration[8.0]
   def change
-    create_enum :chat_type, %w[TextMessage PhotoMessage LinkMessage]
+    create_enum :chat_type, %w[TextMessage FileMessage PhotoMessage VideoMessage]
 
     create_table :chats do |t|
       t.references :user, null: false, foreign_key: true

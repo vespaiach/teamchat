@@ -4,6 +4,8 @@ class Chat < ApplicationRecord
 
   broadcasts_to ->(chat) { [ chat.room, :chats ] }, inserts_by: :append, partial: "chats/chat", target: "room_chats"
 
+  has_one_attached :file_attachment
+
   validates :sender, presence: true
   validates :room, presence: true
   validates :type, presence: true

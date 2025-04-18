@@ -16,7 +16,12 @@ Rails.application.routes.draw do
   delete "signout" => "signin#destroy"
 
   resources :rooms do
-    resources :chats, only: [ :create ]
+    resource :chats do
+      member do
+        post :create_text
+        post :create_file
+      end
+    end
   end
   # Defines the root path route ("/")
   root "rooms#index"
