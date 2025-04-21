@@ -2,13 +2,13 @@ class ChatsController < ApplicationController
   before_action :set_room
 
   def create_text
-    @room.chats.create!(message: params[:room][:message], sender: current_user, type: "TextMessage")
+    @room.chats.create!(message: params[:message], sender: current_user, type: "TextMessage")
     head :ok
   end
 
   def create_file
     chat = Chat.new(message: "#{current_user.name} shared a file", sender: current_user, room: @room)
-    chat.file_attachment.attach(params[:room][:file_attachment])
+    chat.file_attachment.attach(params[:file_attachment])
     if chat.file_attachment.attached?
       chat.type = get_chat_type(chat)
       chat.save!

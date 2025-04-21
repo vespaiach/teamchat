@@ -1,4 +1,5 @@
-<div data-controller="room" class="h-dvh px-4 overflow-auto" id="chat-viewport">
+<div id="chat-viewport" data-controller="room" class="h-dvh px-4 overflow-auto" data-chats-room-id-value="<%= @room.id %>">
+
 	<div class="flex flex-col gap-4">
 		<div data-room-target="membersPanel" class="bg-white border-b z-1 border-b-gray-400 shrink-0 sticky top-0 grow-0 basis-8 overflow-hidden">
 			<div class="flex items-center justify-between">
@@ -15,17 +16,18 @@
 			</ul>
 		</div>
 
-		<div class="flex-1" id="room_chats" data-controller="chats">
+		<div class="flex-1" id="chats-container">
 			<%= render partial: "chats/chat" , collection: @room.chats %>
 		</div>
 
-		<div class="shrink-0 grow-0 sticky bottom-0 bg-white border-t border-t-gray-400 py-3 flex flex-col gap-3">
-			<turbo-frame id="create_text_form">
-				<%= form_with model: @room, class: "flex gap-3 items-center", url: create_text_room_chats_path(@room), method: :post, data: { turbo: true } do |f| %>
-					<%= f.text_field :message, class: "border-gray-400 border flex-1", placeholder: "Type your message here..." %>
-					<%= f.submit "Send Message" %>
-				<% end %>
-			</turbo-frame>
+		<div class="shrink-0 grow-0 sticky bottom-0 bg-white border-t border-t-gray-400 py-3 flex flex-col gap-3"
+		 	data-controller="chat-input"
+			data-chat-input-room-id-value="<%= @room.id %>"
+			data-chat-input-chats-outlet="[data-controller=chats]">
+			<div class="flex gap-3 items-center">
+				<input type="text" data-chat-input-target="textInput" />
+				<button data-action="click->chat-input#handleTextInputSend">send</button>
+			</div>
 
 			<turbo-frame id="create_file_form">
 				<%= form_with model: @room, url: create_file_room_chats_path(@room), method: :post, html: { multipart: true }, data: { turbo: true } do |f| %>
@@ -34,8 +36,18 @@
 					<%= f.submit "Upload File" %>
 				<% end %>
 			</turbo-frame>
+
+			<template data-chat-input-target="textMessageTemplate">
+				<div data-chats-target="iAmTheLastChat">
+					<p><strong>
+							<%= current_user.name %>
+						</strong>: {{message}}</p>
+					<p class="italic text-gray-500">Sending...</p>
+				</div>
+			</template>
 		</div>
 	</div>
+
 </div>
 
-<%= turbo_stream_from @room, :chats %>
+<%= turbo_stream_from @room %>

@@ -1,6 +1,6 @@
 <% chat = local_assigns[:chat] || local_assigns[:text_message] || local_assigns[:video_message] || local_assigns[:photo_message] || local_assigns[:file_message] %>
 
-<div data-chats-target="iAmTheLastChat">
+<div data-chat-id="<%= chat.id %>" <%= chat.reconciliation_id ? raw("data-reconciliation-id='#{chat.reconciliation_id}'") : "" %>>
 	<% case chat.type
 	when "TextMessage" %>
 		<%= render "chats/text_message" , chat: %>

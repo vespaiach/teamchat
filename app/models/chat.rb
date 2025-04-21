@@ -2,7 +2,7 @@ class Chat < ApplicationRecord
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :room
 
-  broadcasts_to ->(chat) { [ chat.room, :chats ] }, inserts_by: :append, partial: "chats/chat", target: "room_chats"
+  broadcasts_to ->(chat) { chat.room }, inserts_by: "insert-sort", partial: "chats/chat", target: "chats-container"
 
   has_one_attached :file_attachment
 

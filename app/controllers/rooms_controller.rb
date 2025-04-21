@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   def show
-    @room = Room.eager_load(:users, chats: :sender).find_by(id: params[:id])
-    @joined = @room.users.include?(current_user)
+    @room = Room.eager_load(users: {}, chats: :sender).merge(Chat.order(:id)).find_by(id: params[:id])
+    @joined = @room.users.include?(current_user) if @room
   end
 
   def index
