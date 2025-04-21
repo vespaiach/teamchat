@@ -1,0 +1,278 @@
+Started POST "/rails/active_storage/direct_uploads" for ::1 at 2025-04-18 13:26:14 -0400
+Processing by ActiveStorage::DirectUploadsController#create as JSON
+  Parameters: {"blob"=>{"filename"=>"jon-tyson-RUsczRV6ifY-unsplash.jpg", "content_type"=>"image/jpeg", "byte_size"=>1450212, "checksum"=>"8BYA/Mynii/qNHFnyMVRjg=="}, "direct_upload"=>{"blob"=>{"filename"=>"jon-tyson-RUsczRV6ifY-unsplash.jpg", "content_type"=>"image/jpeg", "byte_size"=>1450212, "checksum"=>"8BYA/Mynii/qNHFnyMVRjg=="}}}
+  TRANSACTION (0.8ms)  BEGIN /*action='create',application='ChatChit',controller='direct_uploads'*/
+  ActiveStorage::Blob Create (2.3ms)  INSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES ('mslg7opqc6o7cymaa670uo2v8dcx', 'jon-tyson-RUsczRV6ifY-unsplash.jpg', 'image/jpeg', NULL, 'local', 1450212, '8BYA/Mynii/qNHFnyMVRjg==', '2025-04-18 17:26:14.621451') RETURNING "id" /*action='create',application='ChatChit',controller='direct_uploads'*/
+  TRANSACTION (1.1ms)  COMMIT /*action='create',application='ChatChit',controller='direct_uploads'*/
+  Disk Storage (0.2ms) Generated URL for file at key: mslg7opqc6o7cymaa670uo2v8dcx (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtc2xnN29wcWM2bzdjeW1hYTY3MHVvMnY4ZGN4IiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsImNvbnRlbnRfbGVuZ3RoIjoxNDUwMjEyLCJjaGVja3N1bSI6IjhCWUEvTXluaWkvcU5IRm55TVZSamc9PSIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MTQuNjI2WiIsInB1ciI6ImJsb2JfdG9rZW4ifX0=--96cac5960fd6bdc7a99deb68932523316e5fb2ca)
+Completed 200 OK in 47ms (Views: 0.1ms | ActiveRecord: 2.9ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started PUT "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtc2xnN29wcWM2bzdjeW1hYTY3MHVvMnY4ZGN4IiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsImNvbnRlbnRfbGVuZ3RoIjoxNDUwMjEyLCJjaGVja3N1bSI6IjhCWUEvTXluaWkvcU5IRm55TVZSamc9PSIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MTQuNjI2WiIsInB1ciI6ImJsb2JfdG9rZW4ifX0=--96cac5960fd6bdc7a99deb68932523316e5fb2ca" for ::1 at 2025-04-18 13:26:14 -0400
+Processing by ActiveStorage::DiskController#update as */*
+  Parameters: {"encoded_token"=>"[FILTERED]"}
+  Disk Storage (4.8ms) Uploaded file to key: mslg7opqc6o7cymaa670uo2v8dcx (checksum: 8BYA/Mynii/qNHFnyMVRjg==)
+Completed 204 No Content in 46ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/rails/active_storage/direct_uploads" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by ActiveStorage::DirectUploadsController#create as JSON
+  Parameters: {"blob"=>{"filename"=>"jon-tyson-RUsczRV6ifY-unsplash.jpg", "content_type"=>"image/jpeg", "byte_size"=>1450212, "checksum"=>"8BYA/Mynii/qNHFnyMVRjg=="}, "direct_upload"=>{"blob"=>{"filename"=>"jon-tyson-RUsczRV6ifY-unsplash.jpg", "content_type"=>"image/jpeg", "byte_size"=>1450212, "checksum"=>"8BYA/Mynii/qNHFnyMVRjg=="}}}
+  TRANSACTION (0.7ms)  BEGIN /*action='create',application='ChatChit',controller='direct_uploads'*/
+  ActiveStorage::Blob Create (2.1ms)  INSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES ('smi9bqpw9jvzi8t0uy1f08h3x9ar', 'jon-tyson-RUsczRV6ifY-unsplash.jpg', 'image/jpeg', NULL, 'local', 1450212, '8BYA/Mynii/qNHFnyMVRjg==', '2025-04-18 17:26:33.469982') RETURNING "id" /*action='create',application='ChatChit',controller='direct_uploads'*/
+  TRANSACTION (0.6ms)  COMMIT /*action='create',application='ChatChit',controller='direct_uploads'*/
+  Disk Storage (0.1ms) Generated URL for file at key: smi9bqpw9jvzi8t0uy1f08h3x9ar (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJzbWk5YnFwdzlqdnppOHQwdXkxZjA4aDN4OWFyIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsImNvbnRlbnRfbGVuZ3RoIjoxNDUwMjEyLCJjaGVja3N1bSI6IjhCWUEvTXluaWkvcU5IRm55TVZSamc9PSIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzMuNDc1WiIsInB1ciI6ImJsb2JfdG9rZW4ifX0=--931ee3eddcb4ac67347ed0f59bdbc32874908b7a)
+Completed 200 OK in 83ms (Views: 0.1ms | ActiveRecord: 2.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started PUT "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJzbWk5YnFwdzlqdnppOHQwdXkxZjA4aDN4OWFyIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsImNvbnRlbnRfbGVuZ3RoIjoxNDUwMjEyLCJjaGVja3N1bSI6IjhCWUEvTXluaWkvcU5IRm55TVZSamc9PSIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzMuNDc1WiIsInB1ciI6ImJsb2JfdG9rZW4ifX0=--931ee3eddcb4ac67347ed0f59bdbc32874908b7a" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by ActiveStorage::DiskController#update as */*
+  Parameters: {"encoded_token"=>"[FILTERED]"}
+  Disk Storage (3.3ms) Uploaded file to key: smi9bqpw9jvzi8t0uy1f08h3x9ar (checksum: 8BYA/Mynii/qNHFnyMVRjg==)
+Completed 204 No Content in 25ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started PATCH "/rooms/14/upload" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by RoomsController#upload as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "room"=>{"file_attachment"=>"eyJfcmFpbHMiOnsiZGF0YSI6MzIsInB1ciI6ImJsb2JfaWQifX0=--46ff9fc97f19b1a7e3a98c05e84ae855e32cacc8"}, "commit"=>"Upload File", "id"=>"14"}
+  User Load (0.8ms)  SELECT "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = 1 LIMIT 1 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/application_controller.rb:9:in `current_user'
+  Room Load (0.6ms)  SELECT "rooms".* FROM "rooms" INNER JOIN "room_users" ON "room_users"."deleted_at" IS NULL AND "room_users"."room_id" = "rooms"."id" WHERE "rooms"."deleted_at" IS NULL AND "room_users"."user_id" = 1 AND "rooms"."id" = 14 LIMIT 1 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:14:in `upload'
+  TRANSACTION (0.5ms)  BEGIN /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:15:in `upload'
+  PhotoMessage Create (1.4ms)  INSERT INTO "chats" ("user_id", "room_id", "message", "custom_data", "type", "deleted_at", "created_at", "updated_at") VALUES (1, 14, 'John Doe shared a file', '{}', 'PhotoMessage', NULL, '2025-04-18 17:26:33.560669', '2025-04-18 17:26:33.560669') RETURNING "id" /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:15:in `upload'
+  TRANSACTION (0.5ms)  COMMIT /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:15:in `upload'
+  ActiveStorage::Blob Load (0.5ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 32 LIMIT 1 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  TRANSACTION (0.4ms)  BEGIN /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  ActiveStorage::Blob Load (1.6ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" INNER JOIN "active_storage_attachments" ON "active_storage_blobs"."id" = "active_storage_attachments"."blob_id" WHERE "active_storage_attachments"."record_id" = 972 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  ActiveStorage::Attachment Load (0.6ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 972 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  ActiveStorage::Blob Update (0.7ms)  UPDATE "active_storage_blobs" SET "metadata" = '{"identified":true}' WHERE "active_storage_blobs"."id" = 32 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  ActiveStorage::Attachment Load (0.7ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."blob_id" = 32 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  ActiveStorage::Attachment Create (0.7ms)  INSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES ('file_attachment', 'Chat', 972, 32, '2025-04-18 17:26:33.571575') RETURNING "id" /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  PhotoMessage Update (0.5ms)  UPDATE "chats" SET "updated_at" = '2025-04-18 17:26:33.574975' WHERE "chats"."id" = 972 /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+  TRANSACTION (0.5ms)  COMMIT /*action='upload',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:16:in `upload'
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: 07fcedcc-8be5-4d8c-82da-23e24c6cd1cd) to Async(default) with arguments: #<GlobalID:0x0000000178bdbd38 @uri=#<URI::GID gid://chat-chit/ActiveStorage::Blob/32>>
+[ActiveJob] ↳ app/controllers/rooms_controller.rb:16:in `upload'
+Completed 406 Not Acceptable in 50ms (ActiveRecord: 5.6ms (10 queries, 0 cached) | GC: 1.1ms)
+
+
+
+ActionController::UnknownFormat (ActionController::UnknownFormat):
+
+app/controllers/rooms_controller.rb:17:in `upload'
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   ActiveStorage::Blob Load (0.5ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 32 LIMIT 1 /*application='ChatChit'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd] Performing ActiveStorage::AnalyzeJob (Job ID: 07fcedcc-8be5-4d8c-82da-23e24c6cd1cd) from Async(default) enqueued at 2025-04-18T17:26:33.580403000Z with arguments: #<GlobalID:0x000000016db79b70 @uri=#<URI::GID gid://chat-chit/ActiveStorage::Blob/32>>
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd] Skipping image analysis because the ruby-vips gem isn't installed
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   TRANSACTION (0.6ms)  BEGIN /*application='ChatChit',job='ActiveStorage%3A%3AAnalyzeJob'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   ActiveStorage::Blob Update (1.9ms)  UPDATE "active_storage_blobs" SET "metadata" = '{"identified":true,"analyzed":true}' WHERE "active_storage_blobs"."id" = 32 /*application='ChatChit',job='ActiveStorage%3A%3AAnalyzeJob'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   ActiveStorage::Attachment Load (0.6ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."blob_id" = 32 /*application='ChatChit',job='ActiveStorage%3A%3AAnalyzeJob'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   Chat Load (0.4ms)  SELECT "chats".* FROM "chats" WHERE "chats"."deleted_at" IS NULL AND "chats"."id" = 972 /*application='ChatChit',job='ActiveStorage%3A%3AAnalyzeJob'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   PhotoMessage Update (0.6ms)  UPDATE "chats" SET "updated_at" = '2025-04-18 17:26:33.708939' WHERE "chats"."id" = 972 /*application='ChatChit',job='ActiveStorage%3A%3AAnalyzeJob'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd]   TRANSACTION (0.4ms)  COMMIT /*application='ChatChit',job='ActiveStorage%3A%3AAnalyzeJob'*/
+[ActiveJob] [ActiveStorage::AnalyzeJob] [07fcedcc-8be5-4d8c-82da-23e24c6cd1cd] Performed ActiveStorage::AnalyzeJob (Job ID: 07fcedcc-8be5-4d8c-82da-23e24c6cd1cd) from Async(default) in 41.21ms
+Started GET "/rooms/14" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by RoomsController#show as HTML
+  Parameters: {"id"=>"14"}
+  User Load (0.7ms)  SELECT "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = 1 LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/application_controller.rb:9:in `current_user'
+  SQL (1.1ms)  SELECT DISTINCT "rooms"."id" FROM "rooms" LEFT OUTER JOIN "room_users" ON "room_users"."deleted_at" IS NULL AND "room_users"."room_id" = "rooms"."id" LEFT OUTER JOIN "users" ON "users"."deleted_at" IS NULL AND "users"."id" = "room_users"."user_id" LEFT OUTER JOIN "chats" ON "chats"."deleted_at" IS NULL AND "chats"."room_id" = "rooms"."id" LEFT OUTER JOIN "users" "senders_chats" ON "senders_chats"."deleted_at" IS NULL AND "senders_chats"."id" = "chats"."user_id" WHERE "rooms"."deleted_at" IS NULL AND "rooms"."id" = 14 LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:3:in `show'
+  SQL (2.9ms)  SELECT "rooms"."id" AS t0_r0, "rooms"."name" AS t0_r1, "rooms"."user_id" AS t0_r2, "rooms"."deleted_at" AS t0_r3, "rooms"."created_at" AS t0_r4, "rooms"."updated_at" AS t0_r5, "users"."id" AS t1_r0, "users"."first_name" AS t1_r1, "users"."last_name" AS t1_r2, "users"."email" AS t1_r3, "users"."password_digest" AS t1_r4, "users"."last_login_at" AS t1_r5, "users"."deleted_at" AS t1_r6, "users"."created_at" AS t1_r7, "users"."updated_at" AS t1_r8, "chats"."id" AS t2_r0, "chats"."user_id" AS t2_r1, "chats"."room_id" AS t2_r2, "chats"."message" AS t2_r3, "chats"."custom_data" AS t2_r4, "chats"."type" AS t2_r5, "chats"."deleted_at" AS t2_r6, "chats"."created_at" AS t2_r7, "chats"."updated_at" AS t2_r8, "senders_chats"."id" AS t3_r0, "senders_chats"."first_name" AS t3_r1, "senders_chats"."last_name" AS t3_r2, "senders_chats"."email" AS t3_r3, "senders_chats"."password_digest" AS t3_r4, "senders_chats"."last_login_at" AS t3_r5, "senders_chats"."deleted_at" AS t3_r6, "senders_chats"."created_at" AS t3_r7, "senders_chats"."updated_at" AS t3_r8 FROM "rooms" LEFT OUTER JOIN "room_users" ON "room_users"."deleted_at" IS NULL AND "room_users"."room_id" = "rooms"."id" LEFT OUTER JOIN "users" ON "users"."deleted_at" IS NULL AND "users"."id" = "room_users"."user_id" LEFT OUTER JOIN "chats" ON "chats"."deleted_at" IS NULL AND "chats"."room_id" = "rooms"."id" LEFT OUTER JOIN "users" "senders_chats" ON "senders_chats"."deleted_at" IS NULL AND "senders_chats"."id" = "chats"."user_id" WHERE "rooms"."deleted_at" IS NULL AND "rooms"."id" = 14 AND "rooms"."id" = 14 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/controllers/rooms_controller.rb:3:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering rooms/show.html.erb within layouts/application
+  Rendered chats/_text_message.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered chats/_text_message.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered chats/_text_message.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.8ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 971 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  ActiveStorage::Blob Load (0.6ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 30 LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  Rendered chats/_photo_message.html.erb (Duration: 2.8ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.7ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 972 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  ActiveStorage::Blob Load (0.7ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 32 LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  Rendered chats/_photo_message.html.erb (Duration: 2.4ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.6ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 374 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_video_message.html.erb:3
+  ActiveStorage::Blob Load (0.5ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 2 LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_video_message.html.erb:3
+  Rendered chats/_video_message.html.erb (Duration: 2.0ms | GC: 0.0ms)
+  Rendered chats/_text_message.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.6ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 376 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_video_message.html.erb:3
+  CACHE ActiveStorage::Blob Load (0.8ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 2 LIMIT 1
+  ↳ app/views/chats/_video_message.html.erb:3
+  Rendered chats/_video_message.html.erb (Duration: 2.4ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.6ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 377 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  ActiveStorage::Blob Load (0.6ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 1 LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  Rendered chats/_photo_message.html.erb (Duration: 2.2ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.7ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 378 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  CACHE ActiveStorage::Blob Load (0.3ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 1 LIMIT 1
+  ↳ app/views/chats/_photo_message.html.erb:1
+  Rendered chats/_photo_message.html.erb (Duration: 1.9ms | GC: 0.0ms)
+  ActiveStorage::Attachment Load (0.7ms)  SELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 379 AND "active_storage_attachments"."record_type" = 'Chat' AND "active_storage_attachments"."name" = 'file_attachment' LIMIT 1 /*action='show',application='ChatChit',controller='rooms'*/
+  ↳ app/views/chats/_photo_message.html.erb:1
+  CACHE ActiveStorage::Blob Load (0.3ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 1 LIMIT 1
+  ↳ app/views/chats/_photo_message.html.erb:1
+  Rendered chats/_photo_message.html.erb (Duration: 1.9ms | GC: 0.0ms)
+  Rendered collection of chats/_chat.html.erb [11 times] (Duration: 16.4ms | GC: 0.0ms)
+  Rendered rooms/show.html.erb within layouts/application (Duration: 17.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.3ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 14.8ms | ActiveRecord: 6.2ms (17 queries, 3 cached) | GC: 0.0ms)
+
+
+Finished "/cable" [WebSocket] for ::1 at 2025-04-18 13:26:33 -0400
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hhdC1jaGl0L1Jvb20vMTQ:chats
+Started GET "/assets/application-d6a78c0d.css" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/bulma-13e204e4.css" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/fas5-4468ab82.css" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/stimulus.min-4b1e420e.js" for ::1 at 2025-04-18 13:26:33 -0400
+Removed sourceMappingURL comment for missing asset 'bulma-prefixed.min.css.map' from bulma.css
+Started GET "/assets/stimulus-loading-1fc53fe7.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/actioncable.esm-e0ec9819.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/activestorage.esm-f2909226.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/controllers/application-3affb389.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/controllers/index-f14acdc0.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/controllers/room_controller-f474e9f7.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/channels/consumer-bf39ed12.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/channels/index-170a9ec8.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/assets/channels/room_channel-be15eec4.js" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MSwicHVyIjoiYmxvYl9pZCJ9fQ==--8daf73e616b381d8e9949dfb6ae8f27b6109a1c9/morning-coffee.jpg" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzAsInB1ciI6ImJsb2JfaWQifX0=--8c7ad2d2abe97854a4e64ffb60e8b2abd2e8141e/kelli-mcclintock-IuCXuyWNGnI-unsplash.jpg" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6MSwicHVyIjoiYmxvYl9pZCJ9fQ==--8daf73e616b381d8e9949dfb6ae8f27b6109a1c9", "filename"=>"morning-coffee"}
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzIsInB1ciI6ImJsb2JfaWQifX0=--46ff9fc97f19b1a7e3a98c05e84ae855e32cacc8/jon-tyson-RUsczRV6ifY-unsplash.jpg" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6MzAsInB1ciI6ImJsb2JfaWQifX0=--8c7ad2d2abe97854a4e64ffb60e8b2abd2e8141e", "filename"=>"kelli-mcclintock-IuCXuyWNGnI-unsplash"}
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6MzIsInB1ciI6ImJsb2JfaWQifX0=--46ff9fc97f19b1a7e3a98c05e84ae855e32cacc8", "filename"=>"jon-tyson-RUsczRV6ifY-unsplash"}
+  ActiveStorage::Blob Load (0.9ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 1 LIMIT 1 /*action='show',application='ChatChit',controller='redirect'*/
+  Disk Storage (0.2ms) Generated URL for file at key: u3nw0f627plni99ftnyr7vasbeqb (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ1M253MGY2MjdwbG5pOTlmdG55cjd2YXNiZXFiIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwibW9ybmluZy1jb2ZmZWUuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnbW9ybmluZy1jb2ZmZWUuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzMuOTI0WiIsInB1ciI6ImJsb2Jfa2V5In19--c59de9978e8ee78a63d3d84ecd06c521d6dec482/morning-coffee.jpg)
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ1M253MGY2MjdwbG5pOTlmdG55cjd2YXNiZXFiIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwibW9ybmluZy1jb2ZmZWUuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnbW9ybmluZy1jb2ZmZWUuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzMuOTI0WiIsInB1ciI6ImJsb2Jfa2V5In19--c59de9978e8ee78a63d3d84ecd06c521d6dec482/morning-coffee.jpg
+Completed 302 Found in 64ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  ActiveStorage::Blob Load (2.6ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 30 LIMIT 1 /*action='show',application='ChatChit',controller='redirect'*/
+  Disk Storage (0.1ms) Generated URL for file at key: vhucobyysp9uvpy92hnhhez6pyn3 (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ2aHVjb2J5eXNwOXV2cHk5MmhuaGhlejZweW4zIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwia2VsbGktbWNjbGludG9jay1JdUNYdXlXTkduSS11bnNwbGFzaC5qcGdcIjsgZmlsZW5hbWUqPVVURi04JydrZWxsaS1tY2NsaW50b2NrLUl1Q1h1eVdOR25JLXVuc3BsYXNoLmpwZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL2pwZWciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA0LTE4VDE3OjMxOjMzLjkyNloiLCJwdXIiOiJibG9iX2tleSJ9fQ==--44e41c67de1aaf28a47ba5f02d41bb082beefc80/kelli-mcclintock-IuCXuyWNGnI-unsplash.jpg)
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ2aHVjb2J5eXNwOXV2cHk5MmhuaGhlejZweW4zIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwia2VsbGktbWNjbGludG9jay1JdUNYdXlXTkduSS11bnNwbGFzaC5qcGdcIjsgZmlsZW5hbWUqPVVURi04JydrZWxsaS1tY2NsaW50b2NrLUl1Q1h1eVdOR25JLXVuc3BsYXNoLmpwZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL2pwZWciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA0LTE4VDE3OjMxOjMzLjkyNloiLCJwdXIiOiJibG9iX2tleSJ9fQ==--44e41c67de1aaf28a47ba5f02d41bb082beefc80/kelli-mcclintock-IuCXuyWNGnI-unsplash.jpg
+Completed 302 Found in 65ms (ActiveRecord: 2.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ1M253MGY2MjdwbG5pOTlmdG55cjd2YXNiZXFiIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwibW9ybmluZy1jb2ZmZWUuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnbW9ybmluZy1jb2ZmZWUuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzMuOTI0WiIsInB1ciI6ImJsb2Jfa2V5In19--c59de9978e8ee78a63d3d84ecd06c521d6dec482/morning-coffee.jpg" for ::1 at 2025-04-18 13:26:33 -0400
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ2aHVjb2J5eXNwOXV2cHk5MmhuaGhlejZweW4zIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwia2VsbGktbWNjbGludG9jay1JdUNYdXlXTkduSS11bnNwbGFzaC5qcGdcIjsgZmlsZW5hbWUqPVVURi04JydrZWxsaS1tY2NsaW50b2NrLUl1Q1h1eVdOR25JLXVuc3BsYXNoLmpwZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL2pwZWciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA0LTE4VDE3OjMxOjMzLjkyNloiLCJwdXIiOiJibG9iX2tleSJ9fQ==--44e41c67de1aaf28a47ba5f02d41bb082beefc80/kelli-mcclintock-IuCXuyWNGnI-unsplash.jpg" for ::1 at 2025-04-18 13:26:33 -0400
+  ActiveStorage::Blob Load (0.7ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 32 LIMIT 1 /*action='show',application='ChatChit',controller='redirect'*/
+  Disk Storage (0.1ms) Generated URL for file at key: mslg7opqc6o7cymaa670uo2v8dcx (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtc2xnN29wcWM2bzdjeW1hYTY3MHVvMnY4ZGN4IiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiam9uLXR5c29uLVJVc2N6UlY2aWZZLXVuc3BsYXNoLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2pvbi10eXNvbi1SVXNjelJWNmlmWS11bnNwbGFzaC5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNS0wNC0xOFQxNzozMTozMy45MzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--22155e64d373d92363191b84d0342c1cb288972a/jon-tyson-RUsczRV6ifY-unsplash.jpg)
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtc2xnN29wcWM2bzdjeW1hYTY3MHVvMnY4ZGN4IiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiam9uLXR5c29uLVJVc2N6UlY2aWZZLXVuc3BsYXNoLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2pvbi10eXNvbi1SVXNjelJWNmlmWS11bnNwbGFzaC5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNS0wNC0xOFQxNzozMTozMy45MzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--22155e64d373d92363191b84d0342c1cb288972a/jon-tyson-RUsczRV6ifY-unsplash.jpg
+Completed 302 Found in 68ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"morning-coffee"}
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"kelli-mcclintock-IuCXuyWNGnI-unsplash"}
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtc2xnN29wcWM2bzdjeW1hYTY3MHVvMnY4ZGN4IiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiam9uLXR5c29uLVJVc2N6UlY2aWZZLXVuc3BsYXNoLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2pvbi10eXNvbi1SVXNjelJWNmlmWS11bnNwbGFzaC5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNS0wNC0xOFQxNzozMTozMy45MzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--22155e64d373d92363191b84d0342c1cb288972a/jon-tyson-RUsczRV6ifY-unsplash.jpg" for ::1 at 2025-04-18 13:26:33 -0400
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"jon-tyson-RUsczRV6ifY-unsplash"}
+Completed 200 OK in 111ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 200 OK in 112ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MiwicHVyIjoiYmxvYl9pZCJ9fQ==--8cfc59144fe0d05c419e5bdc35b7b447a4c8a910/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MiwicHVyIjoiYmxvYl9pZCJ9fQ==--8cfc59144fe0d05c419e5bdc35b7b447a4c8a910/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Processing by ActiveStorage::Blobs::RedirectController#show as MP4
+Completed 200 OK in 122ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.9ms)
+
+
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6MiwicHVyIjoiYmxvYl9pZCJ9fQ==--8cfc59144fe0d05c419e5bdc35b7b447a4c8a910", "filename"=>"big-buck-bunny"}
+Processing by ActiveStorage::Blobs::RedirectController#show as MP4
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6MiwicHVyIjoiYmxvYl9pZCJ9fQ==--8cfc59144fe0d05c419e5bdc35b7b447a4c8a910", "filename"=>"big-buck-bunny"}
+Started GET "/assets/turbo.min-1262d735.js" for ::1 at 2025-04-18 13:26:34 -0400
+  ActiveStorage::Blob Load (0.8ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 2 LIMIT 1 /*action='show',application='ChatChit',controller='redirect'*/
+  Disk Storage (0.2ms) Generated URL for file at key: 63h957uhtucxbvu4ae35fovd3fr6 (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMwWiIsInB1ciI6ImJsb2Jfa2V5In19--552248ad94a10c6a977193908c11e9b027e65fb2/big-buck-bunny.mp4)
+  ActiveStorage::Blob Load (1.7ms)  SELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 2 LIMIT 1 /*action='show',application='ChatChit',controller='redirect'*/
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMwWiIsInB1ciI6ImJsb2Jfa2V5In19--552248ad94a10c6a977193908c11e9b027e65fb2/big-buck-bunny.mp4
+  Disk Storage (0.1ms) Generated URL for file at key: 63h957uhtucxbvu4ae35fovd3fr6 (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMxWiIsInB1ciI6ImJsb2Jfa2V5In19--0c92da1a138e5f98830ca7ce2b6323ded6b06323/big-buck-bunny.mp4)
+Completed 302 Found in 58ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMxWiIsInB1ciI6ImJsb2Jfa2V5In19--0c92da1a138e5f98830ca7ce2b6323ded6b06323/big-buck-bunny.mp4
+Completed 302 Found in 59ms (ActiveRecord: 1.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMxWiIsInB1ciI6ImJsb2Jfa2V5In19--0c92da1a138e5f98830ca7ce2b6323ded6b06323/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMwWiIsInB1ciI6ImJsb2Jfa2V5In19--552248ad94a10c6a977193908c11e9b027e65fb2/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Completed 206 Partial Content in 42ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 206 Partial Content in 43ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/assets/application-d53e4416.js" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/assets/turbo.min-02fd5b81.js.map" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/assets/tailwind-59019d7b.css" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/assets/stimulus.min-2395e199.js.map" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/cable" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/cable" [WebSocket] for ::1 at 2025-04-18 13:26:34 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+  User Load (0.5ms)  SELECT "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = 1 LIMIT 1 /*application='ChatChit'*/
+  ↳ app/channels/application_cable/connection.rb:12:in `find_logged_in_user'
+Registered connection (Z2lkOi8vY2hhdC1jaGl0L1VzZXIvMQ)
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMwWiIsInB1ciI6ImJsb2Jfa2V5In19--552248ad94a10c6a977193908c11e9b027e65fb2/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hhdC1jaGl0L1Jvb20vMTQ:chats
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Completed 206 Partial Content in 28ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMxWiIsInB1ciI6ImJsb2Jfa2V5In19--0c92da1a138e5f98830ca7ce2b6323ded6b06323/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMwWiIsInB1ciI6ImJsb2Jfa2V5In19--552248ad94a10c6a977193908c11e9b027e65fb2/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Completed 206 Partial Content in 47ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 206 Partial Content in 48ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMwWiIsInB1ciI6ImJsb2Jfa2V5In19--552248ad94a10c6a977193908c11e9b027e65fb2/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMxWiIsInB1ciI6ImJsb2Jfa2V5In19--0c92da1a138e5f98830ca7ce2b6323ded6b06323/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Completed 206 Partial Content in 45ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 206 Partial Content in 45ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI2M2g5NTd1aHR1Y3hidnU0YWUzNWZvdmQzZnI2IiwiZGlzcG9zaXRpb24iOiJhdHRhY2htZW50OyBmaWxlbmFtZT1cImJpZy1idWNrLWJ1bm55Lm1wNFwiOyBmaWxlbmFtZSo9VVRGLTgnJ2JpZy1idWNrLWJ1bm55Lm1wNCIsImNvbnRlbnRfdHlwZSI6InZpZGVvL21wNCIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjUtMDQtMThUMTc6MzE6MzQuMTMxWiIsInB1ciI6ImJsb2Jfa2V5In19--0c92da1a138e5f98830ca7ce2b6323ded6b06323/big-buck-bunny.mp4" for ::1 at 2025-04-18 13:26:34 -0400
+Processing by ActiveStorage::DiskController#show as MP4
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"big-buck-bunny"}
+Completed 206 Partial Content in 18ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)

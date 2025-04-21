@@ -1,0 +1,2 @@
+class FileMessage < Chat
+end

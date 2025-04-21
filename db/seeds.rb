@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+photo_blob = ActiveStorage::Blob.create_and_upload!(
+  io: File.open(Rails.root.join('public', 'morning-coffee.jpg'), "rb"),
+  filename: "morning-coffee.jpg",
+  content_type: "image/jpeg"
+)
+
+video_blob = ActiveStorage::Blob.create_and_upload!(
+  io: File.open(Rails.root.join('public', 'sample-video.mp4'), "rb"),
+  filename: "sample-video.mp4",
+  content_type: "video/mp4"
+)
+
+file_blog = ActiveStorage::Blob.create_and_upload!(
+  io: File.open(Rails.root.join('public', 'dummy.txt'), "rb"),
+  filename: "dummy.txt",
+  content_type: "text/plain"
+)
+
 users = [
   'John Doe',
   'Jane Smith',
@@ -116,10 +134,16 @@ end
             room.chats.create!(sender:, message: Faker::Lorem.paragraph, type: 'TextMessage')
           when 1
             # PhotoMessage
-            room.chats.create!(sender:, url: Faker::LoremFlickr.image(size: '50x60', search_terms: [ 'nature' ]), size: rand(1000..10000), type: 'PhotoMessage')
+            chat = room.chats.create!(sender:, type: 'PhotoMessage')
+            chat.file_attachment.attach(photo_blob.signed_id)
           when 2
-            # LinkMessage
-            room.chats.create!(sender:, url: Faker::Internet.url, type: 'LinkMessage')
+            # VideoMessage
+            chat = room.chats.create!(sender:, type: 'VideoMessage')
+            chat.file_attachment.attach(video_blob.signed_id)
+          when 3
+            # FileMessage
+            chat = room.chats.create!(sender:, type: 'FileMessage')
+            chat.file_attachment.attach(file_blog.signed_id)
           end
         end
       end
