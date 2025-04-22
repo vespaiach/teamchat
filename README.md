@@ -10,7 +10,7 @@ This project is to create a web-based chat app with Ruby on Rails, Turbo and Sti
 - [ ] Create group chats.
 - [ ] Group chat messages by date.
 - [ ] Reply chat in thread.
-- [ ] User profile.
+- [ ] User Registration/ User profile.
 - [ ] Morden UI.
 
 # Tech Stack
