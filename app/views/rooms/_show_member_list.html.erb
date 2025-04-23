@@ -1,0 +1,19 @@
+<div data-room-target="membersPanel" class="bg-white border-b z-1 border-b-gray-400 shrink-0 sticky top-0 grow-0 basis-8 overflow-hidden">
+	<div class="flex items-center justify-between">
+		<h1 class="">
+			<strong>
+				<%= @room.name %>
+			</strong>
+		</h1>
+		<button data-room-target="closeButton" data-action="click->room#handleCloseButtonClick"
+						class="border-0 bg-none shrink-0 grow-0 flex items-center justify-center w-8 h-8 cursor-pointer">X</button>
+	</div>
+	<h2><strong>Members</strong></h2>
+	<ul class="mb-4">
+		<% @room.users.each do |member| %>
+		<li>
+			<%= member.name %>
+		</li>
+		<% end %>
+	</ul>
+</div>

@@ -8,5 +8,4 @@ class Chat < ApplicationRecord
 
   validates :sender, presence: true
   validates :room, presence: true
-  validates :type, presence: true
 end

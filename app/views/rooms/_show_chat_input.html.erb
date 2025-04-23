@@ -1,0 +1,15 @@
+<div class="shrink-0 grow-0 sticky bottom-0 bg-white border-t border-t-gray-400 py-3 flex flex-col gap-3" data-controller="chat-input"
+		 data-chat-input-room-id-value="<%= @room.id %>" data-chat-input-chats-outlet="[data-controller=chats]">
+	<div class="flex gap-3 items-center">
+		<input type="text" data-chat-input-target="textInput" />
+		<button data-action="click->chat-input#handleTextInputSend">send</button>
+	</div>
+
+	<!-- <turbo-frame id="create_file_form">
+		<%= form_with model: @room, url: create_file_room_chats_path(@room), method: :post, html: { multipart: true }, data: { turbo: true } do |f| %>
+		<%= f.file_field :file_attachment, direct_upload: true %>
+		<progress value="0" max="100" data-room-target="uploadProgress" style="display: none;"></progress>
+		<%= f.submit "Upload File" %>
+		<% end %>
+	</turbo-frame> -->
+</div>

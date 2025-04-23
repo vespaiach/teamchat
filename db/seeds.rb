@@ -103,7 +103,7 @@ end
   'Spirituality and Wellness',
   'Environment and Sustainability',
   'Cryptocurrency and Finance' ].each do |room_name|
-    if Room.exists?(name: room_name)
+    unless Room.exists?(name: room_name)
       ActiveRecord::Base.transaction do
         created_by = users.sample
         room_users = [ created_by ]
@@ -111,15 +111,15 @@ end
 
         RoomUser.find_or_create_by!(room: room, user: created_by)
 
-        users.sample((1..5).to_a.sample).each do |user|
+        users.sample((1..8).to_a.sample).each do |user|
           room_users << user
           RoomUser.find_or_create_by!(room: room, user: user)
         end
 
         # Randomly create some chats
-        rand(5..55).times do
+        rand(5..550).times do
           sender = room_users.sample
-          room.chats.create!(sender:, message: Faker::Lorem.paragraph, type: 'TextMessage')
+          room.chats.create!(sender:, message: Faker::Lorem.paragraph)
         end
       end
     end
