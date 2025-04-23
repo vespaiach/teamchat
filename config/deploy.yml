@@ -1,8 +1,8 @@
 # Name of your application. Used to uniquely configure containers.
-service: chat_chit
+service: chatter
 
 # Name of the container image.
-image: your-user/chat_chit
+image: your-user/chatter
 
 # Deploy to these servers.
 servers:
@@ -47,7 +47,7 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
-    # Use chat_chit-db for a db accessory server on same machine via local kamal docker network.
+    # Use chatter-db for a db accessory server on same machine via local kamal docker network.
     # DB_HOST: 192.168.0.2
 
     # Log everything from Rails

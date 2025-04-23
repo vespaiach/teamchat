@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_one_attached :avatar
+
   has_many :room_users
   has_many :chats
   has_many :created_rooms, class_name: "Room", foreign_key: "user_id"
