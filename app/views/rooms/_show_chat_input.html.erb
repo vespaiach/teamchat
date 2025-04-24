@@ -1,8 +1,16 @@
-<div class="shrink-0 grow-0 sticky bottom-0 bg-white border-t border-t-gray-400 py-3 flex flex-col gap-3" data-controller="chat-input"
+<div class="shrink-0 grow-0 sticky bottom-0 py-3 flex flex-col gap-3 bg-white" data-controller="chat-input"
 		 data-chat-input-room-id-value="<%= @room.id %>" data-chat-input-chats-outlet="[data-controller=chats]">
-	<div class="flex gap-3 items-center">
-		<input type="text" data-chat-input-target="textInput" />
-		<button data-action="click->chat-input#handleTextInputSend">send</button>
+	<div class="flex flex-col border border-gray-400 p-2 gap-1">
+		<textarea data-chat-input-target="textInput" class="w-full resize-none outline-none" rows="2" placeholder="Type your message here..."
+							data-action="keydown->chat-input#handleEnterOnTextInput"></textarea>
+		<div class="flex justify-between items-center">
+			<button data-action="click->chat-input#handleTextInputSend">
+				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" width="22" height="22" fill="none" stroke="currentColor"
+						 stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="charm charm-arrow-up-right">
+					<path d="m5.25 4.25h6.5v6.5m-7.5 1 7.5-7.5"></path>
+				</svg>
+			</button>
+		</div>
 	</div>
 
 	<!-- <turbo-frame id="create_file_form">

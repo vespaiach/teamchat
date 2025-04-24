@@ -2,7 +2,7 @@ class ChatsController < ApplicationController
   before_action :set_room
 
   def create_text
-    @room.chats.create!(message: params[:message], sender: current_user, type: "TextMessage")
+    @room.chats.create!(message: params[:message], sender: current_user)
     head :ok
   end
 
