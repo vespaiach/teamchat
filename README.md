@@ -5,6 +5,8 @@ This project is to create a web-based chat app with Ruby on Rails, Turbo and Sti
 # Milestones
 
 - [ ] Basic chat with text messages.
+- [ ] Show user online status.
+- [ ] Lazy load chat histories.
 - [ ] Photo/Video/Audio text messages.
 - [ ] Text message with formatting.
 - [ ] Create group chats.
