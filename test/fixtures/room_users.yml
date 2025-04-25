@@ -26,3 +26,59 @@ bob_random:
   deleted_at:
   created_at: <%= 2.days.ago %>
   updated_at: <%= 1.day.ago %>
+
+charlie_tech_talk:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:tech_talk) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:charlie) %>
+  deleted_at:
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 3.days.ago %>
+
+diana_music_lovers:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:music_lovers) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:diana) %>
+  deleted_at:
+  created_at: <%= 5.days.ago %>
+  updated_at: <%= 4.days.ago %>
+
+edward_book_club:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:book_club) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:edward) %>
+  deleted_at:
+  created_at: <%= 6.days.ago %>
+  updated_at: <%= 5.days.ago %>
+
+fiona_general:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:general) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:fiona) %>
+  deleted_at:
+  created_at: <%= 5.days.ago %>
+  updated_at: <%= 4.days.ago %>
+
+george_random:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:george) %>
+  deleted_at:
+  created_at: <%= 6.days.ago %>
+  updated_at: <%= 5.days.ago %>
+
+hannah_tech_talk:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:tech_talk) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:hannah) %>
+  deleted_at:
+  created_at: <%= 3.days.ago %>
+  updated_at: <%= 2.days.ago %>
+
+ian_music_lovers:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:music_lovers) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:ian) %>
+  deleted_at:
+  created_at: <%= 2.days.ago %>
+  updated_at: <%= 1.day.ago %>
+
+julia_book_club:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:book_club) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:julia) %>
+  deleted_at:
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 3.days.ago %>

@@ -1,64 +1,46 @@
 # Sample chats
-alice_text_message1:
-  user_id: <%= ActiveRecord::FixtureSet.identify(:alice) %>
+
+# Chats for Alice
+alice_general_chat1:
   room_id: <%= ActiveRecord::FixtureSet.identify(:general) %>
-  message: hello 
-  type: TextMessage
-  deleted_at:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:alice) %>
+  message: "Hello everyone in General!"
   created_at: <%= 2.days.ago %>
   updated_at: <%= 2.days.ago %>
 
-alice_link_message1:
+alice_random_chat1:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
   user_id: <%= ActiveRecord::FixtureSet.identify(:alice) %>
+  message: "Random thoughts for the day."
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>
+
+# Chats for Bob
+bob_general_chat1:
   room_id: <%= ActiveRecord::FixtureSet.identify(:general) %>
-  custom_data:
-    url: https://www.example.com
-    caption: Example
-    description: This is an example link message.
-  type: LinkMessage
-  deleted_at:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  message: "Hi Alice, nice to see you here!"
+  created_at: <%= 2.days.ago %>
+  updated_at: <%= 2.days.ago %>
+
+bob_random_chat1:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  message: "This room is so random!"
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>
+
+# Chats for Charlie
+charlie_tech_talk_chat1:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:tech_talk) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:charlie) %>
+  message: "Let's discuss the latest in tech!"
   created_at: <%= 3.days.ago %>
   updated_at: <%= 3.days.ago %>
 
-alice_photo_message1:
-  user_id: <%= ActiveRecord::FixtureSet.identify(:alice) %>
-  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
-  message:
-  custom_data:
-    url: https://example.com/photo.jpg
-    size: 100000
-  type: PhotoMessage
-  deleted_at:
-  created_at: <%= 3.days.ago %>
-  updated_at: <%= 3.days.ago %>
-
-bob_photo_message1:
-  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
-  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
-  message:
-  custom_data:
-    url: https://example.com/photo.jpg
-    size: 100000
-  type: PhotoMessage
-  deleted_at:
+charlie_general_chat1:
+  room_id: <%= ActiveRecord::FixtureSet.identify(:general) %>
+  user_id: <%= ActiveRecord::FixtureSet.identify(:charlie) %>
+  message: "Hello General room!"
   created_at: <%= 2.days.ago %>
   updated_at: <%= 2.days.ago %>
-
-bob_text_message1:
-  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
-  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
-  message: hello world
-  type: TextMessage
-  deleted_at:
-  created_at: <%= 2.days.ago %>
-  updated_at: <%= 2.days.ago %>
-
-bob_link_message1:
-  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
-  room_id: <%= ActiveRecord::FixtureSet.identify(:random) %>
-  message:
-  custom_data: <%= JSON.dump({ url: "https://www.example.com", caption: "Example", description: "This is an example link message." }) %>
-  type: LinkMessage
-  deleted_at:
-  created_at: <%= 4.days.ago %>
-  updated_at: <%= 4.days.ago %>

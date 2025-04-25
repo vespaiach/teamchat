@@ -5,6 +5,7 @@ alice:
   email: alice@example.com
   password_digest: <%= BCrypt::Password.create('password') %>
   last_login_at: <%= 2.days.ago %>
+  online_status: true
   deleted_at:
   created_at: <%= 3.days.ago %>
   updated_at: <%= 2.days.ago %>
@@ -13,8 +14,97 @@ bob:
   first_name: Bob
   last_name: Johnson
   email: bob@example.com
+  online_status: true
   password_digest: <%= BCrypt::Password.create('password') %>
   last_login_at: <%= 1.day.ago %>
   deleted_at:
   created_at: <%= 2.days.ago %>
   updated_at: <%= 1.day.ago %>
+
+charlie:
+  first_name: Charlie
+  last_name: Brown
+  email: charlie@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 3.days.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 3.days.ago %>
+
+diana:
+  first_name: Diana
+  last_name: Prince
+  email: diana@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 1.day.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 2.days.ago %>
+  updated_at: <%= 1.day.ago %>
+
+edward:
+  first_name: Edward
+  last_name: Cullen
+  email: edward@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 5.days.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 6.days.ago %>
+  updated_at: <%= 5.days.ago %>
+
+fiona:
+  first_name: Fiona
+  last_name: Gallagher
+  email: fiona@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 4.days.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 5.days.ago %>
+  updated_at: <%= 4.days.ago %>
+
+george:
+  first_name: George
+  last_name: Weasley
+  email: george@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 6.days.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 7.days.ago %>
+  updated_at: <%= 6.days.ago %>
+
+hannah:
+  first_name: Hannah
+  last_name: Baker
+  email: hannah@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 2.days.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 3.days.ago %>
+  updated_at: <%= 2.days.ago %>
+
+ian:
+  first_name: Ian
+  last_name: Gallagher
+  email: ian@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 1.day.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 2.days.ago %>
+  updated_at: <%= 1.day.ago %>
+
+julia:
+  first_name: Julia
+  last_name: Roberts
+  email: julia@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  last_login_at: <%= 3.days.ago %>
+  online_status: false
+  deleted_at:
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 3.days.ago %>
