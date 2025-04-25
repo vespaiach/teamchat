@@ -2,4 +2,4 @@
 	<%= render partial: "chats/chat", collection: @room.chats %>
 </div>
 
-<%= turbo_stream_from [ @room, current_user ] %>
+<%= turbo_stream_from [ @room ] %>
