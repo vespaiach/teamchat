@@ -1,2 +1,0 @@
-class FileMessage < Chat
-end

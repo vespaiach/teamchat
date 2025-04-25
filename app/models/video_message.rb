@@ -1,2 +1,0 @@
-class VideoMessage < Chat
-end

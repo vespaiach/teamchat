@@ -24,5 +24,10 @@
 
   <body>
     <%= yield %>
+    <% if current_user %>
+      <script type="module">
+        import "channels/user_channel";
+      </script>  
+    <% end %>
   </body>
 </html>

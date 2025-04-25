@@ -1,2 +1,0 @@
-class PhotoMessage < Chat
-end
