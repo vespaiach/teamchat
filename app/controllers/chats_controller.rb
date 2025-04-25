@@ -16,7 +16,7 @@ class ChatsController < ApplicationController
       chat.save!
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("file_upload_form", partial: "shares/flash_message", locals: { message: "File uploaded successfully!" })
+          render turbo_stream: turbo_stream.replace('file_upload_form', partial: 'shares/flash_message', locals: { message: 'File uploaded successfully!' })
         end
       end
     end
@@ -29,14 +29,14 @@ class ChatsController < ApplicationController
   end
 
   def get_chat_type(chat)
-    if chat.file_attachment.content_type.start_with?("image/")
-      "PhotoMessage"
-    elsif chat.file_attachment.content_type.start_with?("video/")
-      "VideoMessage"
-    elsif chat.file_attachment.content_type.start_with?("audio/")
-      "AudioMessage"
+    if chat.file_attachment.content_type.start_with?('image/')
+      'PhotoMessage'
+    elsif chat.file_attachment.content_type.start_with?('video/')
+      'VideoMessage'
+    elsif chat.file_attachment.content_type.start_with?('audio/')
+      'AudioMessage'
     else
-      "FileMessage"
+      'FileMessage'
     end
   end
 end
