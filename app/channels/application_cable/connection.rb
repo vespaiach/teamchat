@@ -11,7 +11,7 @@ module ApplicationCable
     private
 
     def find_logged_in_user
-      if (user = User.find_by(id: encrypted_cookies['user_id']))
+      if (user = find_user)
         user
       else
         reject_unauthorized_connection
@@ -20,6 +20,10 @@ module ApplicationCable
 
     def encrypted_cookies
       cookies.encrypted[:_chat_chit_session]
+    end
+
+    def find_user
+      User.find_by(id: encrypted_cookies['user_id'])
     end
   end
 end

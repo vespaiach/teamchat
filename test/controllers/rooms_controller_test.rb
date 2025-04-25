@@ -3,7 +3,9 @@
 require 'test_helper'
 
 class RoomsControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @user = users(:alice)
+    @room = rooms(:general)
+    sign_in_as(@user)
+  end
 end
