@@ -17,10 +17,11 @@
 	</div>
 	<h2><strong>Members</strong></h2>
 	<ul class="mb-4">
-		<% @room.users.each do |member| %>
-		<li>
-			<%= member.name %>
-		</li>
+		<%= render partial: "rooms/show_member_list_online_status", locals: { user: current_user } %>
+    <% @room.users.reject { |member| member == current_user }.sort_by(&:name).each do |user| %>
+			<%= render partial: "rooms/show_member_list_online_status", locals: { user: } %>
 		<% end %>
 	</ul>
 </div>
+
+<%= turbo_stream_from [ @room, :online_status ] %>

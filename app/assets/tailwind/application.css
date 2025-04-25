@@ -4,4 +4,13 @@
   .icon-button {
 		@apply flex items-center justify-center bg-none border-none cursor-pointer w-8 h-8;
   }
+  .user-online-status {
+    @apply flex items-center gap-1;
+  }
+  .online-status {
+    @apply w-2.5 h-2.5 rounded-full bg-gray-400;
+  }
+  .online-status.online {
+    @apply bg-green-500;
+  }
 }
