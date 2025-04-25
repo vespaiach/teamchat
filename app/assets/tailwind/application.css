@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@layer components {
+  .icon-button {
+		@apply flex items-center justify-center bg-none border-none cursor-pointer w-8 h-8;
+  }
+}
