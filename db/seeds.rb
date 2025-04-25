@@ -1,21 +1,9 @@
 # frozen_string_literal: true
 
-photo_blob = ActiveStorage::Blob.create_and_upload!(
-  io: File.open(Rails.root.join('public', 'morning-coffee.jpg'), "rb"),
-  filename: "morning-coffee.jpg",
+avatar_blob = ActiveStorage::Blob.create_and_upload!(
+  io: File.open(Rails.root.join('public', 'avatar.jpg'), "rb"),
+  filename: "avatar.jpg",
   content_type: "image/jpeg"
-)
-
-video_blob = ActiveStorage::Blob.create_and_upload!(
-  io: File.open(Rails.root.join('public', 'sample-video.mp4'), "rb"),
-  filename: "sample-video.mp4",
-  content_type: "video/mp4"
-)
-
-file_blog = ActiveStorage::Blob.create_and_upload!(
-  io: File.open(Rails.root.join('public', 'dummy.txt'), "rb"),
-  filename: "dummy.txt",
-  content_type: "text/plain"
 )
 
 users = [
@@ -72,13 +60,16 @@ users = [
 ].map do |name|
   first_name, last_name = name.split(' ')
   user = User.find_by(first_name: first_name, last_name: last_name, email: "#{first_name.downcase}.#{last_name.downcase}@example.com")
-  user = User.create!(
-    first_name: first_name,
-    last_name: last_name,
-    email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
-    password: '123456',
-    password_confirmation: '123456'
-  ) if user.nil?
+  if user.nil?
+    user = User.create!(
+      first_name: first_name,
+      last_name: last_name,
+      email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
+      password: '123456',
+      password_confirmation: '123456'
+    )
+    user.avatar.attach(avatar_blob.signed_id)
+  end
   user
 end
 
@@ -112,7 +103,7 @@ end
   'Spirituality and Wellness',
   'Environment and Sustainability',
   'Cryptocurrency and Finance' ].each do |room_name|
-    if !Room.exists?(name: room_name)
+    unless Room.exists?(name: room_name)
       ActiveRecord::Base.transaction do
         created_by = users.sample
         room_users = [ created_by ]
@@ -120,31 +111,15 @@ end
 
         RoomUser.find_or_create_by!(room: room, user: created_by)
 
-        users.sample((1..5).to_a.sample).each do |user|
+        users.sample((1..8).to_a.sample).each do |user|
           room_users << user
           RoomUser.find_or_create_by!(room: room, user: user)
         end
 
         # Randomly create some chats
-        rand(5..55).times do
+        rand(5..550).times do
           sender = room_users.sample
-          case rand(0..2)
-          when 0
-            # TextMessage
-            room.chats.create!(sender:, message: Faker::Lorem.paragraph, type: 'TextMessage')
-          when 1
-            # PhotoMessage
-            chat = room.chats.create!(sender:, type: 'PhotoMessage')
-            chat.file_attachment.attach(photo_blob.signed_id)
-          when 2
-            # VideoMessage
-            chat = room.chats.create!(sender:, type: 'VideoMessage')
-            chat.file_attachment.attach(video_blob.signed_id)
-          when 3
-            # FileMessage
-            chat = room.chats.create!(sender:, type: 'FileMessage')
-            chat.file_attachment.attach(file_blog.signed_id)
-          end
+          room.chats.create!(sender:, message: Faker::Lorem.paragraph)
         end
       end
     end

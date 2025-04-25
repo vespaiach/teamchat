@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
-import { Turbo } from '@hotwired/turbo-rails'
-import { scrollChatViewport } from 'utils/dom'
+// import { Turbo } from '@hotwired/turbo-rails'
+// import { scrollChatViewport } from 'utils/dom'
 
 export default class extends Controller {
   static outlets = ['chats']
@@ -17,9 +17,17 @@ export default class extends Controller {
     }
   }
 
+  handleEnterOnTextInput(event) {
+    if (event.key === 'Enter' && !event.ctrlKey) {
+      event.preventDefault()
+      this.handleTextInputSend()
+    } else if (event.key === 'Enter' && event.ctrlKey) {
+      this.textInputTarget.value += '\n'
+    }
+  }
+
   #sendTextMessage(message) {
-    // this.#addTextMessage(message)
-    this.#sendChat({ message, type: 'TextMessage' })
+    this.#sendChat({ message })
   }
 
   #sendChat(data) {
@@ -38,65 +46,59 @@ export default class extends Controller {
       body: JSON.stringify(data)
     })
   }
-
-  // #addTextMessage(message) {
-  //   const newMessageElement = this.textMessageTemplateTarget.cloneNode(true)
-  //   newMessageElement.innerHTML = newMessageElement.innerHTML.replace(/{{message}}/g, message)
-  // }
 }
 
+// Turbo.StreamActions['insert-sort'] = function () {
+//   // Stop if no chats container is found
+//   const container = this.targetElements[0]
+//   if (!container) return
 
-Turbo.StreamActions['insert-sort'] = function () {
-  // Stop if no chats container is found
-  const container = this.targetElements[0]
-  if (!container) return
+//   // Stop if no template content is found
+//   let newElement = this.templateContent
+//   if (newElement instanceof DocumentFragment) {
+//     newElement = newElement.firstElementChild;
+//     if (!newElement) {
+//       console.error("DocumentFragment is empty.");
+//       return;
+//     }
+//   }
 
-  // Stop if no template content is found
-  let newElement = this.templateContent
-  if (newElement instanceof DocumentFragment) {
-    newElement = newElement.firstElementChild;
-    if (!newElement) {
-      console.error("DocumentFragment is empty.");
-      return;
-    }
-  }
+//   // If there is no chats in the container, append the new element
+//   const lastChatElement = container.querySelector('[data-chat-id]:last-of-type');
+//   if (!lastChatElement) {
+//     container.append(newElement)
+//     scrollChatViewport()
+//     return
+//   }
 
-  // If there is no chats in the container, append the new element
-  const lastChatElement = container.querySelector('[data-chat-id]:last-of-type');
-  if (!lastChatElement) {
-    container.append(newElement)
-    scrollChatViewport()
-    return
-  }
+//   const lastChatId = lastChatElement?.dataset?.chatId
+//   const newChatId = newElement.dataset.chatId
 
-  const lastChatId = lastChatElement?.dataset?.chatId
-  const newChatId = newElement.dataset.chatId
+//   // If this is an update, replace the existing element
+//   const existingElement = document.querySelector(`[data-chat-id="${newChatId}"]`)
+//   if (existingElement) {
+//     existingElement.replaceWith(newElement)
+//     scrollChatViewport()
+//     return
+//   }
 
-  // If this is an update, replace the existing element
-  const existingElement = document.querySelector(`[data-chat-id="${newChatId}"]`)
-  if (existingElement) {
-    existingElement.replaceWith(newElement)
-    scrollChatViewport()
-    return
-  }
+//   // If the new chat is the last one, append it
+//   if (newChatId > lastChatId) {
+//     container.append(newElement)
+//     scrollChatViewport()
+//     return
+//   }
 
-  // If the new chat is the last one, append it
-  if (newChatId > lastChatId) {
-    container.append(newElement)
-    scrollChatViewport()
-    return
-  }
-
-  // Walk backwards through the chat elements until we find the right place to insert the new element
-  let currentElement = lastChatElement
-  while (currentElement && currentElement.dataset.chatId > newChatId) {
-    currentElement = currentElement.previousElementSibling
-  }
-  if (currentElement) {
-    currentElement.parentElement?.insertBefore(newElement, currentElement.nextElementSibling)
-  } else {
-    // New Chat is the first one, prepend it
-    container.prepend(newElement)
-  }
-  scrollChatViewport()
-}
+//   // Walk backwards through the chat elements until we find the right place to insert the new element
+//   let currentElement = lastChatElement
+//   while (currentElement && currentElement.dataset.chatId > newChatId) {
+//     currentElement = currentElement.previousElementSibling
+//   }
+//   if (currentElement) {
+//     currentElement.parentElement?.insertBefore(newElement, currentElement.nextElementSibling)
+//   } else {
+//     // New Chat is the first one, prepend it
+//     container.prepend(newElement)
+//   }
+//   scrollChatViewport()
+// }
