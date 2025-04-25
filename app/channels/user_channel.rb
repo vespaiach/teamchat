@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserChannel < ApplicationCable::Channel
   def subscribed
     reject_unauthorized_connection unless current_user

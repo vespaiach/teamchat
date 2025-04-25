@@ -2,8 +2,16 @@
 inherit_gem:
   rubocop-rails-omakase: rubocop.yml
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# Ensure all files have `# frozen_string_literal: true` at the top
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+# Enforce single quotes for strings
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  Enabled: true
+
+# Enforce consistent spacing around square brackets
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyle: no_space
+  Enabled: true

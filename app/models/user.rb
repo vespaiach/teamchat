@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include ActionView helpers for dom_id
   include ActionView::RecordIdentifier
@@ -9,7 +11,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :room_users
   has_many :chats
-  has_many :created_rooms, class_name: "Room", foreign_key: "user_id"
+  has_many :created_rooms, class_name: 'Room', foreign_key: 'user_id'
   has_many :joined_rooms, through: :room_users, source: :room
 
   # Scopes
@@ -35,9 +37,9 @@ class User < ApplicationRecord
   def broadcast_online_status
     joined_rooms.each do |room|
       Turbo::StreamsChannel.broadcast_replace_to(
-        [ room, :online_status ],
+        [room, :online_status],
         target: dom_id(self, :online_status),
-        partial: "rooms/show_member_list_online_status",
+        partial: 'rooms/show_member_list_online_status',
         locals: { user: self }
       )
     end
