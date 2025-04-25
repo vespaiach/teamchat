@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Chat < ApplicationRecord
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :room

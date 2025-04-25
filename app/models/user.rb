@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include ActionView helpers for dom_id
   include ActionView::RecordIdentifier
