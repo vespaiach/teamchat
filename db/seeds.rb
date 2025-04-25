@@ -73,7 +73,7 @@ users = [
   user
 end
 
-[  'General Chat',
+['General Chat',
   'Tech Talk',
   'Random Room',
   'Music Lovers',
@@ -102,11 +102,11 @@ end
   'Language Learners',
   'Spirituality and Wellness',
   'Environment and Sustainability',
-  'Cryptocurrency and Finance' ].each do |room_name|
+  'Cryptocurrency and Finance'].each do |room_name|
     unless Room.exists?(name: room_name)
       ActiveRecord::Base.transaction do
         created_by = users.sample
-        room_users = [ created_by ]
+        room_users = [created_by]
         room = Room.create!(name: room_name, created_by:)
 
         RoomUser.find_or_create_by!(room: room, user: created_by)

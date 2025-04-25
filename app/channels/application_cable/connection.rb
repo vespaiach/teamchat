@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
@@ -9,7 +11,7 @@ module ApplicationCable
     private
 
     def find_logged_in_user
-      if (user = User.find_by(id: encrypted_cookies["user_id"]))
+      if (user = User.find_by(id: encrypted_cookies['user_id']))
         user
       else
         reject_unauthorized_connection

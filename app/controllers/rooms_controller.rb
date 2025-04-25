@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomsController < ApplicationController
   def show
     @room = Room.eager_load(users: {}, chats: :sender).merge(Chat.order(:id)).find_by(id: params[:id])
