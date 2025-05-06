@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title><%= content_for(:title) || "Chatter" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -25,9 +26,13 @@
   <body>
     <%= yield %>
     <% if current_user %>
-      <script type="module">
-        import "channels/user_channel";
-      </script>  
+    <script type="module">
+      import "channels/user_channel";
+    </script>
+    <% end %>
+    <% if flash[:notice] %>
+    <div class="flash notice"><%= flash[:notice] %></div>
     <% end %>
   </body>
+
 </html>

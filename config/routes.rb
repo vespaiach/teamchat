@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   post 'signin' => 'signin#create'
   delete 'signout' => 'signin#destroy'
 
+  resources :signup, only: %i[new create]
+
   resources :rooms do
     resource :chats do
       member do
@@ -25,6 +27,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :password_resets, only: %i[new create edit update], param: :token
+
   # Defines the root path route ("/")
   root 'rooms#index'
 end
