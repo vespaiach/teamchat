@@ -1,0 +1,20 @@
+<div class="min-h-dvh flex items-center justify-center">
+	<div class="px-8 py-12 rounded-xl bg-white min-w-[320px]">
+		<h1 class="font-bold text-4xl">Forgot Password</h1>
+		<%= form_with(url: password_resets_path, data: { controller: 'password-resets', action: 'submit->password-resets#validate' }, class: 'flex flex-col items-stretch gap-7 mt-8', local: true) do |form| %>
+		<% if flash[:alert] %>
+		<div class="text-red-500">
+			<%= flash[:alert] %>
+		</div>
+		<% end %>
+
+		<div class="space-y-1">
+			<%= form.label :email, 'Enter your email address', class: 'block' %>
+			<%= form.email_field :email, data: { password_resets_target: 'email' }, class: 'text-input' %>
+			<div id="email-error" class="text-red-500 text-sm hidden" data-password-resets-target="emailError">Valid email is required.</div>
+		</div>
+
+		<%= form.submit 'Send Reset Instructions', class: 'primary-button' %>
+		<% end %>
+	</div>
+</div>

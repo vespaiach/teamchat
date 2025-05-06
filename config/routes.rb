@@ -25,6 +25,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :password_resets, only: %i[new create edit update], param: :token
+
   # Defines the root path route ("/")
   root 'rooms#index'
 end
