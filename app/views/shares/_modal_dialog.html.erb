@@ -1,0 +1,25 @@
+<div data-controller="modal" id="<%= local_assigns[:id] || 'modal-dialog' %>" class="relative">
+  <% if local_assigns[:button_text] %>
+    <button data-action="modal#open" class="<%= local_assigns[:button_class] || 'primary-button' %>">
+      <%= button_text %>
+    </button>
+  <% end %>
+  
+  <dialog data-modal-target="dialog" data-action="click->modal#closeBackground"
+          class="p-0 rounded-xl shadow-xl backdrop:bg-gray-500 backdrop:bg-opacity-50 flex items-center justify-center">
+    <div class="px-8 py-12 rounded-xl bg-white min-w-[330px]">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="font-bold text-2xl"><%= local_assigns[:title] || "Dialog" %></h2>
+        <button data-action="modal#close" class="text-stone-500 hover:text-stone-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 512 512">
+            <path d="M 490.5389221556886 73.58083832335329 Q 512 47.52095808383233 490.5389221556886 21.461077844311376 Q 464.47904191616766 0 438.4191616766467 21.461077844311376 L 256 203.88023952095807 L 256 203.88023952095807 L 73.58083832335329 21.461077844311376 L 73.58083832335329 21.461077844311376 Q 47.52095808383233 0 21.461077844311376 21.461077844311376 Q 0 47.52095808383233 21.461077844311376 73.58083832335329 L 203.88023952095807 256 L 203.88023952095807 256 L 21.461077844311376 438.4191616766467 L 21.461077844311376 438.4191616766467 Q 0 464.47904191616766 21.461077844311376 490.5389221556886 Q 47.52095808383233 512 73.58083832335329 490.5389221556886 L 256 308.11976047904193 L 256 308.11976047904193 L 438.4191616766467 490.5389221556886 L 438.4191616766467 490.5389221556886 Q 464.47904191616766 512 490.5389221556886 490.5389221556886 Q 512 464.47904191616766 490.5389221556886 438.4191616766467 L 308.11976047904193 256 L 308.11976047904193 256 L 490.5389221556886 73.58083832335329 L 490.5389221556886 73.58083832335329 Z" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="dialog-content">
+        <%= yield if block_given? %>
+      </div>
+    </div>
+  </dialog>
+</div>

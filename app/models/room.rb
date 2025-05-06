@@ -10,4 +10,5 @@ class Room < ApplicationRecord
   scope :belonging_to_member, ->(user_id) { joins(:room_users).where(room_users: { user_id: }) }
 
   validates :created_by, presence: true
+  validates :name, presence: true, length: { maximum: 50 }
 end

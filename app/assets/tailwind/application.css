@@ -15,7 +15,7 @@
     @apply w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
   }
   .primary-button {
-    @apply bg-primary text-white font-semibold py-2 px-6 rounded-md cursor-pointer;
+    @apply bg-primary text-white font-semibold py-3 px-6 rounded-md cursor-pointer;
   }
   .icon-button {
     @apply flex items-center justify-center bg-none border-none cursor-pointer w-8 h-8;
