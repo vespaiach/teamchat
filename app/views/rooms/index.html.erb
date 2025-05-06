@@ -1,16 +1,33 @@
-<div class="px-4 overflow-auto">
-	<div class="flex flex-col gap-4">
-		<h2 class="text-2xl">My Rooms</h2>
-		<% @joined_rooms.each do |room| %>
-			<a href="<%= room_path(room) %>" class="block">
-				<%= room.name %>
-			</a>
+<div class="min-h-dvh flex items-center justify-center py-4">
+	<div class="px-8 py-8 space-y-5 rounded-xl bg-white min-w-[330px]">
+		<% if @joined_rooms.any? %>
+		<div class="space-y-2">
+			<h2 class="text-2xl">My Rooms</h2>
+			<div class="space-y-2">
+				<% @joined_rooms.each do |room| %>
+				<a href="<%= room_path(room) %>" class="block hover:underline">
+					<%= room.name %>
+				</a>
+				<% end %>
+			</div>
+		</div>
 		<% end %>
-		<h2 class="text-2xl">Available Rooms</h2>
-		<% @not_joined_rooms.each do |room| %>
-			<a href="<%= room_path(room) %>" class="block">
-				<%= room.name %>
-			</a>
-		<% end %>
+		<div class="space-y-2">
+			<h2 class="text-2xl">Available Rooms</h2>
+			<div class="space-y-2">
+				<% @not_joined_rooms.each do |room| %>
+				<a href="<%= room_path(room) %>" class="block hover:underline">
+					<%= room.name %>
+				</a>
+				<% end %>
+			</div>
+		</div>
+		<div data-controller="rooms" data-rooms-modal-outlet="#create-room-modal">
+			<button class="primary-button w-full" data-action="click->rooms#openCreateRoomModal">
+				+ Create Room
+			</button>
+		</div>
 	</div>
 </div>
+
+<%= render 'rooms/create_room_modal', id: 'create-room-modal' %>

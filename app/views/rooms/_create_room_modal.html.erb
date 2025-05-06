@@ -1,0 +1,13 @@
+<%= render 'shares/modal_dialog', id: 'create-room-modal', title: 'Create New Room' do %>
+  <%= form_with(model: Room.new, url: rooms_path, data: { controller: 'room-form', action: 'submit->room-form#validate' }, class: 'flex flex-col items-stretch gap-6') do |form| %>
+    <div class="space-y-1">
+      <label for="room_name" class="block">Room Name</label>
+      <%= form.text_field :name, id: "room_name", class: "text-input", placeholder: "Enter room name (max 50 characters)", data: { room_form_target: 'name' }, maxlength: 50 %>
+      <div id="room-name-error" class="text-red-500 text-xs invisible" data-room-form-target="nameError">Room name is required.</div>
+    </div>
+
+    <div class="space-y-3 w-full">
+      <%= form.submit '+ Create Room', class: 'primary-button w-full' %>
+    </div>
+  <% end %>
+<% end %>
