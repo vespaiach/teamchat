@@ -1,16 +1,22 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["dialog", "button"]
-  
+  static targets = ['dialog']
+
   open() {
-    this.dialogTarget.showModal()
-    document.body.classList.add('overflow-hidden')
+    if (this.hasDialogTarget) {
+      this.dialogTarget.showModal()
+      document.body.classList.add('overflow-hidden')
+    } else {
+      console.error('Modal dialog target not found')
+    }
   }
 
   close() {
-    this.dialogTarget.close()
-    document.body.classList.remove('overflow-hidden')
+    if (this.hasDialogTarget) {
+      this.dialogTarget.close()
+      document.body.classList.remove('overflow-hidden')
+    }
   }
 
   closeBackground(event) {
