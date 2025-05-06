@@ -30,9 +30,11 @@
       import "channels/user_channel";
     </script>
     <% end %>
-    <% if flash[:notice] %>
-    <div class="flash notice"><%= flash[:notice] %></div>
-    <% end %>
+    <div class="fixed top-0 right-0 z-50 w-[350px] overflow-hidden" id="flash-messages-center">
+      <% flash.each do |type, message| %>
+      <%= render partial: "shares/flash_message", locals: { type:, message: } %>
+      <% end %>
+    </div>
   </body>
 
 </html>

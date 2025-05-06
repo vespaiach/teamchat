@@ -2,9 +2,18 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   connect() {
-    const messageEl = this.element
+    const noticeEl = this.element
     setTimeout(() => {
-      messageEl.remove()
-    }, 3000)
+      this.animateAndRemove(noticeEl)
+    }, 4000)
+  }
+
+  close() {
+    this.animateAndRemove(this.element)
+  }
+
+  animateAndRemove(element) {
+    element.addEventListener('animationend', () => { element.remove() }, { once: true })
+    element.classList.add('slide-out-top')
   }
 }
