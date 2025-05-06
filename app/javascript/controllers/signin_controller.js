@@ -15,18 +15,18 @@ export default class extends Controller {
 
     // Validate email
     if (!this.emailTarget.value.trim() || !emailRegex.test(this.emailTarget.value.trim())) {
-      this.emailErrorTarget.classList.remove('hidden')
+      this.emailErrorTarget.classList.remove('invisible')
       isValid = false
     } else {
-      this.emailErrorTarget.classList.add('hidden')
+      this.emailErrorTarget.classList.add('invisible')
     }
 
     // Validate password
     if (!this.passwordTarget.value.trim()) {
-      this.passwordErrorTarget.classList.remove('hidden')
+      this.passwordErrorTarget.classList.remove('invisible')
       isValid = false
     } else {
-      this.passwordErrorTarget.classList.add('hidden')
+      this.passwordErrorTarget.classList.add('invisible')
     }
 
     // Prevent form submission if validation fails

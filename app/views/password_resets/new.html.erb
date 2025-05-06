@@ -1,5 +1,5 @@
 <div class="min-h-dvh flex items-center justify-center">
-	<div class="px-8 py-12 rounded-xl bg-white min-w-[320px]">
+	<div class="px-8 py-12 rounded-xl bg-white min-w-[330px]">
 		<h1 class="font-bold text-4xl">Forgot Password</h1>
 		<%= form_with(url: password_resets_path, data: { controller: 'password-resets', action: 'submit->password-resets#validate' }, class: 'flex flex-col items-stretch gap-7 mt-8', local: true) do |form| %>
 		<% if flash[:alert] %>

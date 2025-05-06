@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   post 'signin' => 'signin#create'
   delete 'signout' => 'signin#destroy'
 
+  resources :signup, only: %i[new create]
+
   resources :rooms do
     resource :chats do
       member do
