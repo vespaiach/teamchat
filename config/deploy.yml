@@ -48,7 +48,7 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Database configuration
-    DB_HOST: db
+    DB_HOST: chatter-db
     POSTGRES_USER: chatter
     POSTGRES_DB: chatter_production
     
