@@ -97,7 +97,8 @@ builder:
 accessories:
   db:
     image: postgres:14
-    host: "127.0.0.1:5432:5432"
+    host: 168.231.71.136
+    port: "127.0.0.1:5432:5432"
     env:
       clear:
         POSTGRES_USER: chatter
