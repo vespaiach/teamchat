@@ -48,7 +48,7 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Database configuration
-    DB_HOST: chatter-db
+    DB_HOST: db
     POSTGRES_USER: chatter
     POSTGRES_DB: chatter_production
     
@@ -98,7 +98,7 @@ accessories:
   db:
     image: postgres:14
     host: 168.231.71.136
-    port: "127.0.0.1:5432:5432"
+    port: "5432:5432"
     env:
       clear:
         POSTGRES_USER: chatter
