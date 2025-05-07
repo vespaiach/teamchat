@@ -83,9 +83,10 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    host: <%= ENV["DB_HOST"] %>
     database: chatter_production
     username: chatter
-    password: <%= ENV["CHATTER_DATABASE_PASSWORD"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: chatter_production_cache

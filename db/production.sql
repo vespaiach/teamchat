@@ -1,0 +1,4 @@
+CREATE DATABASE chatter_production;
+CREATE DATABASE chatter_production_cache;
+CREATE DATABASE chatter_production_queue;
+CREATE DATABASE chatter_production_cable;
