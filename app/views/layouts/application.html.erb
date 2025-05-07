@@ -24,6 +24,9 @@
   </head>
 
   <body>
+    <% if current_user %>
+      <%= render partial: "shares/app_bar" %>
+    <% end %>
     <%= yield %>
     <% if current_user %>
     <script type="module">

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :signup, only: %i[new create]
 
+  resource :profile, only: %i[show edit update]
+
   resources :rooms do
     resource :chats do
       member do

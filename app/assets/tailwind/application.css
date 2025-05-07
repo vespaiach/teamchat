@@ -2,6 +2,7 @@
 
 @theme {
   --color-primary: #c62c25;
+  --container-xs: 21.875rem;
 }
 
 @layer base {

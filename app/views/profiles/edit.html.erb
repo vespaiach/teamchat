@@ -1,0 +1,55 @@
+<%# filepath: /Users/toannguyen/stayon/chatter_app/app/views/profiles/edit.html.erb %>
+<div class="min-h-dvh flex items-center justify-center">
+  <div class="px-8 py-12 rounded-xl bg-white min-w-[330px] max-w-md w-full">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="font-bold text-4xl">Edit Profile</h1>
+      <a href="<%= profile_path %>" class="text-blue-600 hover:text-blue-800">Cancel</a>
+    </div>
+    
+    <%= form_with(model: @user, url: profile_path, method: :patch, class: 'flex flex-col items-stretch gap-4 mt-8', html: { multipart: true }, data: { controller: 'profile', action: 'submit->profile#validate' }) do |form| %>
+      <% if @user.errors.any? %>
+        <div class="text-red-500">
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="flex flex-col items-center mb-6">
+        <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border border-gray-300">
+          <% if @user.avatar.attached? %>
+            <%= image_tag url_for(@user.avatar), alt: "Profile Avatar", class: "w-full h-full object-cover", id: "avatar-preview" %>
+          <% else %>
+            <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500" id="avatar-placeholder">
+              No Image
+            </div>
+            <img src="#" alt="Profile Avatar Preview" class="w-full h-full object-cover hidden" id="avatar-preview">
+          <% end %>
+        </div>
+        
+        <div class="mb-4">
+          <%= form.label :avatar, "Change Profile Picture", class: "cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg" %>
+          <%= form.file_field :avatar, class: "hidden", accept: "image/*", data: { profile_target: "avatarInput", action: "change->profile#previewAvatar" } %>
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label for="first_name" class="block">First Name</label>
+        <%= form.text_field :first_name, id: "first_name", class: "text-input", placeholder: "First name", data: { profile_target: 'firstName' } %>
+        <div id="first-name-error" class="text-red-500 text-xs invisible" data-profile-target="firstNameError">First name is required.</div>
+      </div>
+
+      <div class="space-y-1">
+        <label for="last_name" class="block">Last Name</label>
+        <%= form.text_field :last_name, id: "last_name", class: "text-input", placeholder: "Last name", data: { profile_target: 'lastName' } %>
+        <div id="last-name-error" class="text-red-500 text-xs invisible" data-profile-target="lastNameError">Last name is required.</div>
+      </div>
+      
+      <div class="pt-4">
+        <%= form.submit 'Save Changes', class: 'primary-button w-full' %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<nav class="sticky top-0 bg-white w-full shadow-sm z-10">
+  <div class="mx-auto py-1 px-5 flex items-center justify-between">
+    <div>
+      <a href="<%= root_path %>" class="text-xl font-bold">CHATTER</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="<%= profile_path %>" class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-full overflow-hidden border border-primary">
+          <% if current_user.avatar.attached? %>
+            <%= image_tag url_for(current_user.avatar), alt: "#{current_user.first_name} #{current_user.last_name}'s Avatar", class: "w-full h-full object-cover" %>
+          <% else %>
+            <div class="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">
+              <%= current_user.first_name[0] %><%= current_user.last_name[0] %>
+            </div>
+          <% end %>
+        </div>
+      </a>
+    </div>
+  </div>
+</nav>
