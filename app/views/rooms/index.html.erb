@@ -22,12 +22,13 @@
 				<% end %>
 			</div>
 		</div>
-		<div data-controller="rooms" data-rooms-modal-outlet="#create-room-modal">
-			<button class="primary-button w-full" data-action="click->rooms#openCreateRoomModal">
+		<div>
+			<button class="primary-button w-full" data-controller="open-modal-button"
+							data-open-modal-button-modal-outlet="#create-room-modal" data-action="click->open-modal-button#open">
 				+ Create Room
 			</button>
 		</div>
 	</div>
 </div>
 
-<%= render 'rooms/create_room_modal', id: 'create-room-modal' %>
+<%= render 'rooms/create_room_modal' %>

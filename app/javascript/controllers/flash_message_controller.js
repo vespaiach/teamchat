@@ -5,7 +5,7 @@ export default class extends Controller {
     const noticeEl = this.element
     setTimeout(() => {
       this.animateAndRemove(noticeEl)
-    }, 4000)
+    }, 3000)
   }
 
   close() {

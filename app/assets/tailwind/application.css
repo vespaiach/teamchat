@@ -2,11 +2,13 @@
 
 @theme {
   --color-primary: #c62c25;
+  --container-xs: 21.875rem;
+  
 }
 
 @layer base {
   body {
-    @apply bg-stone-100 text-gray-800;
+    @apply bg-stone-200 text-gray-800;
   }
 }
 

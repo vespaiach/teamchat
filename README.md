@@ -5,8 +5,9 @@ This project is to create a web-based chat app with Ruby on Rails, Turbo and Sti
 # Roadmap
 
 - [x] Sign In
-- [ ] Sign Up
-- [ ] User profile
+- [x] Sign Up
+- [x] Reset Password
+- [x] User profile
 - [x] Basic chat with text messages
 - [x] Show users's online status
 - [ ] Lazy load chat histories

@@ -1,3 +1,7 @@
+<% content_for :breadcrumb do %>
+	<%= @room.name %>
+<% end %>
+
 <div id="chat-viewport" class="h-dvh px-4 overflow-auto" data-controller="room" data-chats-room-id-value="<%= @room.id %>">
 
 	<div class="flex flex-col gap-2">
