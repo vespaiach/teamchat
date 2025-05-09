@@ -3,12 +3,12 @@
 <div class="space-y-1 flex gap-2 items-center">
   <div class="w-20 h-20 rounded-full overflow-hidden border border-gray-300">
     <% if @user.avatar.attached? %>
-      <%= image_tag url_for(@user.avatar), alt: "Profile Avatar", class: "w-full h-full object-cover", id: "avatar-preview" %>
+    <%= image_tag url_for(@user.avatar), alt: "Profile Avatar", class: "w-full h-full object-cover", id: "avatar-preview" %>
     <% else %>
-      <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500" id="avatar-placeholder">
-        No Image
-      </div>
-      <img src="#" alt="Profile Avatar Preview" class="w-full h-full object-cover hidden" id="avatar-preview">
+    <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500" id="avatar-placeholder">
+      No Image
+    </div>
+    <img src="#" alt="Profile Avatar Preview" class="w-full h-full object-cover hidden" id="avatar-preview">
     <% end %>
   </div>
   <%= form.label :avatar, "Change", class: "cursor-pointer hover:text-blue-700 py-2 px-4" %>
