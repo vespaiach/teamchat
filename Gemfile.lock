@@ -425,7 +425,6 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
-  marcel (~> 1.0)
   pg (~> 1.1)
   propshaft
   pry-rails
