@@ -1,35 +1,30 @@
 <div class="min-h-dvh flex items-center justify-center">
-	<div class="px-8 py-12 rounded-xl bg-white min-w-[330px]">
-
-		<h1 class="font-bold text-4xl">Sign In</h1>
+	<%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6 w-4xs' })) do %>
+		<%= render(::LogoComponent.new) %>
+		
+		<h4 class="text-center mt-6 mb-5 font-serif">Welcome Back! Sign In</h4>
 
 		<%= form_with(url: signin_path, class: 'flex flex-col items-stretch gap-3 mt-8', scope: :session, local: true, data: { controller: 'signin', action: 'submit->signin#validate' }) do |form| %>
-		<% if flash[:alert] %>
-		<div class="text-red-500">
-			<%= flash[:alert] %>
-		</div>
-		<% end %>
-
-		<div class="space-y-1">
-			<label for="email" class="block">Email</label>
-			<%= form.email_field :email, id: "email", class: "text-input", placeholder: "Email input", data: { signin_target: 'email' } %>
-			<div id="email-error" class="text-red-500 text-xs invisible" data-signin-target="emailError">Valid email is required.</div>
-		</div>
-
-		<div class="space-y-1">
-			<label for="password" class="block"><%= form.label :password %></label>
-			<%= form.password_field :password, id: "password", class: "text-input", placeholder: "Password input", data: { signin_target: 'password' } %>
-			<div id="password-error" class="text-red-500 text-xs invisible" data-signin-target="passwordError">Password is required.</div>
-		</div>
-
-		<div class="space-y-3 w-full">
-			<%= form.submit 'Log In', class: 'primary-button w-full' %>
-			<div class="flex flex-col items-start">
-				<p class="text-sm">Forgot password? <a href="<%= new_password_reset_path %>" class="text-blue-600">Reset it here</a></p>
-				<p class="text-sm">Don't have an account? <a href="<%= new_signup_path %>" class="text-blue-600">Sign up here</a></p>
+			<div class="space-y-1">
+				<label for="email" class="block">Email</label>
+				<%= form.email_field :email, id: "email", class: "text-input", placeholder: "Email input", data: { signin_target: 'email' } %>
+				<div id="email-error" class="text-red-500 text-xs invisible" data-signin-target="emailError">Valid email is required.</div>
 			</div>
-		</div>
+
+			<div class="space-y-1">
+				<label for="password" class="block"><%= form.label :password %></label>
+				<%= form.password_field :password, id: "password", class: "text-input", placeholder: "Password input", data: { signin_target: 'password' } %>
+				<div id="password-error" class="text-red-500 text-xs invisible" data-signin-target="passwordError">Password is required.</div>
+			</div>
+
+			<div class="space-y-3 w-full">
+				<%= render(::ButtonComponent.new(text: 'Log In', options: { type: 'submit' })) %>
+				<div class="flex flex-col items-start">
+					<p class="text-sm">Forgot password? <a href="<%= new_password_reset_path %>" class="text-blue-600">Reset it here</a></p>
+					<p class="text-sm">Don't have an account? <a href="<%= new_signup_path %>" class="text-blue-600">Sign up here</a></p>
+				</div>
+			</div>
 		<% end %>
 
-	</div>
+	<% end %>
 </div>

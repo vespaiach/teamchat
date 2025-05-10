@@ -1,15 +1,19 @@
 <% content_for :breadcrumb do %>
-	<%= @room.name %>
+<%= @room.name %>
 <% end %>
 
-<div id="chat-viewport" class="h-dvh px-4 overflow-auto" data-controller="room" data-chats-room-id-value="<%= @room.id %>">
+<% content_for :head do %>
+<style>
+	body {
+		background: white;
+	}
+</style>
+<% end %>
 
-	<div class="flex flex-col gap-2">
-		<%= render partial: "rooms/show_member_list" %>
-
-		<%= render partial: "rooms/show_chat_list" %>
-
-		<%= render partial: "rooms/show_chat_input" %>
-	</div>
-
+<div class="flex flex-col gap-5 p-4 bg-white" id="chats-container" data-controller="chats">
+	<%= render partial: "rooms/chat", collection: @room.chats %>
 </div>
+
+<%= render partial: "rooms/chat_input" %>
+
+<%= turbo_stream_from [ @room ] %>

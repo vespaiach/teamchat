@@ -1,12 +1,12 @@
 import { Controller } from '@hotwired/stimulus'
 import { DirectUpload } from '@rails/activestorage'
-import { scrollChatViewport } from 'utils/dom'
+import { scrollToLastChat } from 'utils/dom'
 
 export default class extends Controller {
   static targets = ['closeButton', 'membersPanel']
 
   connect() {
-    scrollChatViewport()
+    scrollToLastChat()
   }
 
   handleCloseButtonClick(event) {

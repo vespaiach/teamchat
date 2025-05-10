@@ -1,6 +1,3 @@
-export function scrollChatViewport() {
-	const container = document.getElementById('chat-viewport')
-	if (container) {
-		container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
-	}
+export function scrollToLastChat() {
+	window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 }

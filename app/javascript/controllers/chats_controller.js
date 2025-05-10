@@ -1,11 +1,11 @@
 import { Controller } from '@hotwired/stimulus'
+import { scrollToLastChat } from 'utils/dom'
 
 export default class extends Controller {
   static targets = ['newChat']
 
   newChatTargetConnected(targetElement) {
-    const viewportElement = document.getElementById('chat-viewport')
-    viewportElement.scrollTo({ top: viewportElement.scrollHeight, behavior: 'smooth' })
+    scrollToLastChat()
     targetElement.removeAttribute('data-chats-target')
   }
 }
