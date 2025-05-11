@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['email', 'password', 'emailError', 'passwordError']
+  static targets = ['emailInput', 'passwordInput', 'emailError', 'passwordError']
 
   connect() {
     console.log('SigninController connected')
@@ -14,7 +14,8 @@ export default class extends Controller {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     // Validate email
-    if (!this.emailTarget.value.trim() || !emailRegex.test(this.emailTarget.value.trim())) {
+    if (!this.emailInputTarget.value.trim() || !emailRegex.test(this.emailInputTarget.value.trim())) {
+      this.emailErrorTarget.innerText = 'Please enter a valid email address'
       this.emailErrorTarget.classList.remove('invisible')
       isValid = false
     } else {
@@ -22,8 +23,9 @@ export default class extends Controller {
     }
 
     // Validate password
-    if (!this.passwordTarget.value.trim()) {
+    if (!this.passwordInputTarget.value.trim()) {
       this.passwordErrorTarget.classList.remove('invisible')
+      this.passwordErrorTarget.innerText = 'Please enter your password'
       isValid = false
     } else {
       this.passwordErrorTarget.classList.add('invisible')

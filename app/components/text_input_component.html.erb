@@ -1,6 +1,7 @@
-<div>
-  <label for="email" class="block"><%= @label %></label>
-  <input type="email" id="email" name="email"
-         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-         placeholder="Email">
-</div>
+<%= content_tag(:div, div_attributes) do %>
+  <% if @label %>
+    <%= tag.label @label, for: @id, class: "block font-sans font-bold" %>
+  <% end %>
+  <%= content_tag(:input, nil, **input_attributes) %>
+  <%= content_tag(:p, '&nbsp;'.html_safe, **p_attributes) %>
+<% end %>

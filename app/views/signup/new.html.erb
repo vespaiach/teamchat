@@ -1,52 +1,52 @@
-<div class="min-h-dvh flex items-center justify-center">
-  <div class="px-8 py-12 rounded-xl bg-white min-w-[330px]">
-    <h1 class="font-bold text-4xl">Sign Up</h1>
-    
-    <%= form_with(model: @user, url: signup_index_path, class: 'flex flex-col items-stretch gap-4 mt-8', data: { controller: 'signup', action: 'submit->signup#validate' }) do |form| %>
-      <% if @user.errors.any? %>
-        <div class="text-red-500">
-          <ul>
-            <% @user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+<div class="py-10 min-h-dvh flex items-center justify-center">
+  <div class="space-y-5">
+
+    <%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6 w-4xs' })) do %>
+      <%= render(::LogoComponent.new) %>
+
+      <h4 class="text-center mt-6 mb-5 font-serif">Welcome! Sign Up</h4>
+
+      <%= form_with(model: @user, url: signup_index_path, class: 'flex flex-col items-stretch gap-1 mt-8', data: { controller: 'signup', action: 'submit->signup#validate' }) do |form| %>
+
+        <%= render(
+          ::TextInputComponent.new(
+            input_options: { type: 'text', placeholder: 'Enter first name', data: { signup_target: 'firstName' } },
+            p_options: { data: { signup_target: 'firstNameError' } },
+            id: 'first_name', label: 'First Name *', name: :first_name)) %>
+
+        <%= render(
+          ::TextInputComponent.new(
+            input_options: { type: 'text', placeholder: 'Enter last name', data: { signup_target: 'lastName' } },
+            p_options: { data: { signup_target: 'lastNameError' } },
+            id: 'last_name', label: 'Last Name *', name: :last_name)) %>
+
+        <%= render(
+          ::TextInputComponent.new(
+            input_options: { type: 'email', placeholder: 'Enter email address', data: { signup_target: 'email' } },
+            p_options: { data: { signup_target: 'emailError' } },
+            id: 'email', label: 'Email *', name: :email)) %>
+
+        <%= render(
+          ::TextInputComponent.new(
+            input_options: { type: 'password', placeholder: 'Enter password', data: { signup_target: 'password' } },
+            p_options: { data: { signup_target: 'passwordError' } },
+            id: 'password', label: 'Password *', name: :password)) %>
+
+        <%= render(
+          ::TextInputComponent.new(
+            input_options: { type: 'password', placeholder: 'Confirm password', data: { signup_target: 'passwordConfirmation' } },
+            p_options: { data: { signup_target: 'passwordConfirmationError' } },
+            id: 'password_confirmation', label: 'Confirm Password *', name: :password_confirmation)) %>
+
       <% end %>
 
-      <div class="space-y-1">
-        <label for="first_name" class="block">First Name</label>
-        <%= form.text_field :first_name, id: "first_name", class: "text-input", placeholder: "First name", data: { signup_target: 'firstName' } %>
-        <div id="first-name-error" class="text-red-500 text-xs invisible" data-signup-target="firstNameError">First name is required.</div>
-      </div>
-
-      <div class="space-y-1">
-        <label for="last_name" class="block">Last Name</label>
-        <%= form.text_field :last_name, id: "last_name", class: "text-input", placeholder: "Last name", data: { signup_target: 'lastName' } %>
-        <div id="last-name-error" class="text-red-500 text-xs invisible" data-signup-target="lastNameError">Last name is required.</div>
-      </div>
-
-      <div class="space-y-1">
-        <label for="email" class="block">Email</label>
-        <%= form.email_field :email, id: "email", class: "text-input", placeholder: "Email address", data: { signup_target: 'email' } %>
-        <div id="email-error" class="text-red-500 text-xs invisible" data-signup-target="emailError">Valid email is required.</div>
-      </div>
-
-      <div class="space-y-1">
-        <label for="password" class="block">Password</label>
-        <%= form.password_field :password, id: "password", class: "text-input", placeholder: "Password", data: { signup_target: 'password' } %>
-        <div id="password-error" class="text-red-500 text-xs invisible" data-signup-target="passwordError">Password is required (minimum 6 characters).</div>
-      </div>
-
-      <div class="space-y-1">
-        <label for="password_confirmation" class="block">Confirm Password</label>
-        <%= form.password_field :password_confirmation, id: "password_confirmation", class: "text-input", placeholder: "Confirm password", data: { signup_target: 'passwordConfirmation' } %>
-        <div id="password-confirmation-error" class="text-red-500 text-xs invisible" data-signup-target="passwordConfirmationError">Passwords don't match.</div>
-      </div>
-
       <div class="space-y-3 w-full">
-        <%= form.submit 'Create Account', class: 'primary-button w-full' %>
-        <p class="text-xs">Already have an account? <a href="<%= signin_path %>" class="text-blue-600">Sign in here</a></p>
+        <%= render(::ButtonComponent.new(text: 'Create Account', options: { type: 'submit' })) %>
       </div>
+    <% end %>
+
+    <%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
+      <p class="text-sm">Already have an account? <a href="<%= signin_path %>" class="text-blue-600">Sign in here</a></p>
     <% end %>
   </div>
 </div>
