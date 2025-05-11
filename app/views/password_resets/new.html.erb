@@ -1,20 +1,22 @@
-<div class="min-h-dvh flex items-center justify-center">
-	<div class="px-8 py-12 rounded-xl bg-white min-w-[330px]">
-		<h1 class="font-bold text-4xl">Forgot Password</h1>
-		<%= form_with(url: password_resets_path, data: { controller: 'password-resets', action: 'submit->password-resets#validate' }, class: 'flex flex-col items-stretch gap-7 mt-8', local: true) do |form| %>
-		<% if flash[:alert] %>
-		<div class="text-red-500">
-			<%= flash[:alert] %>
-		</div>
+<div class="py-10 min-h-dvh flex items-center justify-center">
+	<div class="space-y-5">
+		<%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6 w-4xs' })) do %>
+			<%= render(::LogoComponent.new) %>
+			<h4 class="text-center mt-6 mb-5 font-serif">Reset Your Password</h4>
+
+			<%= form_with(url: password_resets_path, data: { controller: 'password-resets', action: 'submit->password-resets#validate' }, class: 'flex flex-col items-stretch gap-7 mt-8', local: true) do |form| %>
+				<%= render(
+					::TextInputComponent.new(
+						input_options: { type: 'email', placeholder: 'Enter email address', data: { password_resets_target: 'email' } },
+						p_options: { data: { password_resets_target: 'emailError' } },
+						id: 'email', label: 'Email *', name: :email)) %>
+
+				<%= form.submit 'Send Reset Instructions', class: 'primary-button' %>
+			<% end %>
 		<% end %>
 
-		<div class="space-y-1">
-			<%= form.label :email, 'Enter your email address', class: 'block' %>
-			<%= form.email_field :email, data: { password_resets_target: 'email' }, class: 'text-input' %>
-			<div id="email-error" class="text-red-500 text-sm hidden" data-password-resets-target="emailError">Valid email is required.</div>
-		</div>
-
-		<%= form.submit 'Send Reset Instructions', class: 'primary-button' %>
+		<%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
+			<p class="text-sm">Recall your password? <a href="<%= signin_path %>" class="text-blue-600">Sign in</a></p>
 		<% end %>
 	</div>
 </div>
