@@ -38,11 +38,11 @@
             p_options: { data: { signup_target: 'passwordConfirmationError' } },
             id: 'password_confirmation', label: 'Confirm Password *', name: :password_confirmation)) %>
 
+        <div class="space-y-3 w-full">
+          <%= render(::ButtonComponent.new(text: 'Create Account', options: { type: 'submit' })) %>
+        </div>
       <% end %>
 
-      <div class="space-y-3 w-full">
-        <%= render(::ButtonComponent.new(text: 'Create Account', options: { type: 'submit' })) %>
-      </div>
     <% end %>
 
     <%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
