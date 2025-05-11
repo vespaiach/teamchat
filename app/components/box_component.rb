@@ -7,7 +7,7 @@ class BoxComponent < ViewComponent::Base
 
 
   def box_classes
-    base_classes = Set.new(%w[bg-white shadow-xs rounded-xl min-w-[330px] w-box])
+    base_classes = Set.new(%w[bg-white shadow-xs rounded-xl min-w-[330px] w-box mx-auto])
 
     if @options[:class]
       base_classes.add(@options[:class].split)

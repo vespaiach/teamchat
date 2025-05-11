@@ -1,11 +1,11 @@
-<div data-chat-id="<%= chat.id %>" class="flex gap-3">
+<div data-chat-id="<%= chat.id %>" data-user-id="<%= chat.sender.id %>" class="flex gap-3" data-chats-target="newChat">
 	<a class="w-8 h-8 mt-1.5 rounded-full shrink-0 overflow-hidden" href="#">
-		<img src="<%= url_for(chat.sender.avatar) %>" alt="Avatar" class="w-full h-full object-cover">
+		<img src="<%= url_for(chat.sender.avatar) %>" alt="Avatar" class="w-full h-full object-cover grayscale">
 	</a>
-	<div class="flex flex-col">
-		<div class="flex items-baseline gap-1">
-			<strong><%= chat.sender.name %></strong>
-			<time class="text-xs text-gray-500" datetime="<%= chat.created_at %>">
+	<div class="flex flex-col text-base font-sans flex-1">
+		<div class="flex items-baseline justify-between">
+			<p class="text-stone-950"><%= chat.sender.name %></p>
+			<time class="text-xs text-stone-400" datetime="<%= chat.created_at %>">
 				<% if chat.created_at > 1.day.ago %>
 				<%= time_ago_in_words(chat.created_at) %> ago
 				<% else %>
@@ -13,6 +13,6 @@
 				<% end %>
 			</time>
 		</div>
-		<p class="text-gray-600"><%= chat.message %></p>
+		<p class="text-stone-500"><%= chat.message %></p>
 	</div>
 </div>

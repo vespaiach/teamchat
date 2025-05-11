@@ -64,7 +64,7 @@ class LogoComponent < ViewComponent::Base
     }
 
     if @size == LogoComponent::SMALL
-      attrs[:height] = '1.125rem'
+      attrs[:height] = '1.5rem'
     else
       attrs[:height] = '3rem'
     end

@@ -28,12 +28,7 @@
   </head>
 
   <body>
-    <div class="min-h-dvh">
-      <% if current_user %>
-      <%= render partial: "shares/app_bar" %>
-      <% end %>
-      <%= yield %>
-    </div>
+    <%= yield %>
     <div class="fixed top-0 right-0 z-50 w-[350px] overflow-hidden" id="flash-messages-center">
       <% flash.each do |type, message| %>
       <%= render partial: "shares/flash_message", locals: { type:, message: } %>

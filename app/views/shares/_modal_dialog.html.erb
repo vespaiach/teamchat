@@ -1,9 +1,9 @@
 <div data-controller="modal" id="<%= local_assigns[:id] || 'modal-dialog' %>" class="relative">
 	<dialog data-modal-target="dialog" data-action="click->modal#closeBackground"
 					class="fixed inset-0 p-0 rounded-xl shadow-xl backdrop:bg-gray-500 backdrop:bg-opacity-50 m-auto w-fit h-fit">
-		<div class="px-8 py-12 rounded-xl bg-white min-w-[330px]">
+		<div class="px-6 py-10 rounded-xl bg-white min-w-[330px]">
 			<div class="flex justify-between items-center mb-6">
-				<h2 class="font-bold text-2xl"><%= local_assigns[:title] || "Dialog" %></h2>
+				<h2 class="font-bold text-3xl"><%= local_assigns[:title] || "Dialog" %></h2>
 				<button data-action="modal#close" class="text-stone-500 hover:text-stone-700">
 					<svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 512 512">
 						<path

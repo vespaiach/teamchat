@@ -1,7 +1,7 @@
 <div class="py-10 min-h-dvh flex items-center justify-center">
-  <div class="space-y-5">
+  <div class="space-y-5 flex-1">
 
-    <%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6 w-4xs' })) do %>
+    <%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6' })) do %>
       <%= render(::LogoComponent.new) %>
 
       <h4 class="text-center mt-6 mb-5 font-serif">Welcome! Sign Up</h4>
@@ -46,7 +46,7 @@
     <% end %>
 
     <%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
-      <p class="text-sm">Already have an account? <a href="<%= signin_path %>" class="text-blue-600">Sign in here</a></p>
+      <p class="text-sm">Already have an account? <a href="<%= signin_path %>" class="text-blue-600 hover:underline">Sign in here</a></p>
     <% end %>
   </div>
 </div>

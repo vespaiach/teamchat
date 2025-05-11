@@ -11,7 +11,7 @@ class ButtonComponent < ViewComponent::Base
 
 
   def button_classes
-    base_classes = Set.new(%w[font-bold py-2 px-4 rounded-md])
+    base_classes = Set.new(%w[font-bold py-2.5 px-4 rounded-md text-base])
 
     if @disabled
       base_classes.add(%w[bg-gray-400 text-gray-200 cursor-not-allowed])
