@@ -6,18 +6,16 @@ export default class extends Controller {
   validate(event) {
     let isValid = true
 
-    // Email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    // Validate email
     if (!this.emailTarget.value.trim() || !emailRegex.test(this.emailTarget.value.trim())) {
-      this.emailErrorTarget.classList.remove('hidden')
+      this.emailErrorTarget.classList.remove('invisible')
+      this.emailErrorTarget.textContent = 'Valid email is required'
       isValid = false
     } else {
-      this.emailErrorTarget.classList.add('hidden')
+      this.emailErrorTarget.classList.add('invisible')
     }
 
-    // Prevent form submission if validation fails
     if (!isValid) {
       event.preventDefault()
     }

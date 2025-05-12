@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
 // import { Turbo } from '@hotwired/turbo-rails'
-// import { scrollChatViewport } from 'utils/dom'
+// import { scrollToLastChat } from 'utils/dom'
 
 export default class extends Controller {
   static outlets = ['chats']
@@ -67,7 +67,7 @@ export default class extends Controller {
 //   const lastChatElement = container.querySelector('[data-chat-id]:last-of-type');
 //   if (!lastChatElement) {
 //     container.append(newElement)
-//     scrollChatViewport()
+//     scrollToLastChat()
 //     return
 //   }
 
@@ -78,14 +78,14 @@ export default class extends Controller {
 //   const existingElement = document.querySelector(`[data-chat-id="${newChatId}"]`)
 //   if (existingElement) {
 //     existingElement.replaceWith(newElement)
-//     scrollChatViewport()
+//     scrollToLastChat()
 //     return
 //   }
 
 //   // If the new chat is the last one, append it
 //   if (newChatId > lastChatId) {
 //     container.append(newElement)
-//     scrollChatViewport()
+//     scrollToLastChat()
 //     return
 //   }
 
@@ -100,5 +100,5 @@ export default class extends Controller {
 //     // New Chat is the first one, prepend it
 //     container.prepend(newElement)
 //   }
-//   scrollChatViewport()
+//   scrollToLastChat()
 // }

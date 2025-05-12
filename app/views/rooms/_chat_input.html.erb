@@ -1,11 +1,13 @@
-<div class="shrink-0 grow-0 sticky bottom-0 py-3 flex flex-col gap-3 bg-white" data-controller="chat-input"
-		 data-chat-input-room-id-value="<%= @room.id %>" data-chat-input-chats-outlet="[data-controller=chats]">
-	<div class="flex flex-col border border-gray-400 p-2 gap-1">
-		<textarea data-chat-input-target="textInput" class="w-full resize-none outline-none" rows="2" placeholder="Type your message here..."
+<div class="shrink-0 grow-0 sticky bottom-0 flex flex-col gap-3 bg-white pb-2 px-2" 
+			data-controller="chat-input"
+		 	data-chat-input-room-id-value="<%= @room.id %>"
+			data-chat-input-chats-outlet="[data-controller=chats]">
+	<div class="flex flex-col border border-stone-400 p-2 rounded-xl gap-1">
+		<textarea data-chat-input-target="textInput" class="w-full resize-none outline-none font-sans" rows="1" placeholder="Type your message here..."
 							data-action="keydown->chat-input#handleEnterOnTextInput"></textarea>
 		<div class="flex justify-between items-center">
 			<button data-action="click->chat-input#handleTextInputSend">
-				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" width="22" height="22" fill="none" stroke="currentColor"
+				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" height="1em" fill="none" stroke="currentColor"
 						 stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="charm charm-arrow-up-right">
 					<path d="m5.25 4.25h6.5v6.5m-7.5 1 7.5-7.5"></path>
 				</svg>

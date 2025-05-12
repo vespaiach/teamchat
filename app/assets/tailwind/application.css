@@ -3,12 +3,42 @@
 @theme {
   --color-primary: #c62c25;
   --container-xs: 21.875rem;
-  
+  --font-sans: 'Lato', sans-serif;
+  --font-serif: 'Libre Baskerville', serif;
+  --container-box: clamp(330px, 88%, 420px);
 }
 
 @layer base {
   body {
-    @apply bg-stone-200 text-gray-800;
+    @apply bg-stone-300 text-stone-950 font-serif leading-[1.6] text-base;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans font-bold tracking-wide;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    @apply text-2xl;
+  }
+  h4 {
+    @apply text-xl;
+  }
+  h5 {
+    @apply text-lg;
+  }
+  h6 {
+    @apply text-base;
   }
 }
 
@@ -30,6 +60,9 @@
   }
   .online-status.online {
     @apply bg-green-500;
+  }
+  .hamburger-button {
+    @apply relative cursor-pointer;
   }
 }
 /* ----------------------------------------------
@@ -115,4 +148,41 @@
 .slide-out-top {
   -webkit-animation: slide-out-top 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
   animation: slide-out-top 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+.hamburger-line {
+  border-radius: 300px;
+  width: 90%;
+  height: 3px;
+  background: currentColor;
+  transition: all 0.3s ease-in-out;
+  display: block;
+  position: absolute;
+  left: 0;
+}
+
+.line-1 {
+  top: 4.5px;
+}
+
+.line-2 {
+  top: 10.5px;
+}
+
+.line-3 {
+  top: 16.5px;
+}
+
+.hamburger-button.open .line-1 {
+  top: 10.5px;
+  transform: rotate(45deg);
+}
+
+.hamburger-button.open .line-2 {
+  opacity: 0;
+}
+
+.hamburger-button.open .line-3 {
+  top: 10.5px;
+  transform: rotate(-45deg);
 }

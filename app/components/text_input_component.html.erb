@@ -1,0 +1,7 @@
+<%= content_tag(:div, div_attributes) do %>
+  <% if @label %>
+    <%= tag.label @label, for: @id, class: "block font-sans font-bold" %>
+  <% end %>
+  <%= content_tag(:input, nil, **input_attributes) %>
+  <%= content_tag(:p, '&nbsp;'.html_safe, **p_attributes) %>
+<% end %>

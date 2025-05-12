@@ -1,6 +1,34 @@
-# Chatter App
+# Design
 
-This project is to create a web-based chat app with Ruby on Rails, Turbo and Stimulus
+Web-base application for chat
+
+# Name
+
+CHAT
+
+# Primary color
+
+#c62c25
+
+# Styles
+
+- Modern UI
+- Modern Typography (sans + serif)
+- Responsive design (mobile + desktop devices)
+
+# Views
+
+- User sign-in
+- User sign-up
+- User profile
+- User updating profile modal: to update first_name, last_name, password, avatar
+- Recovery password
+- List of rooms to join (to chat)
+- Create a room modal (just require a room name)
+- Chat view with these UIs: chat input + chat history + chat video/audio + images
+- Notification widgets
+- Friend List
+- Setting page to toggle on/off notifications
 
 # Roadmap
 

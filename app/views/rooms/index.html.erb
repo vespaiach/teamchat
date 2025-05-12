@@ -1,33 +1,47 @@
-<div class="min-h-dvh flex items-center justify-center py-4">
-	<div class="px-8 py-8 space-y-5 rounded-xl bg-white min-w-[330px]">
-		<% if @joined_rooms.any? %>
-		<div class="space-y-2">
-			<h2 class="text-2xl">My Rooms</h2>
+<div class="pb-10 min-h-dvh flex justify-center">
+	<div class="flex-1">
+		<%= render partial: 'shares/top_menu' %>
+
+		<%= render(::BoxComponent.new(options: { class: 'p-6 mt-4' })) do %>
+		<div class="space-y-8 mt-2">
+			<div>
+				<h1 class="text-4xl">Rooms</h1>
+				<p class="text-stone-500">Join a room to start chatting!</p>
+			</div>
+
+			<% if @joined_rooms.any? %>
 			<div class="space-y-2">
-				<% @joined_rooms.each do |room| %>
-				<a href="<%= room_path(room) %>" class="block hover:underline">
-					<%= room.name %>
-				</a>
-				<% end %>
+				<p class="font-bold font-sans text-xl">My Rooms</p>
+				<div class="space-y-2">
+					<% @joined_rooms.each do |room| %>
+					<a href="<%= room_path(room) %>" class="block hover:underline text-blue-600">
+						<%= room.name %>
+					</a>
+					<% end %>
+				</div>
+			</div>
+			<% end %>
+
+			<div class="space-y-2">
+				<p class="font-bold font-sans text-xl">Available Rooms</p>
+				<div class="space-y-2">
+					<% @not_joined_rooms.each do |room| %>
+					<a href="<%= room_path(room) %>" class="block hover:underline text-blue-600">
+						<%= room.name %>
+					</a>
+					<% end %>
+				</div>
+			</div>
+
+			<div>
+				<button class="primary-button w-full" data-controller="open-modal-button"
+								data-open-modal-button-modal-outlet="#create-room-modal" data-action="click->open-modal-button#open">
+					+ Create a Room
+				</button>
 			</div>
 		</div>
 		<% end %>
-		<div class="space-y-2">
-			<h2 class="text-2xl">Available Rooms</h2>
-			<div class="space-y-2">
-				<% @not_joined_rooms.each do |room| %>
-				<a href="<%= room_path(room) %>" class="block hover:underline">
-					<%= room.name %>
-				</a>
-				<% end %>
-			</div>
-		</div>
-		<div>
-			<button class="primary-button w-full" data-controller="open-modal-button"
-							data-open-modal-button-modal-outlet="#create-room-modal" data-action="click->open-modal-button#open">
-				+ Create Room
-			</button>
-		</div>
+
 	</div>
 </div>
 

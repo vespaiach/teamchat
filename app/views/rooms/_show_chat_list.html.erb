@@ -1,5 +1,0 @@
-<div class="flex-1 flex flex-col gap-1.5" id="chats-container" data-controller="chats">
-	<%= render partial: "chats/chat", collection: @room.chats %>
-</div>
-
-<%= turbo_stream_from [ @room ] %>
