@@ -1,10 +1,11 @@
 import { Controller } from '@hotwired/stimulus'
 // import { Turbo } from '@hotwired/turbo-rails'
 // import { scrollToLastChat } from 'utils/dom'
+import { userChannel } from 'channels/user_channel'
 
 export default class extends Controller {
   static outlets = ['chats']
-  static targets = ['textInput', 'textMessageTemplate']
+  static targets = ['textInput']
   static values = {
     roomId: Number
   }
@@ -12,7 +13,7 @@ export default class extends Controller {
   handleTextInputSend() {
     const message = this.textInputTarget.value.trim()
     if (message) {
-      this.#sendTextMessage(message)
+      userChannel.sendMessage(message, this.roomIdValue)
       this.textInputTarget.value = ''
     }
   }
@@ -26,26 +27,26 @@ export default class extends Controller {
     }
   }
 
-  #sendTextMessage(message) {
-    this.#sendChat({ message })
-  }
+  // #sendTextMessage(message) {
+  //   this.#sendChat({ message })
+  // }
 
-  #sendChat(data) {
-    this.#fetch(`/rooms/${this.roomIdValue}/chats/create_text`, data)
-  }
+  // #sendChat(data) {
+  //   this.#fetch(`/rooms/${this.roomIdValue}/chats/create_text`, data)
+  // }
 
-  #fetch(url, data, method = 'POST') {
-    return fetch(url, {
-      method,
-      headers: {
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(data)
-    })
-  }
+  // #fetch(url, data, method = 'POST') {
+  //   return fetch(url, {
+  //     method,
+  //     headers: {
+  //       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     credentials: 'include',
+  //     body: JSON.stringify(data)
+  //   })
+  // }
 }
 
 // Turbo.StreamActions['insert-sort'] = function () {

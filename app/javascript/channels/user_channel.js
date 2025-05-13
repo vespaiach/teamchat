@@ -1,8 +1,17 @@
-import consumer from "channels/consumer"
+import consumer from 'channels/consumer'
 
-consumer.subscriptions.create("UserChannel", {
-	connected() {
-		// Called when the subscription is ready for use on the server
-		console.log("Connected to UserChannel");
-	}
-});
+export const userChannel = consumer.subscriptions.create('UserChannel', {
+  connected() {
+    console.log('Connected to UserChannel')
+  },
+
+  disconnected() {
+    console.log('Disconnected from UserChannel')
+  },
+
+  sendMessage(message, room_id, recipient_id = null) {
+    this.perform('send_message', { message, room_id, recipient_id })
+  }
+})
+
+export default userChannel
