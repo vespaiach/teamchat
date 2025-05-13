@@ -1,0 +1,1 @@
+<%= tag.img id: dom_id(user, 'avatar'), src: url_for(user.avatar), alt: user.name, class: "h-full w-full rounded-full object-cover #{user.online_status ? 'border-2 border-blue-500' : 'grayscale opacity-45'}", loading: 'lazy' %>

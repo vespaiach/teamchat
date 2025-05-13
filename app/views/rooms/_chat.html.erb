@@ -1,6 +1,6 @@
 <div data-chat-id="<%= chat.id %>" data-user-id="<%= chat.sender.id %>" class="flex gap-3" data-chats-target="newChat">
 	<a class="w-8 h-8 mt-1.5 rounded-full shrink-0 overflow-hidden" href="#">
-		<img src="<%= url_for(chat.sender.avatar) %>" alt="Avatar" class="w-full h-full object-cover grayscale">
+		<%= render partial: 'rooms/user_avatar', locals: { user: chat.sender } %>
 	</a>
 	<div class="flex flex-col text-base font-sans flex-1">
 		<div class="flex items-baseline justify-between">

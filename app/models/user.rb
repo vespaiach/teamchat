@@ -48,9 +48,9 @@ class User < ApplicationRecord
   def broadcast_online_status
     joined_rooms.each do |room|
       Turbo::StreamsChannel.broadcast_replace_to(
-        [room, :online_status],
-        target: dom_id(self, :online_status),
-        partial: 'rooms/show_member_list_online_status',
+        [room],
+        target: dom_id(self, :avatar),
+        partial: 'rooms/user_avatar',
         locals: { user: self }
       )
     end
