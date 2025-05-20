@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include OnlineStatus
+
   # Modules
   has_secure_password
 
@@ -36,7 +38,6 @@ class User < ApplicationRecord
   end
 
   def online?
-    channels = Rails.cache.fetch("user_#{id}_online_channels_ids") { {} }
-    channels.any? { |_, timestamp| timestamp > Time.current }
+    user_online?(id)
   end
 end

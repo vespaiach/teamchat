@@ -8,12 +8,18 @@ export const onlineStatusChannel = consumer.subscriptions.create('OnlineStatusCh
 
   disconnected() {
     console.log('Disconnected from OnlineStatusChannel')
+    if (this.pingInterval) {
+      clearInterval(this.pingInterval)
+    }
   },
 
   received(data) {
-    console.log('Received data:', data)
-    document.querySelectorAll(`[data-avatar="${data.user_id}"]`).forEach((element) => {
-      if (data.online) {
+    const chatContainerElement = document.getElementById('chats-container')
+
+    if (!chatContainerElement)  return
+    chatContainerElement.querySelectorAll('[data-avatar]').forEach((element) => {
+      const userId = element.dataset['avatar']
+      if (data[userId]) {
         element.classList.add('online')
       } else {
         element.classList.remove('online')

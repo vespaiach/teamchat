@@ -34,6 +34,13 @@
       <%= render partial: "shares/flash_message", locals: { type:, message: } %>
       <% end %>
     </div>
+
+    <% if current_user %>
+      <script type="module">
+        import consumer from 'channels/consumer'
+        consumer.connect()
+      </script>
+    <% end %>
   </body>
 
 </html>
