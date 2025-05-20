@@ -6,9 +6,11 @@ default: &default
     namespace: <%= Rails.env %>
 
 development:
+  database: solid_cache_development
   <<: *default
 
 test:
+  database: solid_cache_test
   <<: *default
 
 production:

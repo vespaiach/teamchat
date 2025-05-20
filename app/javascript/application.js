@@ -6,3 +6,7 @@ import * as ActiveStorage from "@rails/activestorage"
 
 ActiveStorage.start()
 Turbo.start()
+
+Turbo.StreamActions['add-css-class'] = function () {
+	this.targetElements.forEach((e) => e.classList.add(this.templateContent))
+}
