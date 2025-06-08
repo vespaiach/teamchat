@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       member do
         post :create_text
         post :create_file
+        get :index
       end
     end
   end

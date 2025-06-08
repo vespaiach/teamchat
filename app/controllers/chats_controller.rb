@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ChatsController < ApplicationController
+  include LoadChats
+
+  helper_method :recent_chats_by_room
   before_action :set_room
 
   def create_text
@@ -9,7 +12,10 @@ class ChatsController < ApplicationController
   end
 
   def index
-    @chats = @room.chats.includes(:sender).order(:id)
+    respond_to do |format|
+      format.turbo_stream
+      format.html
+    end
   end
 
   # def create_file
