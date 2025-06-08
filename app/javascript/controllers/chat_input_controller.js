@@ -1,29 +1,29 @@
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus';
 // import { Turbo } from '@hotwired/turbo-rails'
 // import { scrollToLastChat } from 'utils/dom'
-import { userChannel } from 'channels/user_channel'
+import { userChannel } from 'channels/user_channel';
 
 export default class extends Controller {
-  static outlets = ['chats']
-  static targets = ['textInput']
+  static outlets = ['chats'];
+  static targets = ['textInput'];
   static values = {
-    roomId: Number
-  }
+    roomId: Number,
+  };
 
   handleTextInputSend() {
-    const message = this.textInputTarget.value.trim()
+    const message = this.textInputTarget.value.trim();
     if (message) {
-      userChannel.sendMessage(message, this.roomIdValue)
-      this.textInputTarget.value = ''
+      userChannel.sendMessage(message, this.roomIdValue);
+      this.textInputTarget.value = '';
     }
   }
 
   handleEnterOnTextInput(event) {
     if (event.key === 'Enter' && !event.ctrlKey) {
-      event.preventDefault()
-      this.handleTextInputSend()
+      event.preventDefault();
+      this.handleTextInputSend();
     } else if (event.key === 'Enter' && event.ctrlKey) {
-      this.textInputTarget.value += '\n'
+      this.textInputTarget.value += '\n';
     }
   }
 

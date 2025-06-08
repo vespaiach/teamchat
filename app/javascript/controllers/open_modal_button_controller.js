@@ -1,9 +1,9 @@
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static outlets = ['modal']
+  static outlets = ['modal'];
 
   open() {
-    this.modalOutlet.open()
+    this.modalOutlet.open();
   }
 }

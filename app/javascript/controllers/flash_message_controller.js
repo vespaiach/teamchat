@@ -1,19 +1,25 @@
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   connect() {
-    const noticeEl = this.element
+    const noticeEl = this.element;
     setTimeout(() => {
-      this.animateAndRemove(noticeEl)
-    }, 3000)
+      this.animateAndRemove(noticeEl);
+    }, 3000);
   }
 
   close() {
-    this.animateAndRemove(this.element)
+    this.animateAndRemove(this.element);
   }
 
   animateAndRemove(element) {
-    element.addEventListener('animationend', () => { element.remove() }, { once: true })
-    element.classList.add('slide-out-top')
+    element.addEventListener(
+      'animationend',
+      () => {
+        element.remove();
+      },
+      { once: true }
+    );
+    element.classList.add('slide-out-top');
   }
 }
