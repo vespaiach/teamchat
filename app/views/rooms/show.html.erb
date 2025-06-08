@@ -62,7 +62,7 @@
 	</div>
 
 	<div class="bg-white px-4 pb-3 flex-1" id="chats-container" data-controller="chats">
-		<%= render partial: "rooms/chat", collection: @room.chats %>
+		<%= render partial: "rooms/chat", collection: recent_chats_by_room(@room) %>
 	</div>
 
 	<%= render partial: "rooms/chat_input" %>

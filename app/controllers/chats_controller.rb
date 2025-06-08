@@ -8,6 +8,10 @@ class ChatsController < ApplicationController
     head :ok
   end
 
+  def index
+    @chats = @room.chats.includes(:sender).order(:id)
+  end
+
   # def create_file
   #   chat = Chat.new(message: "#{current_user.name} shared a file", sender: current_user, room: @room)
   #   chat.file_attachment.attach(params[:file_attachment])

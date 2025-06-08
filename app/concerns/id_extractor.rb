@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ApplicationHelper
+module IdExtractor
   def extract_id(object_or_object_id)
     case object_or_object_id
     when Integer

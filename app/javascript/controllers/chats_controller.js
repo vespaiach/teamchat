@@ -6,6 +6,7 @@ export default class extends Controller {
 
   newChatTargetConnected(targetElement) {
     scrollToLastChat();
+    targetElement.removeAttribute('data-chats-target')
     const previousTargetElement = this.getPreviousChatTarget(targetElement);
     if (previousTargetElement) {
       const previousUserId = previousTargetElement.dataset.userId;

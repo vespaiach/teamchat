@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class RoomsController < ApplicationController
+  include LoadChats
+
+  helper_method :recent_chats_by_room
+
   def show
-    @room = Room.eager_load(:users, chats: :sender).merge(Chat.order(:created_at)).find_by(id: params[:id])
+    @room = Room.eager_load(:users).find(params[:id])
     @joined = @room.users.include?(current_user) if @room
   end
 
