@@ -13,7 +13,7 @@ class Chat < ApplicationRecord
   scope :chronological, -> { order(:id) }
   scope :active, -> { where(deleted_at: nil) }
 
-  broadcasts_to ->(chat) { [chat.room] }, inserts_by: 'append', partial: 'rooms/chat', target: 'chats-container'
+  broadcasts_to ->(chat) { [chat.room] }, inserts_by: 'chat-append', partial: 'rooms/chat', target: 'chats-container'
 
   has_one_attached :file_attachment
 

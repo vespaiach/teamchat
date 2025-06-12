@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 // import { Turbo } from '@hotwired/turbo-rails'
 // import { scrollToLastChat } from 'utils/dom'
-import { userChannel } from 'channels/user_channel';
+import chatChannel from 'channels/chat_channel';
 
 export default class extends Controller {
   static outlets = ['chats'];
@@ -13,7 +13,7 @@ export default class extends Controller {
   handleTextInputSend() {
     const message = this.textInputTarget.value.trim();
     if (message) {
-      userChannel.sendMessage(message, this.roomIdValue);
+      chatChannel.sendChat(message, this.roomIdValue);
       this.textInputTarget.value = '';
     }
   }

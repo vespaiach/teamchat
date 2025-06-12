@@ -10,7 +10,6 @@ import RoomFormController from 'controllers/room_form_controller'
 import ProfileFormController from 'controllers/profile_form_controller'
 import OpenModalButtonController from 'controllers/open_modal_button_controller'
 import TopMenuController from 'controllers/top_menu_controller'
-eagerLoadControllersFrom('controllers', application)
 application.register('chat-input', ChatInputController)
 application.register('flash-message', FlashMessageController)
 application.register('chats', ChatsController)
@@ -21,3 +20,5 @@ application.register('room-form', RoomFormController)
 application.register('profile-form', ProfileFormController)
 application.register('open-modal-button', OpenModalButtonController)
 application.register('top-menu', TopMenuController)
+
+eagerLoadControllersFrom('controllers', application)

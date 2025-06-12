@@ -8,7 +8,19 @@ module LoadChats
     extracted_room_id = extract_id(room_or_room_id)
     return Chat.none if extracted_room_id.blank?
 
-    query = Chat.by_room(extracted_room_id)
+    recent_chats_query(extracted_room_id, last_seen_id, limit_records)
+  end
+
+  def chat_histories_by_room(room_id, last_seen_id, limit_records = 30)
+    return Chat.none if room_id.blank?
+
+    recent_chats_query(room_id, last_seen_id, limit_records)
+  end
+
+  private
+
+  def recent_chats_query(room_id, last_seen_id = nil, limit_records = 30)
+    query = Chat.by_room(room_id)
     query = query.before_id(last_seen_id) if last_seen_id
 
     query.with_sender
@@ -16,8 +28,6 @@ module LoadChats
          .limit(limit_records)
          .reverse
   end
-
-  private
 
   def limit_records
     return 30 if params[:limit].blank?

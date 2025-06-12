@@ -54,7 +54,6 @@ export default class extends Controller {
     Object.entries(upload.customHeaders).forEach(([key, value]) => {
       xhr.setRequestHeader(key, value)
     })
-    debugger
 
     xhr.upload.addEventListener('progress', (e) => {
       if (e.lengthComputable) {
