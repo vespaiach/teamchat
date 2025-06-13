@@ -12,8 +12,12 @@ export default class extends Controller {
     this._handleScroll = this._throttle(this._handleScroll.bind(this), 100);
     window.addEventListener('scroll', this._handleScroll);
 
-    // Scroll to bottom on initial load
-    // this.scrollToBottom();
+    document
+      .getElementById('chats-container')
+      .querySelectorAll('[data-chat-id]')
+      .forEach((targetElement) => {
+        this._groupChats(targetElement);
+      });
   }
 
   disconnect() {
@@ -21,8 +25,24 @@ export default class extends Controller {
   }
 
   newChatTargetConnected(targetElement) {
-    scrollToLastChat();
     targetElement.removeAttribute('data-chats-target');
+    this._groupChats(targetElement);
+    scrollToLastChat();
+  }
+
+  getPreviousChatTarget(targetElement) {
+    const previousTargetElement = targetElement.previousSibling;
+    if (!previousTargetElement) {
+      return null; // No previous element
+    }
+    if (previousTargetElement && previousTargetElement.dataset?.chatId) {
+      return previousTargetElement;
+    }
+
+    return this.getPreviousChatTarget(previousTargetElement);
+  }
+
+  _groupChats(targetElement) {
     const previousTargetElement = this.getPreviousChatTarget(targetElement);
     if (previousTargetElement) {
       const previousUserId = previousTargetElement.dataset.userId;
@@ -42,18 +62,6 @@ export default class extends Controller {
       targetElement.classList.remove('mt-5');
       targetElement.classList.add('mt-1');
     }
-  }
-
-  getPreviousChatTarget(targetElement) {
-    const previousTargetElement = targetElement.previousSibling;
-    if (!previousTargetElement) {
-      return null; // No previous element
-    }
-    if (previousTargetElement && previousTargetElement.dataset?.chatId) {
-      return previousTargetElement;
-    }
-
-    return this.getPreviousChatTarget(previousTargetElement);
   }
 
   _handleScroll() {
@@ -99,7 +107,7 @@ export default class extends Controller {
     loadingElement.classList.add('loading', 'flex', 'items-center', 'justify-center', 'pt-3');
     loadingElement.innerHTML = `
       <svg class="mr-3 -ml-1 size-5 animate-spin text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-    `
+    `;
     return loadingElement;
   }
 }

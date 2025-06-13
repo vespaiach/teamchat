@@ -1,1 +1,3 @@
-<%= render partial: "chats/chat", collection: chats %>
+<% chats.each do |chat| %>
+  <%= render ChatComponent.new(chat, new_chat: false) %>
+<% end %>
