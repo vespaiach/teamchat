@@ -21,7 +21,7 @@ export default class extends Controller {
   }
 
   disconnect() {
-    this.containerTarget.removeEventListener('scroll', this._handleScroll);
+    window.removeEventListener('scroll', this._handleScroll);
   }
 
   newChatTargetConnected(targetElement) {

@@ -29,9 +29,10 @@ class ChatChannel < ApplicationCable::Channel
 
     Rails.logger.info "ChatChannel#load_chat_histories found #{chats.count} chats"
 
-    # Use Turbo::StreamsChannel to broadcast, which works with turbo_stream_from [@room]
-    Turbo::StreamsChannel.broadcast_prepend_to(
+    # Use Turbo::StreamsChannel to broadcast with custom action
+    Turbo::StreamsChannel.broadcast_action_to(
       target_room,
+      action: 'chat-histories-append',
       target: 'chats-container',
       partial: 'chats/list',
       locals: { chats: chats }

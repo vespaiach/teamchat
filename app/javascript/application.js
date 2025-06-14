@@ -27,3 +27,20 @@ Turbo.StreamActions['chat-append'] = function () {
     previousChat.insertAdjacentElement('afterend', this.templateContent.firstElementChild);
   }
 };
+
+Turbo.StreamActions['chat-histories-append'] = function () {
+  this.targetElements.forEach((targetElement) => {
+    // Step 1: Find div element with class 'loading'
+    const loadingDiv = targetElement.querySelector('div.loading');
+
+    if (loadingDiv) {
+      // Step 2: Insert template content before that div element
+      Array.from(this.templateContent.children).forEach((element) => {
+        loadingDiv.insertAdjacentElement('beforebegin', element);
+      });
+
+      // Step 3: Remove the div element
+      loadingDiv.remove();
+    }
+  });
+};
