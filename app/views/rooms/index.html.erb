@@ -24,11 +24,13 @@
 
 			<div class="space-y-2">
 				<p class="font-bold font-sans text-xl">Available Rooms</p>
-				<div class="space-y-2">
+				<div class="space-y-2" data-controller="join-room" data-join-room-modal-outlet="#join-room-modal">
 					<% @not_joined_rooms.each do |room| %>
-					<a href="<%= room_path(room) %>" class="block hover:underline text-blue-600">
+					<button data-action="click->join-room#open" 
+									data-join-room-room-id-value="<%= room.id %>" 
+									class="block hover:underline text-blue-600 text-left w-full">
 						<%= room.name %>
-					</a>
+					</button>
 					<% end %>
 				</div>
 			</div>
@@ -46,3 +48,4 @@
 </div>
 
 <%= render 'rooms/create_room_modal' %>
+<%= render 'rooms/join_room_modal' %>
