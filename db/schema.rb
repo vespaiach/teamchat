@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_08_124106) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_14_163148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_08_124106) do
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
+  create_table "join_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
+    t.string "status", default: "pending", null: false
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.timestamptz "deleted_at"
+    t.index ["deleted_at"], name: "index_join_requests_on_deleted_at"
+    t.index ["room_id"], name: "index_join_requests_on_room_id"
+    t.index ["user_id", "room_id"], name: "index_join_requests_on_user_id_and_room_id", unique: true
+    t.index ["user_id"], name: "index_join_requests_on_user_id"
+  end
+
   create_table "room_users", force: :cascade do |t|
     t.bigint "room_id", null: false
     t.bigint "user_id", null: false
@@ -97,6 +111,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_08_124106) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "rooms"
   add_foreign_key "chats", "users"
+  add_foreign_key "join_requests", "rooms"
+  add_foreign_key "join_requests", "users"
   add_foreign_key "room_users", "rooms"
   add_foreign_key "room_users", "users"
   add_foreign_key "rooms", "users"

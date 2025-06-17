@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :chats
   has_many :created_rooms, class_name: 'Room', foreign_key: 'user_id'
   has_many :joined_rooms, through: :room_users, source: :room
+  has_many :join_requests, dependent: :destroy
 
   # Scopes
   scope :chats_by_room, ->(room_id) { joins(:chats).where(rooms: { id: room_id }) }
@@ -39,5 +40,27 @@ class User < ApplicationRecord
 
   def online?
     user_online?(id)
+  end
+
+  def as_json(options = {})
+    result = super(options.merge(
+      only: [:id, :first_name, :last_name, :email, :created_at, :updated_at]
+    ))
+
+    if avatar.attached?
+      result.merge!({
+        avatar_url: Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true),
+        avatar_filename: avatar.filename.to_s,
+        avatar_content_type: avatar.content_type
+      })
+    else
+      result.merge!({
+        avatar_url: nil,
+        avatar_filename: nil,
+        avatar_content_type: nil
+      })
+    end
+
+    result
   end
 end

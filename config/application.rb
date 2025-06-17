@@ -28,5 +28,18 @@ module ChatChit
 
     # Configure ViewComponent
     config.view_component.preview_paths << "#{Rails.root}/test/components/previews"
+
+    # Configure CORS for development (allow esbuild server on port 8000)
+    if Rails.env.development?
+      config.middleware.insert_before 0, Rack::Cors do
+        allow do
+          origins 'localhost:8000', '127.0.0.1:8000'
+          resource '*',
+            headers: :any,
+            methods: [:get, :post, :put, :patch, :delete, :options, :head],
+            credentials: false
+        end
+      end
+    end
   end
 end

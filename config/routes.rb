@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :rooms do
     member do
       post :join_request
+      get :join_requests
     end
     resource :chats do
       member do
@@ -29,6 +30,18 @@ Rails.application.routes.draw do
         post :create_file
         get :index
       end
+    end
+    resource :chat_histories do
+      member do
+        get :index
+      end
+    end
+  end
+
+  resources :join_requests, only: [] do
+    member do
+      patch :approve
+      patch :reject
     end
   end
 

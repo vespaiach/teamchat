@@ -4,6 +4,7 @@ class Room < ApplicationRecord
   has_many :room_users
   has_many :chats
   has_many :users, through: :room_users
+  has_many :join_requests, dependent: :destroy
 
   belongs_to :created_by, class_name: 'User', foreign_key: 'user_id'
 

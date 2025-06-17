@@ -1,0 +1,28 @@
+{
+  "name": "chatter-app",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "Trinh Nguyen",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node dev.js",
+    "build": "node build.js",
+    "start": "./start-dev.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/rails__actioncable": "^6.1.11",
+    "@types/react-dom": "^19.1.6",
+    "esbuild": "0.25.5",
+    "eslint": "^9.29.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
+  },
+  "dependencies": {
+    "@rails/actioncable": "^8.0.200",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

@@ -42,3 +42,5 @@ storage/
 /config/credentials/production.key
 
 copilot-instructions.md
+node_modules/
+*.map

@@ -16,7 +16,7 @@ class RoomsController < ApplicationController
   end
 
   def index
-    @all_rooms = Room.includes(:users).order(:name).all
+    @all_rooms = Room.includes(:users, :join_requests).order(:name).all
     @joined_rooms = @all_rooms.select { |room| room.users.include?(current_user) }
     @not_joined_rooms = @all_rooms.reject { |room| room.users.include?(current_user) }
   end
@@ -43,13 +43,40 @@ class RoomsController < ApplicationController
 
     # Check if user is already a member
     if @room.users.include?(current_user)
-      redirect_to room_path(@room), notice: 'You are already a member of this room.'
+      render json: { error: 'You are already a member of this room.' }, status: :unprocessable_entity
       return
     end
 
-    # TODO: Implement join request logic (e.g., send notification to room creator)
-    # For now, we'll just show a success message
-    redirect_to rooms_path, notice: 'Join request sent successfully.'
+    # Check if user already has a pending request
+    existing_request = JoinRequest.find_by(user: current_user, room: @room)
+    if existing_request&.pending?
+      render json: { error: 'You already have a pending request for this room.' }, status: :unprocessable_entity
+      return
+    end
+
+    # Create or update join request
+    join_request = JoinRequest.find_or_initialize_by(user: current_user, room: @room)
+    join_request.status = 'pending'
+    join_request.message = params[:message] || "#{current_user.name} wants to join #{@room.name}"
+
+    if join_request.save
+      # TODO: Send notification to room creator
+      render json: { message: 'Join request sent successfully.' }, status: :ok
+    else
+      render json: { error: join_request.errors.full_messages.join(', ') }, status: :unprocessable_entity
+    end
+  end
+
+  def join_requests
+    @room = Room.find(params[:id])
+
+    # Only room creator can view join requests
+    unless @room.created_by == current_user
+      redirect_to rooms_path, alert: 'You are not authorized to view join requests for this room.'
+      return
+    end
+
+    @pending_requests = @room.join_requests.pending.includes(:user)
   end
 
   private

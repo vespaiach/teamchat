@@ -14,9 +14,19 @@
 				<p class="font-bold font-sans text-xl">My Rooms</p>
 				<div class="space-y-2">
 					<% @joined_rooms.each do |room| %>
-					<a href="<%= room_path(room) %>" class="block hover:underline text-blue-600">
-						<%= room.name %>
-					</a>
+					<div class="flex items-center justify-between">
+						<a href="<%= room_path(room) %>" class="block hover:underline text-blue-600 flex-1">
+							<%= room.name %>
+						</a>
+						<% if room.created_by == current_user %>
+						<%
+							pending_count = room.join_requests.select(&:pending?).count
+						%>
+						<a href="<%= join_requests_room_path(room) %>" class="text-sm text-gray-500 hover:text-gray-700 ml-4">
+							Manage Requests<% if pending_count > 0 %> (<%= pending_count %>)<% end %>
+						</a>
+						<% end %>
+					</div>
 					<% end %>
 				</div>
 			</div>

@@ -6,11 +6,12 @@
   --font-sans: 'Lato', sans-serif;
   --font-serif: 'Libre Baskerville', serif;
   --container-box: clamp(330px, 88%, 420px);
+  
 }
 
 @layer base {
   body {
-    @apply bg-stone-300 text-stone-950 font-serif leading-[1.6] text-base;
+    @apply text-stone-950 font-serif leading-[1.6] text-base;
   }
 
   h1,
@@ -69,6 +70,12 @@
   }
   .hide-avatar {
     @apply invisible h-0!;
+  }
+
+
+
+  .viewport {
+    @apply w-full max-w-[500px] mx-auto min-h-dvh;
   }
 }
 /* ----------------------------------------------
