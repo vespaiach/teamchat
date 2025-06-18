@@ -36,10 +36,10 @@ export function TheirChat({ creatorAvatar, creatorName, createdAt, messages, ...
 
 export function MyChat({ createdAt, messages, ...rest }: ChatProps) {
   return (
-    <ChatBase {...rest} className="flex flex-col items-end gap-2 text-sm px-4">
+    <ChatBase {...rest} className="flex flex-col items-stretch gap-2 text-sm px-4">
       {messages.map((items) => (
-        <div key={items.id} className="flex justify-end">
-          <div className="bg-red-600 inline-block text-white p-3 rounded-l-2xl rounded-br-2xl w-[83%]">
+        <div key={items.id} className="flex justify-end flex-1">
+          <div className="bg-red-600 inline-block text-white p-3 rounded-l-2xl rounded-br-2xl max-w-[83%]">
             {items.message}
           </div>
         </div>
@@ -76,10 +76,12 @@ export function AutoScrollIntoView({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    ref.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-    });
+    setTimeout(() => {
+      ref.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    }, 200);
   }, []);
   return <div ref={ref} className={className} />;
 }

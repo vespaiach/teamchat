@@ -27,7 +27,6 @@ Rails.application.routes.draw do
     resource :chats do
       member do
         post :create_text
-        get :index
       end
     end
     resource :chat_histories do

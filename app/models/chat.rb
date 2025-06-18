@@ -17,4 +17,8 @@ class Chat < ApplicationRecord
 
   validates :sender, presence: true
   validates :room, presence: true
+
+  def json
+    as_json.merge({ sender: sender.as_json })
+  end
 end

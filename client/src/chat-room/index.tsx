@@ -46,7 +46,7 @@ function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUse
                 createdAt={chat.createdAt}
                 messages={chat.messages}
               />
-              {index === chatHistories.length - 1 && <AutoScrollIntoView className="h-14" />}
+              {index === chatHistories.length - 1 && <AutoScrollIntoView key={chat.messages.length} className="h-14" />}
             </Fragment>
           );
         })}

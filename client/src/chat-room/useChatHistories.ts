@@ -1,4 +1,5 @@
 import { useRef, useCallback, useEffect, useMemo, useState } from 'react';
+import consumer from '../consumer.js';
 
 interface DbChat {
   id: number;
@@ -22,7 +23,7 @@ interface DbChat {
   };
 }
 
-const FIVE_MINUTES = 5 * 60 * 1000;
+const THREE_MINUTES = 3 * 60 * 1000;
 
 export default function useChatHistories(roomId: number) {
   const [allChatsLoaded, setAllChatsLoaded] = useState(false);
@@ -42,7 +43,7 @@ export default function useChatHistories(roomId: number) {
     for (let i = 1; i < chats.length; i++) {
       if (
         chats[i].sender.id === groups[groups.length - 1].creatorId &&
-        new Date(chats[i].created_at).getTime() - groups[groups.length - 1].createdAt.getTime() < FIVE_MINUTES
+        new Date(chats[i].created_at).getTime() - groups[groups.length - 1].createdAt.getTime() < THREE_MINUTES
       ) {
         addToGroupedChat(groups[groups.length - 1], chats[i]);
       } else {
@@ -88,6 +89,24 @@ export default function useChatHistories(roomId: number) {
   );
 
   useEffect(() => {
+    const channel = consumer.subscriptions.create(
+      { channel: 'ChatChannel', room_id: roomId },
+      {
+        received: (newChat: DbChat) => {
+          setChats((prevChats) => {
+            // TODO: insert sorted by id better here, since previous chats are sorted by id
+            const newChats = [...prevChats, newChat].sort((a, b) => a.id - b.id);
+            return newChats;
+          });
+        },
+      }
+    );
+    return () => {
+      channel.unsubscribe();
+    };
+  }, [roomId]);
+
+  useEffect(() => {
     loadMoreChatHistories();
   }, [loadMoreChatHistories]);
 
@@ -112,10 +131,7 @@ function createGroupedChatFromDbChat(dbChat: DbChat): GroupedChat {
   };
 }
 
-function addToGroupedChat(
-  groupedChat: GroupedChat,
-  dbChat: DbChat
-): GroupedChat {
+function addToGroupedChat(groupedChat: GroupedChat, dbChat: DbChat): GroupedChat {
   groupedChat.messages.push({ id: dbChat.id, message: dbChat.message });
-  return groupedChat
+  return groupedChat;
 }
