@@ -36,13 +36,13 @@ export default function UserAvatar({
       onClick={onClick}
       role="img"
       className={cx(
-        'flex items-center justify-center bg-stone-200 bg-cover bg-center shrink-0 rounded-full',
+        'flex items-center justify-center bg-stone-200 bg-cover bg-center shrink-0 rounded-full relative',
         SIZE[size],
         className
       )}
       style={style}>
       {!src && <p className="text-lg font-bold">{name[0]}</p>}
-      {online && <div className="absolute right-1 bottom-3 w-full w-2 h-2 bg-green-500" />}
+      {online && <div className="absolute top-[-2] right-[-1] rounded-full w-3 h-3 bg-green-500 border-2 border-white" />}
       {children}
     </div>
   );

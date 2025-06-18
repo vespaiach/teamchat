@@ -9,12 +9,7 @@ import useLoadMoreHistoriesOnScrolling from './useLoadMoreHistoriesOnScrolling.j
 import { useSendingChat } from './useSending.js';
 import DayBreaker from '../componets/DayBreaker.js';
 import AutoScrollIntoView from '../componets/AutoScrollIntoView.js';
-
-interface CurrentUser {
-  id: number;
-  name: string;
-  avatar: string;
-}
+import { UsersOnlineStatus } from '../contexts/UsersOnlineStatus.js';
 
 interface Room {
   id: number;
@@ -22,7 +17,7 @@ interface Room {
   totalMembers: number;
 }
 
-function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUser }) {
+function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: LoggedInUser }) {
   const { chatHistories, loadMoreChatHistories, loading } = useChatHistories(room.id);
   useLoadMoreHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading);
 
@@ -43,6 +38,7 @@ function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUse
             <Fragment key={chat.groupId}>
               {showDayBreak && <DayBreaker date={chat.createdAt} />}
               <ChatComponent
+                userId={chat.creatorId}
                 creatorAvatar={chat.creatorAvatar}
                 creatorName={chat.creatorName}
                 createdAt={chat.createdAt}
@@ -62,7 +58,11 @@ function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUse
 const container = document.getElementById('chat-room');
 if (container) {
   const root = createRoot(container);
-  const currentUser = JSON.parse(document.getElementById('current-user-data')!.textContent!) as CurrentUser;
+  const currentUser = JSON.parse(document.getElementById('current-user-data')!.textContent!) as LoggedInUser;
   const room = JSON.parse(document.getElementById('room-data')!.textContent!) as Room;
-  root.render(<ChatRoom loggedInUser={currentUser} room={room} />);
+  root.render(
+    <UsersOnlineStatus>
+      <ChatRoom loggedInUser={currentUser} room={room} />
+    </UsersOnlineStatus>
+  );
 }

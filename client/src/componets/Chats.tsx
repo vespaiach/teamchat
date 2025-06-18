@@ -1,3 +1,4 @@
+import { useUserOnline } from "../contexts/UsersOnlineStatus.js";
 import UserAvatar from "./UserAvatar.js";
 
 interface ChatBaseProps {
@@ -7,16 +8,19 @@ interface ChatBaseProps {
 }
 
 interface ChatProps extends ChatBaseProps {
+  userId: number;
   creatorAvatar: string;
   creatorName: string;
   createdAt: Date;
   messages: Array<{ id: number; message: string }>;
 }
 
-export function TheirChat({ creatorAvatar, creatorName, createdAt, messages, ...rest }: ChatProps) {
+export function TheirChat({ creatorAvatar, creatorName, createdAt, messages, userId, ...rest }: ChatProps) {
+  const { isOnline } = useUserOnline();
+
   return (
     <ChatBase {...rest} className="flex w-full text-sm gap-3 px-4">
-      <UserAvatar name={creatorName} src={creatorAvatar} />
+      <UserAvatar name={creatorName} src={creatorAvatar} online={isOnline(userId)} />
       <div className="flex-1 space-y-2">
         <p className="font-bold font-sans">{creatorName}</p>
         <div className="flex flex-col gap-2 items-start pl-2">

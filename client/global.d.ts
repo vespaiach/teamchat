@@ -7,6 +7,12 @@ declare global {
     createdAt: Date;
     messages: Array<{ id: number; message: string }>;
   }
+
+  interface LoggedInUser {
+    id: number;
+    name: string;
+    avatar: string;
+  }
 }
 
 export {};
