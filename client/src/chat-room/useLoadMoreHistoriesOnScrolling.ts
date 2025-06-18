@@ -1,7 +1,7 @@
 import { useDebounce, useWindowScroll } from '@uidotdev/usehooks';
 import { useRef, useEffect } from 'react';
 
-export default function useLoadHistoriesOnScrolling(
+export default function useLoadMoreHistoriesOnScrolling(
   loadMoreChatHistories: (lastMessageId?: number) => void,
   chatHistories: GroupedChat[],
   loading: boolean

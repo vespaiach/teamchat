@@ -1,12 +1,14 @@
 import { Fragment } from 'react';
 import { createRoot } from 'react-dom/client';
-import { MyChat, TheirChat, DayBreak, AutoScrollIntoView } from './Chat.js';
+import { MyChat, TheirChat } from '../componets/Chats.js';
 import useChatHistories from './useChatHistories.js';
-import WaveLoading from './WaveLoading.js';
+import WaveLoading from '../componets/WaveLoading.js';
 import ChatInput from '../componets/ChatInput.js';
 import ChatRoomHeader from '../componets/ChatRoomHeader.js';
-import useLoadHistoriesOnScrolling from './useLoadHistoriesOnScrolling.js';
+import useLoadMoreHistoriesOnScrolling from './useLoadMoreHistoriesOnScrolling.js';
 import { useSendingChat } from './useSending.js';
+import DayBreaker from '../componets/DayBreaker.js';
+import AutoScrollIntoView from '../componets/AutoScrollIntoView.js';
 
 interface CurrentUser {
   id: number;
@@ -22,13 +24,13 @@ interface Room {
 
 function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUser }) {
   const { chatHistories, loadMoreChatHistories, loading } = useChatHistories(room.id);
-  useLoadHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading);
+  useLoadMoreHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading);
 
   const { chat, handleChatChange, sendChat, sending } = useSendingChat(room.id);
 
   return (
     <>
-      <div className="viewport space-y-10 min-h-dvh">
+      <div className="viewport space-y-10 min-h-dvh bg-white">
         <ChatRoomHeader room={room} />
         <div className="flex justify-center items-center pt-2">
           <WaveLoading className={loading ? 'visible' : 'invisible'} />
@@ -39,7 +41,7 @@ function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUse
           const ChatComponent = chat.creatorId === loggedInUser.id ? MyChat : TheirChat;
           return (
             <Fragment key={chat.groupId}>
-              {showDayBreak && <DayBreak date={chat.createdAt} />}
+              {showDayBreak && <DayBreaker date={chat.createdAt} />}
               <ChatComponent
                 creatorAvatar={chat.creatorAvatar}
                 creatorName={chat.creatorName}
@@ -56,6 +58,7 @@ function ChatRoom({ loggedInUser, room }: { room: Room; loggedInUser: CurrentUse
   );
 }
 
+// Mount the ChatRoom component to the DOM
 const container = document.getElementById('chat-room');
 if (container) {
   const root = createRoot(container);

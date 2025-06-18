@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import UserAvatar from "./UserAvatar.js";
 
 interface ChatBaseProps {
   children?: React.ReactNode;
@@ -15,10 +15,10 @@ interface ChatProps extends ChatBaseProps {
 
 export function TheirChat({ creatorAvatar, creatorName, createdAt, messages, ...rest }: ChatProps) {
   return (
-    <ChatBase {...rest} className="flex w-full text-sm gap-4 px-4">
-      <img src={creatorAvatar} alt={`${creatorName}'s avatar`} className="w-10 h-10 rounded-full shrink-0" />
+    <ChatBase {...rest} className="flex w-full text-sm gap-3 px-4">
+      <UserAvatar name={creatorName} src={creatorAvatar} />
       <div className="flex-1 space-y-2">
-        <p className="font-bold">{creatorName}</p>
+        <p className="font-bold font-sans">{creatorName}</p>
         <div className="flex flex-col gap-2 items-start pl-2">
           {messages.map((items) => (
             <div key={items.id}>
@@ -51,7 +51,7 @@ export function MyChat({ createdAt, messages, ...rest }: ChatProps) {
   );
 }
 
-export function ChatBase({ children, className, id }: ChatBaseProps) {
+function ChatBase({ children, className, id }: ChatBaseProps) {
   return (
     <section className={className} id={id}>
       {children}
@@ -59,29 +59,4 @@ export function ChatBase({ children, className, id }: ChatBaseProps) {
   );
 }
 
-export function DayBreak({ date }: { date: Date }) {
-  const isToday = date.toDateString() === new Date().toDateString();
-  return (
-    <div className="flex items-center text-neutral-500">
-      <hr className="flex-1 border-t border-stone-100 flex-1" />
-      <span className="px-2 font-sans bg-stone-100 rounded px-2 shrink-0">
-        {isToday ? 'Today' : date.toLocaleDateString()}
-      </span>
-      <hr className="flex-1 border-t border-stone-100 flex-1" />
-    </div>
-  );
-}
 
-export function AutoScrollIntoView({ className }: { className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      ref.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-      });
-    }, 200);
-  }, []);
-  return <div ref={ref} className={className} />;
-}

@@ -1,7 +1,7 @@
 import TextInput from './TextInput.js';
 import { cx } from '../utils.js';
 import IconButton from './IconButton.js';
-import WaveLoading from '../chat-room/WaveLoading.js';
+import WaveLoading from './WaveLoading.js';
 
 interface ChatInputProps {
   className?: string;
@@ -13,8 +13,8 @@ interface ChatInputProps {
 
 export default function ChatInput({ className, value, sending, onChange, onClick }: ChatInputProps) {
   return (
-    <div className={cx('fixed bottom-0 left-0 right-0 bg-white w-full border-t border-t-stone-200 py-4', className)}>
-      <div className="viewport px-5 flex items-center gap-2 relative">
+    <div className={cx('fixed bottom-0 left-0 right-0 w-full', className)}>
+      <div className="viewport px-5 flex items-center gap-2 relative border-t border-t-stone-100 bg-white py-4">
         <TextInput
           type="text"
           className="flex-1 w-40 text-sm pr-12"

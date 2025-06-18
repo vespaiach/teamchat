@@ -5,11 +5,13 @@ class ChatsController < ApplicationController
 
   def create
     sleep 1
-    chat = @room.chats.create!(message: params[:message], sender: current_user)
 
-    # TODO: move this to a background job for better performance
-    # Broadcast the new message to ChatChannel subscribers
-    ChatChannel.broadcast_to(@room, chat.json)
+    if params[:message].present?
+      chat = @room.chats.create!(message: params[:message], sender: current_user)
+      # TODO: move this to a background job for better performance
+      # Broadcast the new message to ChatChannel subscribers
+      ChatChannel.broadcast_to(@room, chat.json)
+    end
 
     render json: { status: 'success', message: 'Chat created successfully' }
   end

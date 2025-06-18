@@ -11,7 +11,7 @@
 
 @layer base {
   body {
-    @apply text-stone-950 font-serif leading-[1.6] text-base;
+    @apply text-stone-950 font-serif leading-[1.6] text-base bg-stone-50;
   }
 
   h1,

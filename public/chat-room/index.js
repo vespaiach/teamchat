@@ -9,49 +9,76 @@ import {
 var import_react7 = __toESM(require_react(), 1);
 var import_client = __toESM(require_client(), 1);
 
-// src/chat-room/Chat.tsx
+// src/componets/UserAvatar.tsx
 var import_react = __toESM(require_react(), 1);
+
+// src/utils.ts
+function cx(...name) {
+  return name.filter(Boolean).map((s) => String(s).trim().replace(/\s+|\n/g, " ")).join(" ") || void 0;
+}
+
+// src/componets/UserAvatar.tsx
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var SIZE = {
+  small: "w-9 h-9",
+  medium: "w-12 h-12",
+  large: "w-22 h-22"
+};
+function UserAvatar({
+  src,
+  name,
+  size = "small",
+  online = false,
+  className,
+  children,
+  onClick
+}) {
+  const style = (0, import_react.useMemo)(() => {
+    return src ? { backgroundImage: `url(${src})` } : {};
+  }, [src]);
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+    "div",
+    {
+      "aria-label": `${name}'s avatar`,
+      onClick,
+      role: "img",
+      className: cx(
+        "flex items-center justify-center bg-stone-200 bg-cover bg-center shrink-0 rounded-full",
+        SIZE[size],
+        className
+      ),
+      style,
+      children: [
+        !src && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-lg font-bold", children: name[0] }),
+        online && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute right-1 bottom-3 w-full w-2 h-2 bg-green-500" }),
+        children
+      ]
+    }
+  );
+}
+
+// src/componets/Chats.tsx
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 function TheirChat({ creatorAvatar, creatorName, createdAt, messages, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ChatBase, { ...rest, className: "flex w-full text-sm gap-4 px-4", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", { src: creatorAvatar, alt: `${creatorName}'s avatar`, className: "w-10 h-10 rounded-full shrink-0" }),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex-1 space-y-2", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "font-bold", children: creatorName }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex flex-col gap-2 items-start pl-2", children: [
-        messages.map((items) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-stone-200 inline-block p-3 rounded-r-2xl rounded-bl-2xl", children: items.message }) }, items.id)),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-neutral-500 ml-2 font-sans text-xs", children: createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }) })
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(ChatBase, { ...rest, className: "flex w-full text-sm gap-3 px-4", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(UserAvatar, { name: creatorName, src: creatorAvatar }),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1 space-y-2", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "font-bold font-sans", children: creatorName }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-2 items-start pl-2", children: [
+        messages.map((items) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-stone-200 inline-block p-3 rounded-r-2xl rounded-bl-2xl", children: items.message }) }, items.id)),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-neutral-500 ml-2 font-sans text-xs", children: createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }) })
       ] })
     ] })
   ] });
 }
 function MyChat({ createdAt, messages, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ChatBase, { ...rest, className: "flex flex-col items-stretch gap-2 text-sm px-4", children: [
-    messages.map((items) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex justify-end flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-red-600 inline-block text-white p-3 rounded-l-2xl rounded-br-2xl max-w-[83%]", children: items.message }) }, items.id)),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-neutral-500 text-right mr-2 font-sans text-xs", children: createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }) })
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(ChatBase, { ...rest, className: "flex flex-col items-stretch gap-2 text-sm px-4", children: [
+    messages.map((items) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex justify-end flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-red-600 inline-block text-white p-3 rounded-l-2xl rounded-br-2xl max-w-[83%]", children: items.message }) }, items.id)),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-neutral-500 text-right mr-2 font-sans text-xs", children: createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }) })
   ] });
 }
 function ChatBase({ children, className, id }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", { className, id, children });
-}
-function DayBreak({ date }) {
-  const isToday = date.toDateString() === (/* @__PURE__ */ new Date()).toDateString();
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex items-center text-neutral-500", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: "flex-1 border-t border-stone-100 flex-1" }),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "px-2 font-sans bg-stone-100 rounded px-2 shrink-0", children: isToday ? "Today" : date.toLocaleDateString() }),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: "flex-1 border-t border-stone-100 flex-1" })
-  ] });
-}
-function AutoScrollIntoView({ className }) {
-  const ref = (0, import_react.useRef)(null);
-  (0, import_react.useEffect)(() => {
-    setTimeout(() => {
-      ref.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "end"
-      });
-    }, 200);
-  }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { ref, className });
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("section", { className, id, children });
 }
 
 // src/chat-room/useChatHistories.ts
@@ -635,33 +662,28 @@ function addToGroupedChat(groupedChat, dbChat) {
   return groupedChat;
 }
 
-// src/utils.ts
-function cx(...name) {
-  return name.filter(Boolean).map((s) => String(s).trim().replace(/\s+|\n/g, " ")).join(" ") || void 0;
-}
-
-// src/chat-room/WaveLoading.tsx
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+// src/componets/WaveLoading.tsx
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 function WaveLoading({ className }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: cx("wave-container", className), children: [
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "wave-bar bg-red-600" }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "wave-bar bg-red-600" }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "wave-bar bg-red-600" }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "wave-bar bg-red-600" }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "wave-bar bg-red-600" })
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: cx("wave-container", className), children: [
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "wave-bar bg-red-600" }),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "wave-bar bg-red-600" }),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "wave-bar bg-red-600" }),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "wave-bar bg-red-600" }),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "wave-bar bg-red-600" })
   ] });
 }
 
 // src/componets/TextInput.tsx
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 function TextInput({ className, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("input", { ...rest, className: cx("border-none rounded-xl bg-stone-100 px-4 py-3 outline-red-200", className) });
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { ...rest, className: cx("border-none rounded-xl bg-stone-100 px-4 py-3 outline-red-200", className) });
 }
 
 // src/componets/IconButton.tsx
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function IconButton({ children, className, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
     "button",
     {
       ...rest,
@@ -675,10 +697,10 @@ function IconButton({ children, className, ...rest }) {
 }
 
 // src/componets/ChatInput.tsx
-var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 function ChatInput({ className, value, sending, onChange, onClick }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: cx("fixed bottom-0 left-0 right-0 bg-white w-full border-t border-t-stone-200 py-4", className), children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "viewport px-5 flex items-center gap-2 relative", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: cx("fixed bottom-0 left-0 right-0 w-full", className), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "viewport px-5 flex items-center gap-2 relative border-t border-t-stone-100 bg-white py-4", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       TextInput,
       {
         type: "text",
@@ -688,52 +710,23 @@ function ChatInput({ className, value, sending, onChange, onClick }) {
         onChange
       }
     ),
-    sending && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(WaveLoading, { className: "absolute right-10 top-1/2 -translate-y-1/2" }),
-    !sending && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+    sending && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(WaveLoading, { className: "absolute right-10 top-1/2 -translate-y-1/2" }),
+    !sending && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       IconButton,
       {
         className: "absolute w-7! h-7! right-8 top-1/2 -translate-y-1/2 text-white rounded-lg! bg-red-500!",
         onClick,
-        children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", height: "1em", fill: "currentColor", viewBox: "0 0 512 512", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("path", { d: "M 137.65570599613153 232.2321083172147 L 70.31334622823985 97.54738878143134 L 137.65570599613153 232.2321083172147 L 70.31334622823985 97.54738878143134 L 384.247582205029 232.2321083172147 L 384.247582205029 232.2321083172147 L 137.65570599613153 232.2321083172147 L 137.65570599613153 232.2321083172147 Z M 137.65570599613153 279.7678916827853 L 384.247582205029 279.7678916827853 L 137.65570599613153 279.7678916827853 L 384.247582205029 279.7678916827853 L 70.31334622823985 414.4526112185687 L 70.31334622823985 414.4526112185687 L 137.65570599613153 279.7678916827853 L 137.65570599613153 279.7678916827853 Z M 49.516441005802704 37.13733075435203 Q 28.719535783365572 29.214700193423596 13.864603481624759 44.06963249516441 Q 0 59.91489361702128 7.922630560928433 79.72147001934236 L 96.06189555125725 256 L 96.06189555125725 256 L 7.922630560928433 432.27852998065765 L 7.922630560928433 432.27852998065765 Q 0 452.0851063829787 13.864603481624759 467.9303675048356 Q 28.719535783365572 482.7852998065764 49.516441005802704 475.85299806576404 L 493.18375241779495 285.7098646034816 L 493.18375241779495 285.7098646034816 Q 511.0096711798839 276.79690522243715 512 256 Q 511.0096711798839 236.19342359767893 493.18375241779495 227.28046421663444 L 49.516441005802704 37.13733075435203 L 49.516441005802704 37.13733075435203 Z" }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", height: "1em", fill: "currentColor", viewBox: "0 0 512 512", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("path", { d: "M 137.65570599613153 232.2321083172147 L 70.31334622823985 97.54738878143134 L 137.65570599613153 232.2321083172147 L 70.31334622823985 97.54738878143134 L 384.247582205029 232.2321083172147 L 384.247582205029 232.2321083172147 L 137.65570599613153 232.2321083172147 L 137.65570599613153 232.2321083172147 Z M 137.65570599613153 279.7678916827853 L 384.247582205029 279.7678916827853 L 137.65570599613153 279.7678916827853 L 384.247582205029 279.7678916827853 L 70.31334622823985 414.4526112185687 L 70.31334622823985 414.4526112185687 L 137.65570599613153 279.7678916827853 L 137.65570599613153 279.7678916827853 Z M 49.516441005802704 37.13733075435203 Q 28.719535783365572 29.214700193423596 13.864603481624759 44.06963249516441 Q 0 59.91489361702128 7.922630560928433 79.72147001934236 L 96.06189555125725 256 L 96.06189555125725 256 L 7.922630560928433 432.27852998065765 L 7.922630560928433 432.27852998065765 Q 0 452.0851063829787 13.864603481624759 467.9303675048356 Q 28.719535783365572 482.7852998065764 49.516441005802704 475.85299806576404 L 493.18375241779495 285.7098646034816 L 493.18375241779495 285.7098646034816 Q 511.0096711798839 276.79690522243715 512 256 Q 511.0096711798839 236.19342359767893 493.18375241779495 227.28046421663444 L 49.516441005802704 37.13733075435203 L 49.516441005802704 37.13733075435203 Z" }) })
       }
     )
   ] }) });
 }
 
 // src/componets/ChatRoomHeader.tsx
-var import_react4 = __toESM(require_react(), 1);
-
-// src/componets/UserAvatar.tsx
 var import_react3 = __toESM(require_react(), 1);
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-var SIZE = {
-  small: "w-8 h-8",
-  medium: "w-12 h-12",
-  large: "w-22 h-22"
-};
-function UserAvatar({ src, name, size = "small", online = false, className, children }) {
-  const style = (0, import_react3.useMemo)(() => {
-    return src ? { backgroundImage: `url(${src})` } : {};
-  }, [src]);
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-    "div",
-    {
-      role: "img",
-      className: cx("flex items-center justify-center bg-stone-200 bg-cover bg-center shrink-0 rounded-full", SIZE[size], className),
-      style,
-      children: [
-        !src && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-lg font-bold", children: name[0] }),
-        online && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "absolute right-1 bottom-3 w-full w-2 h-2 bg-green-500" }),
-        children
-      ]
-    }
-  );
-}
-
-// src/componets/ChatRoomHeader.tsx
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 function ChatRoomHeader({ className, user, room }) {
-  const headerRef = (0, import_react4.useRef)(null);
+  const headerRef = (0, import_react3.useRef)(null);
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
     "div",
     {
@@ -830,18 +823,18 @@ function useWindowScroll() {
   return [state, scrollTo];
 }
 
-// src/chat-room/useLoadHistoriesOnScrolling.ts
-var import_react5 = __toESM(require_react(), 1);
-function useLoadHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading) {
+// src/chat-room/useLoadMoreHistoriesOnScrolling.ts
+var import_react4 = __toESM(require_react(), 1);
+function useLoadMoreHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading) {
   const [{ y }] = useWindowScroll();
   const debouncedY = useDebounce(y, 100);
-  const loadRef = (0, import_react5.useRef)(() => {
+  const loadRef = (0, import_react4.useRef)(() => {
   });
   loadRef.current = () => {
     if (loading) return;
     loadMoreChatHistories(chatHistories.length > 0 ? chatHistories[0].messages[0].id : void 0);
   };
-  (0, import_react5.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
     if (debouncedY !== null && debouncedY < 50) {
       loadRef.current();
     }
@@ -849,11 +842,11 @@ function useLoadHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loadi
 }
 
 // src/chat-room/useSending.ts
-var import_react6 = __toESM(require_react(), 1);
+var import_react5 = __toESM(require_react(), 1);
 function useSendingChat(roomId) {
-  const [sending, setSending] = (0, import_react6.useState)(false);
-  const [chat, setChat] = (0, import_react6.useState)("");
-  const sendingRef = (0, import_react6.useRef)(() => {
+  const [sending, setSending] = (0, import_react5.useState)(false);
+  const [chat, setChat] = (0, import_react5.useState)("");
+  const sendingRef = (0, import_react5.useRef)(() => {
   });
   sendingRef.current = async () => {
     if (sending) return;
@@ -882,31 +875,54 @@ function useSendingChat(roomId) {
       setSending(false);
     }
   };
-  const sendChat = (0, import_react6.useCallback)(async () => {
+  const sendChat = (0, import_react5.useCallback)(async () => {
     await sendingRef.current();
   }, []);
-  const handleChatChange = (0, import_react6.useCallback)((e) => {
+  const handleChatChange = (0, import_react5.useCallback)((e) => {
     setChat(e.target.value);
   }, []);
   return { chat, handleChatChange, sending, sendChat };
 }
 
-// src/chat-room/index.tsx
+// src/componets/DayBreaker.tsx
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+function DayBreaker({ date }) {
+  const isToday = date.toDateString() === (/* @__PURE__ */ new Date()).toDateString();
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "flex items-center text-neutral-500 px-4 justify-center py-6", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "px-2 font-sans bg-stone-100 rounded px-2 shrink-0", children: isToday ? "Today" : date.toDateString() }) });
+}
+
+// src/componets/AutoScrollIntoView.tsx
+var import_react6 = __toESM(require_react(), 1);
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+function AutoScrollIntoView({ className }) {
+  const ref = (0, import_react6.useRef)(null);
+  (0, import_react6.useEffect)(() => {
+    setTimeout(() => {
+      ref.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+      });
+    }, 200);
+  }, []);
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { ref, className });
+}
+
+// src/chat-room/index.tsx
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 function ChatRoom({ loggedInUser, room }) {
   const { chatHistories, loadMoreChatHistories, loading } = useChatHistories(room.id);
-  useLoadHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading);
+  useLoadMoreHistoriesOnScrolling(loadMoreChatHistories, chatHistories, loading);
   const { chat, handleChatChange, sendChat, sending } = useSendingChat(room.id);
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "viewport space-y-10 min-h-dvh", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(ChatRoomHeader, { room }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "flex justify-center items-center pt-2", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(WaveLoading, { className: loading ? "visible" : "invisible" }) }),
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "viewport space-y-10 min-h-dvh bg-white", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ChatRoomHeader, { room }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "flex justify-center items-center pt-2", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(WaveLoading, { className: loading ? "visible" : "invisible" }) }),
       chatHistories.map((chat2, index) => {
         const showDayBreak = index === 0 || chatHistories[index - 1].createdAt.toDateString() !== chat2.createdAt.toDateString();
         const ChatComponent = chat2.creatorId === loggedInUser.id ? MyChat : TheirChat;
-        return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_react7.Fragment, { children: [
-          showDayBreak && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(DayBreak, { date: chat2.createdAt }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_react7.Fragment, { children: [
+          showDayBreak && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(DayBreaker, { date: chat2.createdAt }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
             ChatComponent,
             {
               creatorAvatar: chat2.creatorAvatar,
@@ -915,11 +931,11 @@ function ChatRoom({ loggedInUser, room }) {
               messages: chat2.messages
             }
           ),
-          index === chatHistories.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(AutoScrollIntoView, { className: "h-14" }, chat2.messages.length)
+          index === chatHistories.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(AutoScrollIntoView, { className: "h-14" }, chat2.messages.length)
         ] }, chat2.groupId);
       })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(ChatInput, { value: chat, onChange: handleChatChange, onClick: sendChat, sending })
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ChatInput, { value: chat, onChange: handleChatChange, onClick: sendChat, sending })
   ] });
 }
 var container = document.getElementById("chat-room");
@@ -927,6 +943,6 @@ if (container) {
   const root = (0, import_client.createRoot)(container);
   const currentUser = JSON.parse(document.getElementById("current-user-data").textContent);
   const room = JSON.parse(document.getElementById("room-data").textContent);
-  root.render(/* @__PURE__ */ (0, import_jsx_runtime8.jsx)(ChatRoom, { loggedInUser: currentUser, room }));
+  root.render(/* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ChatRoom, { loggedInUser: currentUser, room }));
 }
 //# sourceMappingURL=index.js.map
