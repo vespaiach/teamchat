@@ -27,7 +27,6 @@ Rails.application.routes.draw do
     resource :chats do
       member do
         post :create_text
-        post :create_file
         get :index
       end
     end

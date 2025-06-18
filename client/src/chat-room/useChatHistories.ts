@@ -1,13 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
-interface Chat {
-  id: number;
-  creatorId: number;
-  creatorAvatar: string;
-  creatorName: string;
-  createdAt: Date;
-  messages: string[];
-}
+import { useRef, useCallback, useEffect, useMemo, useState } from 'react';
 
 interface DbChat {
   id: number;
@@ -31,54 +22,70 @@ interface DbChat {
   };
 }
 
-const FIVE_MINUTES = 5 * 60 * 1000; // 5 minutes in milliseconds
+const FIVE_MINUTES = 5 * 60 * 1000;
 
 export default function useChatHistories(roomId: number) {
-  const [dbChats, setDbChats] = useState<Chat[]>([]);
+  const [allChatsLoaded, setAllChatsLoaded] = useState(false);
+  const [chats, setChats] = useState<DbChat[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // Ref to control loading more chats
+  // Don't want these values to trigger re-renders
+  const stopLoadMoreRef = useRef(false);
+  stopLoadMoreRef.current = allChatsLoaded || loading;
 
   // Group chats by creator and time (5 minutes interval)
   const groupedChats = useMemo(() => {
-    if (dbChats.length === 0) return [];
-    const groups = [dbChats[0]];
-    for (let i = 1; i < dbChats.length; i++) {
+    if (chats.length === 0) return [];
+
+    const groups: GroupedChat[] = [createGroupedChatFromDbChat(chats[0])];
+    for (let i = 1; i < chats.length; i++) {
       if (
-        dbChats[i].creatorId === groups[groups.length - 1].creatorId &&
-        dbChats[i].createdAt.getTime() - groups[groups.length - 1].createdAt.getTime() < FIVE_MINUTES
+        chats[i].sender.id === groups[groups.length - 1].creatorId &&
+        new Date(chats[i].created_at).getTime() - groups[groups.length - 1].createdAt.getTime() < FIVE_MINUTES
       ) {
-        groups[groups.length - 1].messages.push(dbChats[i].messages[0]);
+        addToGroupedChat(groups[groups.length - 1], chats[i]);
       } else {
-        groups.push(dbChats[i]);
+        groups.push(createGroupedChatFromDbChat(chats[i]));
       }
     }
 
     return groups;
-  }, [dbChats]);
+  }, [chats]);
 
-  const loadMoreChatHistories = useCallback((lastSeenId?: number) => {
-    setLoading(true);
-    const query = lastSeenId !== undefined && lastSeenId > 0 ? `?last_seen_id=${lastSeenId}` : '';
-    fetch(`/rooms/${roomId}/chat_histories${query}`, {
-      method: 'GET',
-      credentials: 'include',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data: DbChat[]) => {
-        // TODO: can be optimized
-        setDbChats((prevChats) =>
-          [...prevChats, ...data.map(tranformDbChatToChat)].sort((a, b) => a.id - b.id)
-        );
-        setLoading(false);
+  const loadMoreChatHistories = useCallback(
+    (lastSeenId?: number) => {
+      if (stopLoadMoreRef.current) return;
+      setLoading(true);
+
+      const query = lastSeenId !== undefined && lastSeenId > 0 ? `?last_seen_id=${lastSeenId}` : '';
+
+      fetch(`/rooms/${roomId}/chat_histories${query}`, {
+        method: 'GET',
+        credentials: 'include',
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .catch(() => {
-        // TODO: handle error
-        setLoading(false);
-      });
-  }, [roomId]);
+        .then((response) => response.json())
+        .then((data: DbChat[]) => {
+          if (data.length === 0) {
+            setAllChatsLoaded(true);
+            setLoading(false);
+            return;
+          }
+          // TODO: can be optimized
+          setChats((prevChats) => [...data, ...prevChats].sort((a, b) => a.id - b.id));
+          setLoading(false);
+        })
+        .catch(() => {
+          // TODO: handle error
+          setLoading(false);
+        });
+    },
+    [roomId]
+  );
 
   useEffect(() => {
     loadMoreChatHistories();
@@ -86,17 +93,29 @@ export default function useChatHistories(roomId: number) {
 
   return {
     chatHistories: groupedChats,
+    loadMoreChatHistories,
     loading,
   };
 }
 
-function tranformDbChatToChat(dbChat: DbChat): Chat {
+function createGroupedChatFromDbChat(dbChat: DbChat): GroupedChat {
+  const createdAt = new Date(dbChat.created_at);
+  const groupId = `${dbChat.sender.id}-${createdAt.getTime()}`;
+
   return {
-    id: dbChat.id,
+    groupId,
     creatorId: dbChat.sender.id,
     creatorAvatar: dbChat.sender.avatar_url || '',
-    creatorName: `${dbChat.sender.first_name} ${dbChat.sender.last_name}`,
-    createdAt: new Date(dbChat.created_at),
-    messages: [dbChat.message],
+    creatorName: dbChat.sender.first_name + ' ' + dbChat.sender.last_name,
+    createdAt,
+    messages: [{ id: dbChat.id, message: dbChat.message }],
   };
+}
+
+function addToGroupedChat(
+  groupedChat: GroupedChat,
+  dbChat: DbChat
+): GroupedChat {
+  groupedChat.messages.push({ id: dbChat.id, message: dbChat.message });
+  return groupedChat
 }

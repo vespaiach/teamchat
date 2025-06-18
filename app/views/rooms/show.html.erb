@@ -1,9 +1,16 @@
 <div id="chat-room" data-room-id="<%= @room.id %>" data-logged-in-user-id="<%= current_user.id %>"></div>
-
-<% if @joined %>
-<%= turbo_stream_from [ @room ] %>
-<% end %>
-
-<% content_for :footer do %>
+<script id="room-data" type="application/json">
+  {
+    "id": <%= @room.id %>,
+    "name": "<%= @room.name %>",
+    "totalMembers": <%= @room.users.size %>
+  }
+</script>
+<script id="current-user-data" type="application/json">
+  {
+    "id": <%= current_user.id %>,
+    "name": "<%= current_user.name %>",
+    "avatar": "<%= current_user.avatar_url || ''  %>"
+  }
+</script>
 <script type="module" src="/chat-room/index.js"></script>
-<% end %>

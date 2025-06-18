@@ -1,6 +1,5 @@
 import { application } from 'controllers/application'
 import { eagerLoadControllersFrom } from '@hotwired/stimulus-loading'
-import ChatInputController from 'controllers/chat_input_controller'
 import FlashMessageController from 'controllers/flash_message_controller'
 import ChatsController from 'controllers/chats_controller'
 import SigninController from 'controllers/signin_controller'
@@ -10,7 +9,6 @@ import RoomFormController from 'controllers/room_form_controller'
 import ProfileFormController from 'controllers/profile_form_controller'
 import OpenModalButtonController from 'controllers/open_modal_button_controller'
 import TopMenuController from 'controllers/top_menu_controller'
-application.register('chat-input', ChatInputController)
 application.register('flash-message', FlashMessageController)
 application.register('chats', ChatsController)
 application.register('signin', SigninController)

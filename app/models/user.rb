@@ -63,4 +63,8 @@ class User < ApplicationRecord
 
     result
   end
+
+  def avatar_url
+    avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : nil
+  end
 end
