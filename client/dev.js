@@ -1,7 +1,7 @@
-import * as esbuild from 'esbuild'
+import * as esbuild from 'esbuild';
 
 let ctx = await esbuild.context({
-  entryPoints: ['./src/chat-room/index.tsx', './src/react-shim.tsx'],
+  entryPoints: ['./src/chat-room/index.tsx', './src/home/index.tsx', './src/react-shim.tsx'],
   bundle: true,
   outdir: '../public',
   format: 'esm',
@@ -10,8 +10,8 @@ let ctx = await esbuild.context({
   sourcemap: true,
   chunkNames: 'react-[hash]',
   splitting: true,
-})
+});
 
-await ctx.watch()
+await ctx.watch();
 
-console.log(`👀 Watching for changes...`)
+console.log(`👀 Watching for changes...`);

@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { createRoot } from 'react-dom/client';
-import { MyChat, TheirChat } from '../componets/Chats.js';
+import { MyChat, TheirChat } from './Chats.js';
 import useChatHistories from './useChatHistories.js';
 import WaveLoading from '../componets/WaveLoading.js';
 import ChatInput from '../componets/ChatInput.js';

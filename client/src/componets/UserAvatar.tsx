@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { cx } from '../utils.js';
 
 interface AvatarProps {
@@ -26,23 +25,23 @@ export default function UserAvatar({
   children,
   onClick,
 }: AvatarProps) {
-  const style = useMemo(() => {
-    return src ? { backgroundImage: `url(${src})` } : {};
-  }, [src]);
-
   return (
     <div
       aria-label={`${name}'s avatar`}
       onClick={onClick}
       role="img"
       className={cx(
-        'flex items-center justify-center bg-stone-200 bg-cover bg-center shrink-0 rounded-full relative',
+        'flex items-center justify-center bg-stone-200 bg-cover bg-center shrink-0 rounded-full relative border-2',
         SIZE[size],
+        online ? 'border-green-500' : 'border-transparent',
         className
+      )}>
+      {Boolean(src) && (
+        <img src={src} alt={`${name}'s avatar`} className="object-cover object-center w-full h-full rounded-full border border-transparent" />
       )}
-      style={style}>
-      {!src && <p className="text-lg font-bold">{name[0]}</p>}
-      {online && <div className="absolute top-[-2] right-[-1] rounded-full w-3 h-3 bg-green-500 border-2 border-white" />}
+      {!src && (
+        <div className="rounded-full w-full h-full text-lg font-bold flex items-center justify-center">{name[0]}</div>
+      )}
       {children}
     </div>
   );

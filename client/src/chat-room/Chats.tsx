@@ -1,5 +1,5 @@
 import { useUserOnline } from "../contexts/UsersOnlineStatus.js";
-import UserAvatar from "./UserAvatar.js";
+import UserAvatar from "../componets/UserAvatar.js";
 
 interface ChatBaseProps {
   children?: React.ReactNode;
