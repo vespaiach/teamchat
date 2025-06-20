@@ -22,8 +22,7 @@
           rel="stylesheet">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag :app %>
     <%= yield :head %>
   </head>
 
@@ -35,12 +34,6 @@
       <% end %>
     </div>
 
-    <% if current_user %>
-      <script type="module">
-        import consumer from 'channels/consumer'
-        consumer.connect()
-      </script>
-    <% end %>
     <%= yield :footer %>
   </body>
 

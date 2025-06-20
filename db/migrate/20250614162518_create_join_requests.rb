@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateJoinRequests < ActiveRecord::Migration[8.0]
   def change
     create_table :join_requests do |t|

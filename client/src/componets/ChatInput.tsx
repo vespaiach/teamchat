@@ -1,5 +1,5 @@
 import TextInput from './TextInput.js';
-import { cx } from '../utils.js';
+import { cx } from '../utils/string.js';
 import IconButton from './IconButton.js';
 import WaveLoading from './WaveLoading.js';
 

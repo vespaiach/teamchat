@@ -44,27 +44,11 @@ class User < ApplicationRecord
 
   def as_json(options = {})
     result = super(options.merge(
-      only: [:id, :first_name, :last_name, :email, :created_at, :updated_at]
+      only: [:id, :first_name, :last_name, :email, :created_at]
     ))
 
-    if avatar.attached?
-      result.merge!({
-        avatar_url: Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true),
-        avatar_filename: avatar.filename.to_s,
-        avatar_content_type: avatar.content_type
-      })
-    else
-      result.merge!({
-        avatar_url: nil,
-        avatar_filename: nil,
-        avatar_content_type: nil
-      })
-    end
-
-    result
-  end
-
-  def avatar_url
-    avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : nil
+    result.merge!({
+      avatar: avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : ''
+    })
   end
 end

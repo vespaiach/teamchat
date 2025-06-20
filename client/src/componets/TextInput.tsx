@@ -1,4 +1,4 @@
-import { cx } from '../utils.js';
+import { cx } from '../utils/string.js';
 
 type TextInputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 

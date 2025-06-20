@@ -1,4 +1,4 @@
-import { cx } from '../utils.js';
+import { cx } from '../utils/string.js';
 
 export default function WaveLoading({ className }: { className?: string }) {
   return (

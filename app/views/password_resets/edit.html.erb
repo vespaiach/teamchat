@@ -1,12 +1,7 @@
-<h1>Reset Password</h1>
-<%= form_with(model: @user, url: password_reset_path(token: params[:token]), local: true) do |form| %>
-<div>
-	<%= form.label :password, 'New Password' %>
-	<%= form.password_field :password, required: true %>
-</div>
-<div>
-	<%= form.label :password_confirmation, 'Confirm New Password' %>
-	<%= form.password_field :password_confirmation, required: true %>
-</div>
-<%= form.submit 'Reset Password' %>
-<% end %>
+<div id="root"></div>
+<!-- BUNDLE_START -->
+<%= content_for :head do %>
+<script type="module" defer src="/assets/reset-password-ZR2PX3TO.js"></script>
+<link rel="modulepreload" href="/assets/common-K3GH6YJX.js">
+
+<% end %><!-- BUNDLE_END -->

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { cx } from '../utils.js';
+import { cx } from '../utils/string.js';
 import IconButton from './IconButton.js';
 import UserAvatar from './UserAvatar.js';
 

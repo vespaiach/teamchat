@@ -1,4 +1,4 @@
-import { cx } from '../utils.js';
+import { cx } from '../utils/string.js';
 
 interface AvatarProps {
   size?: 'small' | 'medium' | 'large';

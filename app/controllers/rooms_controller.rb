@@ -16,6 +16,7 @@ class RoomsController < ApplicationController
   end
 
   def index
+    @users = User.all
     @all_rooms = Room.includes(:users, :join_requests).order(:name).all
     @joined_rooms = @all_rooms.select { |room| room.users.include?(current_user) }
     @not_joined_rooms = @all_rooms.reject { |room| room.users.include?(current_user) }

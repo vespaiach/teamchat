@@ -24,11 +24,7 @@ Rails.application.routes.draw do
       post :join_request
       get :join_requests
     end
-    resource :chats do
-      member do
-        post :create_text
-      end
-    end
+    resource :chats
     resource :chat_histories do
       member do
         get :index
@@ -45,6 +41,9 @@ Rails.application.routes.draw do
 
   resources :password_resets, only: %i[new create edit update], param: :token
 
+  resource :home, only: [:show]
+  resources :channels, only: [:show]
+
   # Defines the root path route ("/")
-  root 'rooms#index'
+  root 'hoom#show'
 end
