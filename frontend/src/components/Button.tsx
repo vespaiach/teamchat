@@ -115,25 +115,6 @@ export interface IconButtonProps extends Omit<ButtonProps, 'children' | 'leftIco
   'aria-label': string;
 }
 
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, size = 'md', variant = 'ghost', className = '', ...props }, ref) => {
-    const sizeClasses = {
-      sm: 'p-1.5',
-      md: 'p-2',
-      lg: 'p-3',
-      xl: 'p-4',
-    };
-
-    return (
-      <Button ref={ref} variant={variant} size={size} className={`${sizeClasses[size]} ${className}`} {...props}>
-        {icon}
-      </Button>
-    );
-  }
-);
-
-IconButton.displayName = 'IconButton';
-
 // Button Group component for related actions
 export interface ButtonGroupProps {
   children: React.ReactNode;

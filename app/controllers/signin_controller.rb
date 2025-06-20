@@ -12,8 +12,8 @@ class SigninController < ApplicationController
       user_online!(current_user.id)
       redirect_to root_url, notice: 'Signed in!'
     else
-      flash.now[:alert] = 'Invalid email or password'
-      render :new, status: :unprocessable_entity
+      @app_errors = [{ message: 'Invalid email or password' }]
+      render :new
     end
   end
 

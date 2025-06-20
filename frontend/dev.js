@@ -6,12 +6,12 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const ERB_MAPS = {
-  'src/sign-in/index.tsx': path.resolve(__dirname, '../app/views/signin/new.html.erb'),
-  'src/sign-up/index.tsx': path.resolve(__dirname, '../app/views/signup/new.html.erb'),
-  'src/homes/index.tsx': path.resolve(__dirname, '../app/views/homes/show.html.erb'),
-  'src/channels/index.tsx': path.resolve(__dirname, '../app/views/channels/show.html.erb'),
-  'src/forgot-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/new.html.erb'),
-  'src/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),
+  'frontend/src/sign-in/index.tsx': path.resolve(__dirname, '../app/views/signin/new.html.erb'),
+  'frontend/src/sign-up/index.tsx': path.resolve(__dirname, '../app/views/signup/new.html.erb'),
+  'frontend/src/homes/index.tsx': path.resolve(__dirname, '../app/views/homes/show.html.erb'),
+  'frontend/src/channels/index.tsx': path.resolve(__dirname, '../app/views/channels/show.html.erb'),
+  'frontend/src/forgot-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/new.html.erb'),
+  'frontend/src/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),
 };
 
 const htmlInject = {
@@ -59,7 +59,7 @@ ${modules}
 const ctx = await esbuild.context({
   entryPoints: Object.keys(ERB_MAPS),
   bundle: true,
-  outdir: '../public/assets/',
+  outdir: 'public/assets/',
   format: 'esm',
   platform: 'browser',
   target: 'es2020',

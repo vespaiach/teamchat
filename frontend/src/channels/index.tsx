@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 
 import { Logo } from "../components/Logo";
 import { TextBox } from "../components/TextBox";
-import { Button, IconButton } from "../components/Button";
+import { Button } from "../components/Button";
+import IconButton from "~/components/IconButton";
 
 // Mock data
 const channels = [
