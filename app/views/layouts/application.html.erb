@@ -22,5 +22,8 @@
 
   <body>
     <%= yield %>
+    <% if Rails.env.development? %>
+    <script src="/hot-reload.js?abc"></script>
+    <% end %>
   </body>
 </html>

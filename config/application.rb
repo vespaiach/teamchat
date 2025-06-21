@@ -1,8 +1,6 @@
-# frozen_string_literal: true
+require_relative "boot"
 
-require_relative 'boot'
-
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -25,21 +23,5 @@ module ChatChit
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    # Configure ViewComponent
-    config.view_component.preview_paths << "#{Rails.root}/test/components/previews"
-
-    # Configure CORS for development (allow esbuild server on port 8000)
-    if Rails.env.development?
-      config.middleware.insert_before 0, Rack::Cors do
-        allow do
-          origins 'localhost:8000', '127.0.0.1:8000'
-          resource '*',
-            headers: :any,
-            methods: [:get, :post, :put, :patch, :delete, :options, :head],
-            credentials: false
-        end
-      end
-    end
   end
 end

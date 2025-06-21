@@ -44,6 +44,11 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :channels, only: [:show]
 
+  # This route is only available in development mode
+  if Rails.env.development?
+    resources :development, only: [:create]
+  end
+
   # Defines the root path route ("/")
   root 'hoom#show'
 end

@@ -19,12 +19,12 @@ export function SignIn() {
     if (!email.trim()) {
       return 'Email is required';
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return 'Please enter a valid email address';
     }
-    
+
     return null;
   };
 
@@ -32,44 +32,44 @@ export function SignIn() {
     if (!password) {
       return 'Password is required';
     }
-    
+
     if (password.length < 6) {
       return 'Password must be at least 6 characters long';
     }
-    
+
     return null;
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     // Clear previous errors
     setEmailError(null);
     setPasswordError(null);
-    
+
     // Get form data
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    
+
     // Validate fields
     const emailValidationError = validateEmail(email);
     const passwordValidationError = validatePassword(password);
-    
+
     if (emailValidationError) {
       setEmailError(emailValidationError);
     }
-    
+
     if (passwordValidationError) {
       setPasswordError(passwordValidationError);
     }
-    
+
     if (emailValidationError || passwordValidationError) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     event.currentTarget.submit();
   };
 
@@ -101,8 +101,6 @@ export function SignIn() {
     setCsrfToken(document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? null);
   }, []);
 
-
-
   return (
     <div className="page-container flex">
       <LeftBrandingPanel />
@@ -122,12 +120,12 @@ export function SignIn() {
 
           <form className="space-y-6" method="post" action="/signin" onSubmit={handleSubmit}>
             {csrfToken && <input type="hidden" name="authenticity_token" value={csrfToken} />}
-            <EmailTextBox 
-              name="email" 
-              label="Email" 
-              placeholder="Enter your email" 
-              autoComplete="email" 
-              required 
+            <EmailTextBox
+              name="email"
+              label="Email"
+              placeholder="Enter your email"
+              autoComplete="email"
+              required
               error={emailError || undefined}
               disabled={isSubmitting}
               onBlur={handleEmailBlur}

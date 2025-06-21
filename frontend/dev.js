@@ -2,6 +2,7 @@ import * as esbuild from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import crypto from 'node:crypto';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,7 +18,6 @@ const ERB_MAPS = {
 const htmlInject = {
   name: 'html-inject',
   setup(build) {
-
     build.onEnd((result) => {
       if (!result.metafile?.outputs) return;
 
@@ -40,8 +40,8 @@ const htmlInject = {
           modules += `\n<link rel="modulepreload" href="/assets/${fileName}">`;
         });
 
-        const erbFilePath = ERB_MAPS[meta.entryPoint]; 
-        const erbContent = fs.readFileSync(erbFilePath, 'utf-8')
+        const erbFilePath = ERB_MAPS[meta.entryPoint];
+        const erbContent = fs.readFileSync(erbFilePath, 'utf-8');
         const updatedContent = erbContent.replace(
           /<!--\s*BUNDLE_START\s*-->[\s\S]*?<!--\s*BUNDLE_END\s*-->/,
           `<!-- BUNDLE_START -->
@@ -49,12 +49,78 @@ const htmlInject = {
 ${modules}
 <% end %>
 <!-- BUNDLE_END -->`
-        )
-        fs.writeFileSync(erbFilePath, updatedContent)
+        );
+        fs.writeFileSync(erbFilePath, updatedContent);
+        console.log(`Updated ${erbFilePath} with new modules.`);
       });
     });
   },
 };
+
+function logReplacedFilesPlugin() {
+  let previousOutputs = new Map(); // entryKey -> { filePath, hash }
+
+  return {
+    name: 'log-replaced-files',
+    setup(build) {
+      build.onEnd((result) => {
+        if (!result.metafile) {
+          console.warn('[log-replaced-files] No metafile available.');
+          return;
+        }
+
+        const changes = [];
+
+        for (const outputFile of Object.keys(result.metafile.outputs)) {
+          try {
+            const content = fs.readFileSync(outputFile);
+            const hash = crypto.createHash('sha1').update(content).digest('hex');
+
+            const entryKey =
+              Object.entries(result.metafile.outputs[outputFile].entryPoint || {})
+                .map(([k]) => k)
+                .join() || outputFile;
+
+            const prev = previousOutputs.get(entryKey);
+
+            if (prev?.filePath && (prev.hash !== hash || prev.filePath !== outputFile)) {
+              changes.push({
+                old: prev ? prev.filePath : null,
+                new: outputFile,
+              });
+            }
+
+            previousOutputs.set(entryKey, { filePath: outputFile, hash });
+          } catch {
+            // File might not exist yet
+          }
+        }
+
+        if (changes.length > 0) {
+          console.log('[log-replaced-files] File replacements:');
+
+          changes.forEach((change) => {
+            console.log(' -', change);
+          });
+
+          // make api call to POST https://localhost:5000/developments to submit changes
+          fetch('http://localhost:5000/development', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              changes,
+              timestamp: new Date().toISOString(),
+            }),
+          }).catch((error) => {
+            console.error('[log-replaced-files] Error submitting changes:', error);
+          });
+        }
+      });
+    },
+  };
+}
 
 const ctx = await esbuild.context({
   entryPoints: Object.keys(ERB_MAPS),
@@ -66,7 +132,7 @@ const ctx = await esbuild.context({
   metafile: true,
   sourcemap: true,
   splitting: true,
-  plugins: [htmlInject],
+  plugins: [htmlInject, logReplacedFilesPlugin()],
   entryNames: '[dir]-[hash]',
   chunkNames: 'common-[hash]',
   assetNames: 'assets/[name]-[hash]',
