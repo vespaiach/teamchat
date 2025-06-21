@@ -6,6 +6,13 @@ module ApplicationCable
 
     def connect
       self.current_user = find_logged_in_user
+    rescue ActionCable::Connection::Authorization::UnauthorizedError
+      # In development, allow connections for hot reload functionality
+      if Rails.env.development?
+        self.current_user = nil
+      else
+        raise
+      end
     end
 
     private

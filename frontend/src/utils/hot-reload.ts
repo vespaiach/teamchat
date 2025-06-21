@@ -1,19 +1,19 @@
 import consumer from './consumer';
 
-consumer.subscriptions.create('DevelopmentChannel', {
+consumer.subscriptions.create('HotReloadChannel', {
   connected() {
-    console.log('Connected to DevelopmentChannel');
+    console.log('Connected to HotReloadChannel');
   },
   disconnected() {
-    console.log('Disconnected from DevelopmentChannel');
+    console.log('Disconnected from HotReloadChannel');
   },
   received(data) {
-    console.log('Received data from DevelopmentChannel:', data);
-    
+    console.log('Received data from HotReloadChannel:', data);
+    this.updateDom();
+  },
+
+  updateDom() {
     // Handle the hot reload logic here
-    if (data.event === 'assets_updated') {
-      console.log('Assets updated, reloading page...');
-      // window.location.reload();
-    }
+    window.location.reload();
   },
 });

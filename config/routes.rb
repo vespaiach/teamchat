@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
   # This route is only available in development mode
   if Rails.env.development?
-    resources :development, only: [:create]
+    resource :hot_reload, only: [:show], controller: 'hot_reload'
   end
 
   # Defines the root path route ("/")

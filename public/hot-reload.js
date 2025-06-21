@@ -491,19 +491,19 @@
   var consumer_default = createConsumer();
 
   // src/utils/hot-reload.ts
-  consumer_default.subscriptions.create("DevelopmentChannel", {
+  consumer_default.subscriptions.create("HotReloadChannel", {
     connected() {
-      console.log("Connected to DevelopmentChannel");
+      console.log("Connected to HotReloadChannel");
     },
     disconnected() {
-      console.log("Disconnected from DevelopmentChannel");
+      console.log("Disconnected from HotReloadChannel");
     },
     received(data) {
-      debugger
-      console.log("Received data from DevelopmentChannel:", data);
-      if (data.event === "assets_updated") {
-        console.log("Assets updated, reloading page...");
-      }
+      console.log("Received data from HotReloadChannel:", data);
+      this.updateDom();
+    },
+    updateDom() {
+      window.location.reload();
     }
   });
 })();

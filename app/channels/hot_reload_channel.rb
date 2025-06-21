@@ -2,6 +2,11 @@
 
 class HotReloadChannel < ApplicationCable::Channel
   def subscribed
-    stream_from 'hot_reload'
+    if Rails.env.development?
+      stream_from 'hot_reload'
+      # ActionCable.server.broadcast('hot_reload', true)
+    else
+      reject
+    end
   end
 end

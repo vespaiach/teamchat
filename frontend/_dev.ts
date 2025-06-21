@@ -15,7 +15,7 @@ const ERB_MAPS = {
   'frontend/src/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),
 };
 
-const htmlInject = {
+const htmlInject: esbuild.Plugin = {
   name: 'html-inject',
   setup(build) {
     build.onEnd((result) => {
@@ -60,7 +60,7 @@ ${modules}
 function trackFileChangesPlugin() {
   const previousOutputs = new Map(); // entryKey -> { filePath, hash }
 
-  const plugin = {
+  const plugin: esbuild.Plugin = {
     name: 'log-replaced-files',
     setup(build) {
       build.onEnd((result) => {
@@ -69,7 +69,7 @@ function trackFileChangesPlugin() {
           return;
         }
 
-        const changes = [];
+        const changes: Array<{ old: string; new: string }> = [];
 
         for (const outputFile of Object.keys(result.metafile.outputs)) {
           try {
@@ -97,18 +97,24 @@ function trackFileChangesPlugin() {
 
         if (changes.length > 0) {
           console.log('[log-replaced-files] File replacements:');
-          console.log(changes);
+
+          changes.forEach((change) => {
+            console.log(' -', change);
+          });
 
           // make api call to POST https://localhost:5000/hot_reload to submit changes
           fetch('http://localhost:5000/hot_reload', {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-            }
-          })
-            .catch((error) => {
-              console.error('[log-replaced-files] Error submitting changes:', error);
-            })
+            },
+            body: JSON.stringify({
+              changes,
+              timestamp: new Date().toISOString(),
+            }),
+          }).catch((error) => {
+            console.error('[log-replaced-files] Error submitting changes:', error);
+          });
         }
       });
     },
@@ -126,7 +132,7 @@ const ctx = await esbuild.context({
   metafile: true,
   sourcemap: true,
   splitting: true,
-  plugins: [htmlInject()],
+  plugins: [htmlInject, trackFileChangesPlugin()],
   entryNames: '[dir]-[hash]',
   chunkNames: 'common-[hash]',
   assetNames: 'assets/[name]-[hash]',
