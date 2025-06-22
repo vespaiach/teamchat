@@ -13,6 +13,8 @@ const ERB_MAPS = {
   'frontend/src/channels/index.tsx': path.resolve(__dirname, '../app/views/channels/show.html.erb'),
   'frontend/src/forgot-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/new.html.erb'),
   'frontend/src/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),
+  'frontend/src/check-email/index.tsx': path.resolve(__dirname, '../app/views/password_resets/instructions_sent.html.erb'),
+  'frontend/src/password-reset-expired/index.tsx': path.resolve(__dirname, '../app/views/password_resets/expired.html.erb'),
 };
 
 const htmlInject = {

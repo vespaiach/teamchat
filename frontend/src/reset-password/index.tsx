@@ -3,51 +3,40 @@ import { createRoot } from 'react-dom/client';
 import { Logo } from '~/components/Logo';
 import { PasswordTextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
+import LeftBrandingPanel from '~/components/LeftBrandingPanel';
 
 export default function ResetPassword() {
+  
   return (
     <div className="page-container flex">
-      {/* Left side - Branding */}
-      <div
-        className="hidden lg:flex lg:w-1/2 relative overflow-hidden"
-        style={{ background: `linear-gradient(to bottom right, var(--color-primary), oklch(50% 0.245 27.325))` }}>
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="relative z-10 flex flex-col justify-center items-center text-white p-12">
-          <div className="text-center max-w-md">
-            <div className="mb-6 flex justify-center">
-              <Logo size={60} showText={false} className="text-white" />
-            </div>
-            <h1 className="text-4xl font-bold mb-6">Create New Password</h1>
-            <p className="text-xl mb-8 opacity-90">
-              You're almost there! Create a strong new password to secure your account.
-            </p>
-            <div className="space-y-4 text-left">
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>At least 8 characters</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Include numbers and letters</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Mix of uppercase and lowercase</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Consider special characters</span>
-              </div>
-            </div>
+      <LeftBrandingPanel>
+        <h1 className="text-4xl font-bold mb-6">Create New Password</h1>
+        <p className="text-xl mb-8 opacity-90">
+          You're almost there! Create a strong new password to secure your account.
+        </p>
+        <div className="space-y-4 text-left">
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>At least 8 characters</span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>Include numbers and letters</span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>Mix of uppercase and lowercase</span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>Consider special characters</span>
           </div>
         </div>
-      </div>
+      </LeftBrandingPanel>
 
-      {/* Right side - Reset Password Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-gray-900 transition-colors duration-200">
         <div className="w-full max-w-md">
-          {/* Logo for mobile */}
-          <div className="lg:hidden text-center mb-8">
+        <div className="lg:hidden text-center mb-8">
             <Logo size={50} className="justify-center mb-4" />
           </div>
 
@@ -87,7 +76,7 @@ export default function ResetPassword() {
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Remember your password?{' '}
               <a
-                href="/"
+                href="/signin"
                 className="font-medium transition duration-200 hover:opacity-80 text-primary dark:text-dark-primary">
                 Back to sign in
               </a>

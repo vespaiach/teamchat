@@ -3,22 +3,27 @@
 class PasswordResetsController < ApplicationController
   def new; end
 
+  def instructions_sent; end
+
+  def expired; end
+
   def create
     user = User.find_by(email: params[:email].downcase)
     if user
       user.generate_password_reset_token!
       PasswordResetMailer.with(user:).reset_email.deliver_now
-      redirect_to root_url, notice: 'Password reset instructions have been sent to your email.'
+      redirect_to instructions_sent_url
     else
-      flash.now[:alert] = 'Email not found'
-      render :new, status: :unprocessable_entity
+      @app_errors = [{ message: 'Email not found' }]
+      render :new
     end
   end
 
   def edit
     @user = User.find_by(password_reset_token: params[:token])
-    redirect_to root_url, alert: 'Invalid or expired token' unless @user
+    redirect_to reset_password_expired_url unless @user
   end
+
 
   def update
     @user = User.find_by(password_reset_token: params[:token])

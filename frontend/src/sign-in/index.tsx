@@ -8,6 +8,7 @@ import LeftBrandingPanel from '~/components/LeftBrandingPanel';
 import { ToastProvider } from '~/global-contexts/toast';
 import useShowServerErrors from '~/hooks/useAppErrors';
 import useCSRFToken from '~/hooks/useCSRFToken';
+import { validateEmail, validatePassword } from '~/utils/string';
 
 export function SignIn() {
   const { csrfTokenElement } = useCSRFToken();
@@ -15,31 +16,6 @@ export function SignIn() {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   useShowServerErrors();
-
-  const validateEmail = (email: string): string | null => {
-    if (!email.trim()) {
-      return 'Email is required';
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return 'Please enter a valid email address';
-    }
-
-    return null;
-  };
-
-  const validatePassword = (password: string): string | null => {
-    if (!password) {
-      return 'Password is required';
-    }
-
-    if (password.length < 6) {
-      return 'Password must be at least 6 characters long';
-    }
-
-    return null;
-  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

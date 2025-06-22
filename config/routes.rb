@@ -17,8 +17,15 @@ Rails.application.routes.draw do
   get 'signup' => 'signup#new'
   post 'signup' => 'signup#create'
 
-  delete 'signout' => 'signin#destroy'
+  get 'forgot-password' => 'password_resets#new', as: :forgot_password_new
+  get 'check-email' => 'password_resets#instructions_sent', as: :instructions_sent
+  post 'forgot-password' => 'password_resets#create', as: :forgot_password_create
 
+  get 'reset-password/:token' => 'password_resets#edit', as: :reset_password_edit
+  get 'reset-password-expired' => 'password_resets#expired', as: :reset_password_expired
+  put 'reset-password/:token' => 'password_resets#update', as: :reset_password_update
+
+  delete 'signout' => 'signin#destroy'
 
   resource :profile, only: %i[show update]
 
@@ -42,8 +49,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :password_resets, only: %i[new create edit update], param: :token
-
   resource :home, only: [:show]
   resources :channels, only: [:show]
 
@@ -53,5 +58,5 @@ Rails.application.routes.draw do
   end
 
   # Defines the root path route ("/")
-  root 'hoom#show'
+  root 'homes#show'
 end
