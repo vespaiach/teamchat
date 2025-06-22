@@ -12,7 +12,8 @@ class SignupController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_url, notice: 'Account created successfully!'
     else
-      render :new, status: :unprocessable_entity
+      @app_errors = [{ message: 'Invalid email or password' }]
+      render :new
     end
   end
 

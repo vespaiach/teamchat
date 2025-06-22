@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useState } from 'react';
+import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Logo } from '~/components/Logo';
 import { EmailTextBox, PasswordTextBox } from '~/components/TextBox';
@@ -7,9 +7,10 @@ import { Checkbox } from '~/components/Checkbox';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
 import { ToastProvider } from '~/global-contexts/toast';
 import useShowServerErrors from '~/hooks/useAppErrors';
+import useCSRFToken from '~/hooks/useCSRFToken';
 
 export function SignIn() {
-  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const { csrfTokenElement } = useCSRFToken();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -97,13 +98,28 @@ export function SignIn() {
     }
   };
 
-  useEffect(() => {
-    setCsrfToken(document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? null);
-  }, []);
-
   return (
     <div className="page-container flex">
-      <LeftBrandingPanel />
+      <LeftBrandingPanel>
+        <h1 className="text-4xl font-bold mb-6">TeamChat</h1>
+        <p className="text-xl mb-8 opacity-90">
+          Bring your team together with seamless communication and collaboration.
+        </p>
+        <div className="space-y-4 text-left">
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>Real-time messaging</span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>File sharing & collaboration</span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span>Organized channels & threads</span>
+          </div>
+        </div>
+      </LeftBrandingPanel>
 
       {/* Right side - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-gray-900 transition-colors duration-200">
@@ -119,7 +135,7 @@ export function SignIn() {
           </div>
 
           <form className="space-y-6" method="post" action="/signin" onSubmit={handleSubmit}>
-            {csrfToken && <input type="hidden" name="authenticity_token" value={csrfToken} />}
+            {csrfTokenElement}
             <EmailTextBox
               name="email"
               label="Email"

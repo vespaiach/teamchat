@@ -1,6 +1,6 @@
-import { Logo } from "~/components/Logo";
+import { Logo } from '~/components/Logo';
 
-export default function LeftBrandingPanel() {
+export default function LeftBrandingPanel({ children }: { children?: React.ReactNode }) {
   return (
     <div
       className="hidden lg:flex lg:w-1/2 relative overflow-hidden"
@@ -11,24 +11,7 @@ export default function LeftBrandingPanel() {
           <div className="mb-6 flex justify-center">
             <Logo size={60} showText={false} className="text-white" />
           </div>
-          <h1 className="text-4xl font-bold mb-6">TeamChat</h1>
-          <p className="text-xl mb-8 opacity-90">
-            Bring your team together with seamless communication and collaboration.
-          </p>
-          <div className="space-y-4 text-left">
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-              <span>Real-time messaging</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-              <span>File sharing & collaboration</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-              <span>Organized channels & threads</span>
-            </div>
-          </div>
+          {children}
         </div>
       </div>
     </div>

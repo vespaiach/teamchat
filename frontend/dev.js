@@ -126,7 +126,7 @@ const ctx = await esbuild.context({
   metafile: true,
   sourcemap: true,
   splitting: true,
-  plugins: [htmlInject()],
+  plugins: [htmlInject],
   entryNames: '[dir]-[hash]',
   chunkNames: 'common-[hash]',
   assetNames: 'assets/[name]-[hash]',

@@ -13,9 +13,12 @@ Rails.application.routes.draw do
 
   get 'signin' => 'signin#new'
   post 'signin' => 'signin#create'
+
+  get 'signup' => 'signup#new'
+  post 'signup' => 'signup#create'
+
   delete 'signout' => 'signin#destroy'
 
-  resources :signup, only: %i[new create]
 
   resource :profile, only: %i[show update]
 
