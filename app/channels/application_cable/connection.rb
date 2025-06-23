@@ -26,7 +26,7 @@ module ApplicationCable
     end
 
     def encrypted_cookies
-      cookies.encrypted[:_chat_chit_session]
+      cookies.encrypted[:_teamchat_session]
     end
   end
 end

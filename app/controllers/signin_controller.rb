@@ -32,7 +32,7 @@ class SigninController < ApplicationController
 
     # Clear both session and cookies to ensure ActionCable disconnects
     session[:user_id] = nil
-    cookies.delete(:_chat_chit_session)
+    cookies.delete(:_teamchat_session)
     cookies.delete(:remember_token)
 
     redirect_to root_url, notice: 'Logged out!'
