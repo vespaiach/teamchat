@@ -12,7 +12,7 @@ class SignupController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_url, notice: 'Account created successfully!'
     else
-      @app_errors = [{ message: 'Invalid email or password' }]
+      @server_notifications = [{ message: 'Invalid email or password', type: 'error' }]
       render :new
     end
   end

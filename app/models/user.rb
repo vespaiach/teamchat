@@ -28,10 +28,9 @@ class User < ApplicationRecord
   end
 
   def generate_password_reset_token!
-    update!(
-      password_reset_token: SecureRandom.urlsafe_base64,
-      password_reset_sent_at: Time.current
-    )
+    self.password_reset_token = SecureRandom.urlsafe_base64
+    self.password_reset_sent_at = Time.current
+    save!
   end
 
   def clear_password_reset_token!
@@ -50,5 +49,20 @@ class User < ApplicationRecord
     result.merge!({
       avatar: avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : ''
     })
+  end
+
+  def debug_password_reset_token
+    {
+      rails_value: password_reset_token,
+      rails_encoding: password_reset_token&.encoding,
+      raw_attribute: read_attribute(:password_reset_token),
+      raw_encoding: read_attribute(:password_reset_token)&.encoding
+    }
+  end
+
+  # Bypass type casting for password_reset_token
+  def password_reset_token
+    @attributes['password_reset_token']&.value_before_type_cast ||
+    @attributes['password_reset_token']&.value
   end
 end

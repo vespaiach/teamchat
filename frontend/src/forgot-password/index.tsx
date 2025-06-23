@@ -5,7 +5,7 @@ import { EmailTextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
 import { ToastProvider } from '~/global-contexts/toast';
-import useShowServerErrors from '~/hooks/useAppErrors';
+import useShowServerNotifications from '~/hooks/useShowServerNotifications';
 import useCSRFToken from '~/hooks/useCSRFToken';
 import { validateEmail } from '~/utils/string';
 
@@ -13,7 +13,7 @@ export default function ForgotPassword() {
   const { csrfTokenElement } = useCSRFToken();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useShowServerErrors();
+  useShowServerNotifications();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

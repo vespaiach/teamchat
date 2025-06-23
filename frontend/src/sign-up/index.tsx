@@ -6,7 +6,7 @@ import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
 import { ToastProvider } from '~/global-contexts/toast';
-import useShowServerErrors from '~/hooks/useAppErrors';
+import useShowServerNotifications from '~/hooks/useShowServerNotifications';
 import { validateEmail, validateName, validatePassword } from '~/utils/string';
 import useCSRFToken from '~/hooks/useCSRFToken';
 
@@ -18,7 +18,7 @@ export default function SignUp() {
   const [firstNameError, setFirstNameError] = useState<string | null>(null);
   const [lastNameError, setLastNameError] = useState<string | null>(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
-  useShowServerErrors();
+  useShowServerNotifications();
 
   const validateConfirmPassword = (password: string, confirmPassword: string): string | null => {
     if (!confirmPassword) {

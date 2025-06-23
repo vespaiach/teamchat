@@ -6,7 +6,7 @@ import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
 import { ToastProvider } from '~/global-contexts/toast';
-import useShowServerErrors from '~/hooks/useAppErrors';
+import useShowServerNotifications from '~/hooks/useShowServerNotifications';
 import useCSRFToken from '~/hooks/useCSRFToken';
 import { validateEmail, validatePassword } from '~/utils/string';
 
@@ -15,7 +15,7 @@ export function SignIn() {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useShowServerErrors();
+  useShowServerNotifications();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

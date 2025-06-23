@@ -1,8 +1,8 @@
 declare global {
-  interface AppError {
-    id: string;
+  interface ServerNotification {
+    type: 'error' | 'success' | 'warning';
+    title?: string;
     message: string;
-    location?: string;
   }
 
   interface User {
@@ -13,7 +13,7 @@ declare global {
     lastName: string;
   }
   
-  var appErrors: AppError[] | undefined;
+  var appErrors: ServerNotification[] | undefined;
 
   type OnlineStatus = 'online' | 'offline' | 'away' | 'busy';
 }

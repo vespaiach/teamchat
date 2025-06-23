@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   get 'reset-password/:token' => 'password_resets#edit', as: :reset_password_edit
   get 'reset-password-expired' => 'password_resets#expired', as: :reset_password_expired
-  put 'reset-password/:token' => 'password_resets#update', as: :reset_password_update
+  post 'reset-password/:token' => 'password_resets#update', as: :reset_password_update
 
   delete 'signout' => 'signin#destroy'
 

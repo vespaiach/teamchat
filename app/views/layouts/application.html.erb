@@ -21,6 +21,10 @@
   </head>
 
   <body>
+    <% if @server_notifications.present? %>
+      <%= json_script_tag @server_notifications, id: 'server-notifications' %>
+    <% end %>
+    <div id="root"></div>
     <%= yield %>
   </body>
 </html>
