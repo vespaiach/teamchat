@@ -13,7 +13,7 @@ class SigninController < ApplicationController
       # Handle remember me with separate token
       if params[:remember_me] == 'true' || params[:remember_me] == true
         remember_token = user.generate_remember_token!
-        cookies.permanent.signed[:remember_token] = remember_token
+        cookies.permanent.signed[:_teamchat_remember_token] = remember_token
       end
 
       user_online!(current_user.id)
@@ -33,8 +33,9 @@ class SigninController < ApplicationController
     # Clear both session and cookies to ensure ActionCable disconnects
     session[:user_id] = nil
     cookies.delete(:_teamchat_session)
-    cookies.delete(:remember_token)
+    cookies.delete(:_teamchat_remember_token)
 
-    redirect_to root_url, notice: 'Logged out!'
+    flash[:success] = 'You have been logged out successfully.'
+    redirect_to signin_path
   end
 end

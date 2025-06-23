@@ -2,20 +2,16 @@
 
 class User < ApplicationRecord
   include OnlineStatus
-
-  # Modules
   has_secure_password
 
-  # Associations
-  has_one_attached :avatar
-  has_many :room_users
-  has_many :chats
-  has_many :created_rooms, class_name: 'Room', foreign_key: 'user_id'
-  has_many :joined_rooms, through: :room_users, source: :room
-  has_many :join_requests, dependent: :destroy
+  has_many :conversation_participants, dependent: :destroy
+  has_many :conversations, through: :conversation_participants
 
-  # Scopes
-  scope :chats_by_room, ->(room_id) { joins(:chats).where(rooms: { id: room_id }) }
+  has_many :messages, foreign_key: :sender_id, dependent: :nullify
+  has_many :message_reactions, dependent: :destroy
+  has_many :message_statuses, dependent: :destroy
+
+  has_one_attached :avatar
 
   # Validations
   validates :first_name, presence: true
