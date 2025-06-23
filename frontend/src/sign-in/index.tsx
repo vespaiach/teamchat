@@ -137,7 +137,7 @@ export function SignIn() {
             />
 
             <div className="flex items-center justify-between">
-              <Checkbox id="remember-me" name="remember-me" disabled={isSubmitting}>
+              <Checkbox id="remember-me" name="remember_me" value="true" disabled={isSubmitting}>
                 Remember me
               </Checkbox>
 

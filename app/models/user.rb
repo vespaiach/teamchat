@@ -28,9 +28,10 @@ class User < ApplicationRecord
   end
 
   def generate_password_reset_token!
-    self.password_reset_token = SecureRandom.urlsafe_base64
-    self.password_reset_sent_at = Time.current
-    save!
+    update!(
+      password_reset_token: SecureRandom.urlsafe_base64,
+      password_reset_sent_at: Time.current
+    )
   end
 
   def clear_password_reset_token!
@@ -51,18 +52,30 @@ class User < ApplicationRecord
     })
   end
 
-  def debug_password_reset_token
-    {
-      rails_value: password_reset_token,
-      rails_encoding: password_reset_token&.encoding,
-      raw_attribute: read_attribute(:password_reset_token),
-      raw_encoding: read_attribute(:password_reset_token)&.encoding
-    }
+  def generate_remember_token!
+    update!(
+      remember_token: SecureRandom.urlsafe_base64,
+      remember_token_expires_at: 1.year.from_now
+    )
+  end
+
+  def clear_remember_token!
+    update!(remember_token: nil, remember_token_expires_at: nil)
+  end
+
+  def remember_token_valid?
+    remember_token.present? && remember_token_expires_at&.future?
   end
 
   # Bypass type casting for password_reset_token
   def password_reset_token
     @attributes['password_reset_token']&.value_before_type_cast ||
     @attributes['password_reset_token']&.value
+  end
+
+  # Bypass type casting for remember_token
+  def remember_token
+    @attributes['remember_token']&.value_before_type_cast ||
+    @attributes['remember_token']&.value
   end
 end

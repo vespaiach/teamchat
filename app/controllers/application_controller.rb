@@ -8,7 +8,9 @@ class ApplicationController < ActionController::Base
   before_action :require_login, if: -> { !%w[signin signup password_resets hot_reload].include?(controller_name) }
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+    @current_user ||= (
+      User.find_by(id: session[:user_id]) if session[:user_id]
+    ) || authenticate_with_remember_token
   end
 
   def signed_in?
@@ -31,5 +33,24 @@ class ApplicationController < ActionController::Base
     end
 
     notifications
+  end
+
+  private
+
+  def authenticate_with_remember_token
+    return unless cookies.signed[:remember_token]
+
+    user = User.find_by(remember_token: cookies.signed[:remember_token])
+
+    if user&.remember_token_valid?
+      session[:user_id] = user.id
+      # Rotate token for security
+      user.generate_remember_token!
+      cookies.permanent.signed[:remember_token] = user.remember_token
+      user
+    else
+      cookies.delete(:remember_token)
+      nil
+    end
   end
 end
