@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCompositeIndexToChats < ActiveRecord::Migration[8.0]
   def change
     # Add composite index for efficient pagination queries

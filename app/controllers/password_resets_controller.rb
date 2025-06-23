@@ -14,7 +14,7 @@ class PasswordResetsController < ApplicationController
       PasswordResetMailer.with(user:).reset_email.deliver_now
       redirect_to instructions_sent_url
     else
-      @server_notifications = [{ message: 'Email not found', type: 'error' }]
+      flash[:error] = 'Email not found'
       render :new
     end
   end
@@ -29,10 +29,10 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by(password_reset_token: params[:token])
     if @user&.update(password_params)
       @user.clear_password_reset_token!
-      @server_notifications = [{ message: 'Password reset successfully', type: 'success' }]
+      flash[:success] = 'Password reset successfully'
       redirect_to signin_path
     else
-      @server_notifications = [{ message: 'Failed to reset password', type: 'error' }]
+      flash[:error] = 'Failed to reset password'
       render :edit
     end
   end

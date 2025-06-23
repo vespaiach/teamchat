@@ -35,7 +35,7 @@ export default function ToastItem({ toast, className, onRemove }: ToastItemProps
     const showTimer = setTimeout(() => setIsVisible(true), 10);
 
     // Auto-close timer
-    const duration = toast.duration || 5000;
+    const duration = toast.duration || 8000;
     const closeTimer = setTimeout(() => {
       setIsExiting(true);
       setTimeout(() => onRemove(toast.id), 300); // Wait for exit animation

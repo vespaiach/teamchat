@@ -12,7 +12,7 @@ class SigninController < ApplicationController
       user_online!(current_user.id)
       redirect_to root_url, notice: 'Signed in!'
     else
-      @server_notifications = [{ message: 'Invalid email or password', type: 'error' }]
+      flash[:error] = 'Invalid email or password'
       render :new
     end
   end

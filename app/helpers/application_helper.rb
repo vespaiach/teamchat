@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def json_script_tag(data, id:)
-    return unless data
+    return unless data.present?
     json_data = if data.respond_to?(:map) && !data.is_a?(String)
       data.map(&:as_json)
     else
