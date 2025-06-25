@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_23_184927) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_25_134617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "conversation_role", ["admin", "member"]
+  create_enum "message_status", ["delivered", "read"]
   create_enum "message_type", ["text", "image", "audio", "video", "file"]
   create_enum "request_status", ["pending", "approved", "rejected"]
 
@@ -65,6 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_184927) do
     t.bigint "conversation_id", null: false
     t.bigint "user_id", null: false
     t.enum "role", default: "member", null: false, enum_type: "conversation_role"
+    t.bigint "last_read_message_id"
     t.datetime "joined_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -97,6 +99,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_184927) do
     t.index ["message_id", "user_id", "emoji"], name: "index_reactions_on_message_user_emoji", unique: true
     t.index ["message_id"], name: "index_message_reactions_on_message_id"
     t.index ["user_id"], name: "index_message_reactions_on_user_id"
+  end
+
+  create_table "message_statuses", force: :cascade do |t|
+    t.bigint "message_id", null: false
+    t.bigint "user_id", null: false
+    t.enum "status", default: "delivered", null: false, enum_type: "message_status"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id", "user_id"], name: "index_message_statuses_on_message_id_and_user_id", unique: true
+    t.index ["message_id"], name: "index_message_statuses_on_message_id"
+    t.index ["user_id"], name: "index_message_statuses_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -139,6 +153,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_184927) do
   add_foreign_key "conversations", "users", column: "created_by_id"
   add_foreign_key "message_reactions", "messages"
   add_foreign_key "message_reactions", "users"
+  add_foreign_key "message_statuses", "messages"
+  add_foreign_key "message_statuses", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "messages", column: "parent_message_id"
   add_foreign_key "messages", "users", column: "sender_id"

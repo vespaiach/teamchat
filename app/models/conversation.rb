@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Conversation < ApplicationRecord
-  belongs_to :creator, class_name: 'User', foreign_key: :created_by_id
+  belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id
 
   has_many :conversation_participants, class_name: 'ConversationParticipant', dependent: :destroy
   has_many :participants, through: :conversation_participants, source: :user

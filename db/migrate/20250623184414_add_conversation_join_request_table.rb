@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AddConversationJoinRequestTable < ActiveRecord::Migration[8.0]
-  def up
+  def change
     create_enum :request_status, %w[pending approved rejected]
 
     create_table :conversation_join_requests do |t|
