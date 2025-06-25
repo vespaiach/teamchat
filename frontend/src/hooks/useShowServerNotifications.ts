@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { useToast } from '~/global-contexts/toast';
+import { showError, showSuccess, showWarning } from '~/global-contexts/toast';
 
 export default function useShowServerNotifications() {
-  const { showError, showSuccess, showWarning } = useToast();
   const showRef = useRef<(n: ServerNotification) => void | null>(null);
   showRef.current = (noti: ServerNotification) => {
     switch (noti.type) {

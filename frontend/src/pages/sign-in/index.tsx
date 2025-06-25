@@ -5,7 +5,7 @@ import { EmailTextBox, PasswordTextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
-import { ToastProvider } from '~/global-contexts/toast';
+import { ToastContainer } from '~/global-contexts/toast';
 import useShowServerNotifications from '~/hooks/useShowServerNotifications';
 import useCSRFToken from '~/hooks/useCSRFToken';
 import { validateEmail, validatePassword } from '~/utils/string';
@@ -173,8 +173,7 @@ export function SignIn() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider>
-      <SignIn />
-    </ToastProvider>
+    <SignIn />
+    <ToastContainer />
   </StrictMode>
 );

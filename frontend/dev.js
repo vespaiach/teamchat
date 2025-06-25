@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ERB_MAPS = {
   'frontend/src/pages/sign-in/index.tsx': path.resolve(__dirname, '../app/views/signin/new.html.erb'),
   'frontend/src/pages/sign-up/index.tsx': path.resolve(__dirname, '../app/views/signup/new.html.erb'),
-  'frontend/src/pages/homes/index.tsx': path.resolve(__dirname, '../app/views/homes/show.html.erb'),
+  'frontend/src/pages/home/index.tsx': path.resolve(__dirname, '../app/views/home/show.html.erb'),
   'frontend/src/pages/channels/index.tsx': path.resolve(__dirname, '../app/views/channels/show.html.erb'),
   'frontend/src/pages/forgot-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/new.html.erb'),
   'frontend/src/pages/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),

@@ -10,8 +10,7 @@ class AddConversationParticipantsTable < ActiveRecord::Migration[8.0]
       t.enum        :role,          enum_type: :conversation_role, default: :member, null: false
       t.datetime    :joined_at,     null: false, default: -> { 'CURRENT_TIMESTAMP' }
 
-
-      t.datetime :deleted_at
+      t.datetime    :deleted_at
       t.timestamps
     end
 

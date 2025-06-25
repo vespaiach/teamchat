@@ -3,16 +3,7 @@ import ErrorIcon from '~/svgs/Error';
 import SuccessIcon from '~/svgs/Success';
 import WarningIcon from '~/svgs/Warning';
 import { cx } from '~/utils/string';
-
-export type ToastType = 'success' | 'error' | 'warning';
-
-export interface Toast {
-  id: string;
-  type: ToastType;
-  title?: string;
-  message: string;
-  duration?: number;
-}
+import { removeToast } from '~/global-contexts/toast';
 
 const toastIconTypes: Record<string, string> = {
   success: 'text-green-500 dark:text-green-400',
@@ -23,10 +14,9 @@ const toastIconTypes: Record<string, string> = {
 interface ToastItemProps {
   toast: Toast;
   className?: string;
-  onRemove: (id: string) => void;
 }
 
-export default function ToastItem({ toast, className, onRemove }: ToastItemProps) {
+export default function ToastItem({ toast, className }: ToastItemProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 
@@ -38,18 +28,18 @@ export default function ToastItem({ toast, className, onRemove }: ToastItemProps
     const duration = toast.duration || 8000;
     const closeTimer = setTimeout(() => {
       setIsExiting(true);
-      setTimeout(() => onRemove(toast.id), 300); // Wait for exit animation
+      setTimeout(() => removeToast(toast.id), 300); // Wait for exit animation
     }, duration);
 
     return () => {
       clearTimeout(showTimer);
       clearTimeout(closeTimer);
     };
-  }, [toast.id, toast.duration, onRemove]);
+  }, [toast.id, toast.duration]);
 
   const handleClose = () => {
     setIsExiting(true);
-    setTimeout(() => onRemove(toast.id), 300);
+    setTimeout(() => removeToast(toast.id), 300);
   };
 
   const toastClassNames = useMemo(() => {
@@ -64,7 +54,7 @@ export default function ToastItem({ toast, className, onRemove }: ToastItemProps
     const typeStyles = {
       success: cx(
         'bg-green-50 border-green-200 text-green-800',
-        'dark:bg-green-900/20 dark:border-green-700 dark:text-green-300'
+        'dark:bg-green-900 dark:border-green-700 dark:text-green-300'
       ),
       error: cx('bg-red-50 border-red-200 text-red-800', 'dark:bg-red-900 dark:border-red-700 dark:text-red-300'),
       warning: cx(

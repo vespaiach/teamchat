@@ -3,7 +3,7 @@
 class Conversation < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: :created_by_id
 
-  has_many :conversation_participants, dependent: :destroy
+  has_many :conversation_participants, class_name: 'ConversationParticipant', dependent: :destroy
   has_many :participants, through: :conversation_participants, source: :user
   has_many :messages, dependent: :destroy
 
@@ -11,6 +11,11 @@ class Conversation < ApplicationRecord
   scope :private_only, -> { where(is_public: false) }
   scope :group_chats, -> { where(is_group: true) }
   scope :direct_chats, -> { where(is_group: false) }
+  scope :by_creator, -> { where(created_by_id: _1) }
 
   validates :is_group, inclusion: { in: [true, false] }
+
+  def as_json(options = {})
+    super(options.merge(only: [:id, :name, :is_group, :is_public, :created_at]))
+  end
 end

@@ -59,3 +59,16 @@ export function validateName(name: string, fieldName: string): string | null {
 
   return null;
 }
+
+export function validateChannelName(name: string): string | null {
+  const nameRef = /^[a-z0-9-]{1,30}$/;
+  if (!name.trim()) {
+    return 'Channel name is required';
+  }
+
+  if (!nameRef.test(name)) {
+    return 'Channel name must be lowercase, without spaces or periods, and shorter than 30 characters';
+  }
+
+  return null;
+}

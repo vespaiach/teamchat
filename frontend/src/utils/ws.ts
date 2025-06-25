@@ -1,3 +1,4 @@
 import { createConsumer } from '@rails/actioncable';
 
-export default createConsumer();
+export const consumer = createConsumer();
+

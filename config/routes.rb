@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get 'signup' => 'signup#new'
   post 'signup' => 'signup#create'
+  delete 'signout' => 'signin#destroy'
 
   get 'forgot-password' => 'password_resets#new', as: :forgot_password_new
   get 'check-email' => 'password_resets#instructions_sent', as: :instructions_sent
@@ -25,7 +26,10 @@ Rails.application.routes.draw do
   get 'reset-password-expired' => 'password_resets#expired', as: :reset_password_expired
   post 'reset-password/:token' => 'password_resets#update', as: :reset_password_update
 
-  delete 'signout' => 'signin#destroy'
+  resource :home, only: [:show], controller: 'home'
+
+  resources :conversations, only: %i[index create]
+
 
   resource :profile, only: %i[show update]
 
@@ -49,7 +53,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :home, only: [:show]
   resources :channels, only: [:show]
 
   # This route is only available in development mode
@@ -58,5 +61,5 @@ Rails.application.routes.draw do
   end
 
   # Defines the root path route ("/")
-  root 'homes#show'
+  root 'home#show'
 end

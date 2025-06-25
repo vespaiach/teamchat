@@ -4,7 +4,7 @@ import { Logo } from '~/components/Logo';
 import { PasswordTextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
-import { ToastProvider } from '~/global-contexts/toast';
+import { ToastContainer } from '~/global-contexts/toast';
 import useShowServerNotifications from '~/hooks/useShowServerNotifications';
 import useCSRFToken from '~/hooks/useCSRFToken';
 import { validatePassword } from '~/utils/string';
@@ -187,8 +187,7 @@ export default function ResetPassword() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider>
-      <ResetPassword />
-    </ToastProvider>
+    <ResetPassword />
+    <ToastContainer />
   </StrictMode>
 );

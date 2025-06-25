@@ -50,11 +50,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         'dark:focus:ring-offset-gray-900 dark:focus:ring-gray-400'
       ),
       outline: cx(
-        'text-gray-700 bg-white border border-gray-300 shadow-sm',
-        'hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2',
-        'dark:text-gray-300 dark:bg-gray-900 dark:border-gray-600 dark:hover:bg-gray-800',
-        'dark:focus:ring-offset-gray-900',
-        'ring-primary border-primary text-primary hover:not-disabled:bg-primary-light'
+        'text-primary bg-transparent border border-primary shadow-sm hover:not-disabled:bg-primary-light',
+        'dark:text-dark-primary dark:border-dark-primary hover:not-disabled:bg-dark-primary-light',
+        'focus:outline-none focus:ring-2 focus:ring-offset-2 ring-primary dark:ring-dark-primary',
       ),
       ghost: cx(
         'text-gray-700 bg-transparent border border-transparent',

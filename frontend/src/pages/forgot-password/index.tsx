@@ -4,7 +4,7 @@ import { Logo } from '~/components/Logo';
 import { EmailTextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
 import LeftBrandingPanel from '~/components/LeftBrandingPanel';
-import { ToastProvider } from '~/global-contexts/toast';
+import { ToastContainer } from '~/global-contexts/toast';
 import useShowServerNotifications from '~/hooks/useShowServerNotifications';
 import useCSRFToken from '~/hooks/useCSRFToken';
 import { validateEmail } from '~/utils/string';
@@ -100,13 +100,7 @@ export default function ForgotPassword() {
             />
 
             <div>
-              <Button 
-                type="submit" 
-                variant="primary" 
-                size="md" 
-                fullWidth
-                disabled={isSubmitting}
-              >
+              <Button type="submit" variant="primary" size="md" fullWidth disabled={isSubmitting}>
                 {isSubmitting ? 'Sending...' : 'Send Reset Instructions'}
               </Button>
             </div>
@@ -130,8 +124,7 @@ export default function ForgotPassword() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider>
-      <ForgotPassword />
-    </ToastProvider>
+    <ForgotPassword />
+    <ToastContainer />
   </StrictMode>
 );

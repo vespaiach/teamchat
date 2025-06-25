@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+class ConversationParticipant < ApplicationRecord
+  belongs_to :conversation
+  belongs_to :user
+
+  validates :role, presence: true
+  validates :user_id, uniqueness: { scope: :conversation_id }
+
+  enum :role, {
+    member: 'member',
+    admin: 'admin'
+  }
+
+  scope :admins, -> { where(role: 'admin') }
+  scope :members, -> { where(role: 'member') }
+end
