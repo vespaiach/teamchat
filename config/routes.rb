@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   resource :home, only: [:show], controller: 'home'
 
-  resources :conversations, only: %i[index create]
+  resources :conversations, only: %i[index create update]
 
 
   resource :profile, only: %i[show update]

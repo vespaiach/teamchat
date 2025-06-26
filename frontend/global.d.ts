@@ -15,11 +15,18 @@ declare global {
 
   interface Channel {
     id: number;
-    name: string;
-    description?: string;
-    isPrivate: boolean;
-    isDM: boolean;
+    name: string | null;
+    description: string | null;
+    isPublic: boolean;
+    isGroup: boolean;
+    createdById: number;
     createdAt: string;
+  }
+
+  interface ExtendedChannel extends Channel {
+    memberCount: number;
+    hasUnreadMessages: boolean;
+    isMember: boolean;
   }
 
   type ToastType = 'success' | 'error' | 'warning';
@@ -38,10 +45,11 @@ declare global {
 
   type ApiResponse<T> =
     | {
+        success: false;
         error: string;
       }
     | {
-        error: never;
+        success: true;
         data: T;
       };
 }

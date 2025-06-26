@@ -17,13 +17,14 @@ export async function apiCall<T  = unknown>(url: string, options: RequestInit = 
     if (!response.ok) {
       const data = await response.json();
       showError(data.error || 'An unexpected error occurred');
-      return { error: data.error || 'An unexpected error occurred' } as ApiResponse<T>;
+      return { success: false, error: data.error || 'An unexpected error occurred' } as ApiResponse<T>;
     }
-    return { data: (await response.json()) } as ApiResponse<T>;
+    return { success: true, data: (await response.json()) } as ApiResponse<T>;
   } catch (error) {
     // Handle network errors or other unexpected issues
-    showError(error instanceof Error ? error.message : 'An unexpected error occurred');
-    return { error } as ApiResponse<T>;
+    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+    showError(errorMessage);
+    return { success: false, error: errorMessage } as ApiResponse<T>;
   }
 }
 

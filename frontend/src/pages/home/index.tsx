@@ -1,12 +1,10 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import PlusIcon from '~/svgs/Plus'
 import { TextBox } from '~/components/TextBox';
-import { Button } from '~/components/Button';
 import Header from './Header';
-import EditChannelModal from './EditChannelModal';
 import NewMessageBadge from '~/components/NewMessageBadge';
 import { ToastContainer } from '~/global-contexts/toast';
+import Channels from './Channels';
 
 // Mock data for demonstration
 const channels = [
@@ -50,64 +48,15 @@ const StatusIndicator = ({ status }: { status: string }) => {
 };
 
 export default function Home() {
-  const [showEditChannelModal, setShowEditChannelModal] = useState(false);
-
   return (
     <div className="page-container">
-      <Header /> 
-      
+      <Header />
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Channels */}
-          <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-200">
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Channels</h2>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowEditChannelModal(true)}
-                    leftIcon={
-                      <PlusIcon className="h-4 w-4" />
-                    }>
-                    New Channel
-                  </Button>
-                </div>
-              </div>
+          <Channels />
 
-              <div className="p-2">
-                {channels.map((channel) => (
-                  <div
-                    key={channel.id}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-gray-500 dark:text-gray-400">#</span>
-                        <span className="font-medium text-gray-900 dark:text-white">{channel.name}</span>
-                      </div>
-                      {channel.hasNewMessages && <NewMessageBadge />}
-                    </div>
-
-                    <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
-                      <span>{channel.memberCount}</span>
-                      <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Middle Column - Chat Area Placeholder */}
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-200 h-96">
               <div className="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -290,7 +239,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <EditChannelModal isOpen={showEditChannelModal} onClose={setShowEditChannelModal} />
     </div>
   );
 }

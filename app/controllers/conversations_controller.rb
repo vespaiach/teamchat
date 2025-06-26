@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ConversationsController < ApplicationController
+  include Conversations
+
   def create
     @conversation = Conversation.new(conversation_params)
     if @conversation.save
@@ -18,6 +20,10 @@ class ConversationsController < ApplicationController
     else
       render json: { message: @conversation.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
+  end
+
+  def index
+    render json: group_conversations, status: :ok
   end
 
   private

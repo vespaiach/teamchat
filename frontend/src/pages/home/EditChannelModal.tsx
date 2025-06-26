@@ -34,7 +34,7 @@ export default function EditChannelModal({ isOpen, onClose, channel }: EditChann
     }
 
     setIsSubmitting(true);
-    if (await submitData({ ...channel, name, description, isPrivate })) {
+    if (await submitData({ ...channel, name, description, isGroup: !isPrivate })) {
       showSuccess(`Channel ${isEditMode ? 'updated' : 'created'} successfully!`);
       onClose(false);
     }
@@ -143,7 +143,7 @@ export default function EditChannelModal({ isOpen, onClose, channel }: EditChann
   );
 }
 
-async function submitData(data: Omit<Channel, 'id' | 'createdAt' | 'isDM'> & { id?: number }) {
+async function submitData(data: Omit<Channel, 'id' | 'createdAt'> & { id?: number }) {
   const method = data.id ? put : post;
   const response = await method<{ id: number; name: string }>('/conversations', data);
   return !response.error;
