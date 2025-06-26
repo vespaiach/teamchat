@@ -28,7 +28,11 @@ Rails.application.routes.draw do
 
   resource :home, only: [:show], controller: 'home'
 
-  resources :conversations, only: %i[index create update]
+  resources :conversations, only: %i[index create update] do
+    member do
+      post :join_or_request
+    end
+  end
 
 
   resource :profile, only: %i[show update]

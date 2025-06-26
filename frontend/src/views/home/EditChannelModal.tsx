@@ -146,5 +146,5 @@ export default function EditChannelModal({ isOpen, onClose, channel }: EditChann
 async function submitData(data: Omit<Channel, 'id' | 'createdAt'> & { id?: number }) {
   const method = data.id ? put : post;
   const response = await method<{ id: number; name: string }>('/conversations', data);
-  return !response.error;
+  return response.success;
 }

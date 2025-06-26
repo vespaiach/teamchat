@@ -6,24 +6,26 @@ import ClosedLockIcon from '~/svgs/ClosedLock';
 import NewMessageBadge from '~/components/NewMessageBadge';
 import MemberIcon from '~/svgs/Member';
 import TeamIcon from '~/svgs/Team';
-import EditChannelModal from './EditChannelModal';
+import EditChannelModal from '~/views/home/EditChannelModal';
 import useConversationsWebSocket from '~/hooks/useConversationsWebSocket';
 import { get } from '~/utils/remote';
 import Spinner from '~/svgs/Spinner';
+import { JoinChannelModal } from '~/views/JoinChannelModal';
 
 export default function Channels() {
   const [showEditChannelModal, setShowEditChannelModal] = useState(false);
+  const [joinOrRequestChannel, setJoinOrRequestChannel] = useState<ExtendedChannel | null>(null);
   const [channelsPromise, setChannelsPromise] = useState<Promise<ApiResponse<ExtendedChannel[]>>>(
     new Promise(() => {})
   );
 
+  const handleJoinOrRequest = (channel: ExtendedChannel) => {
+    setJoinOrRequestChannel(channel);
+  };
+
   useEffect(() => {
     setChannelsPromise(get<ExtendedChannel[]>('/conversations'));
   }, []);
-
-  useConversationsWebSocket((updatedChannels) => {
-    setChannelsPromise(Promise.resolve({ success: true, data: updatedChannels }));
-  });
 
   return (
     <>
@@ -46,25 +48,55 @@ export default function Channels() {
               <Spinner className="w-5 h-5" /> Loading channels...
             </div>
           }>
-          <ChannelList channelsPromise={channelsPromise} />
+          <ChannelList channelsPromise={channelsPromise} onJoinOrRequest={handleJoinOrRequest} />
         </Suspense>
       </Box>
       <EditChannelModal isOpen={showEditChannelModal} onClose={setShowEditChannelModal} />
+      <JoinChannelModal
+        channel={joinOrRequestChannel}
+        isOpen={Boolean(joinOrRequestChannel)}
+        onClose={() => {
+          setJoinOrRequestChannel(null);
+        }}
+      />
     </>
   );
 }
 
-function ChannelList({ channelsPromise }: { channelsPromise: Promise<ApiResponse<ExtendedChannel[]>> }) {
+function ChannelList({
+  channelsPromise,
+  onJoinOrRequest,
+}: {
+  onJoinOrRequest: (channel: ExtendedChannel) => void;
+  channelsPromise: Promise<ApiResponse<ExtendedChannel[]>>;
+}) {
   const resolvedData = use(channelsPromise);
+  const [channels, setChannels] = useState<ExtendedChannel[]>(resolvedData.success ? resolvedData.data : []);
+
+  useConversationsWebSocket((updatedOrNewChannel) => {
+    setChannels((l) => {
+      if (!l) return [updatedOrNewChannel];
+      const existingIndex = l.findIndex((c) => c.id === updatedOrNewChannel.id);
+      if (existingIndex !== -1) {
+        // Update existing channel
+        const updatedChannels = [...l];
+        updatedChannels[existingIndex] = updatedOrNewChannel;
+        return updatedChannels;
+      }
+      // Add new channel
+      return [updatedOrNewChannel, ...l];
+    });
+  });
 
   if (!resolvedData.success) {
     return <div className="text-red-500">Error loading channels</div>;
   }
 
-  return resolvedData.data.map((channel) => (
+  return channels.map((channel) => (
     <ChannelItem
       key={channel.id}
       channel={channel}
+      onJoinOrRequest={onJoinOrRequest}
       onClick={() => {
         window.location.href = `/channels/${channel.id}`;
       }}
@@ -75,9 +107,11 @@ function ChannelList({ channelsPromise }: { channelsPromise: Promise<ApiResponse
 function ChannelItem({
   channel,
   onClick,
+  onJoinOrRequest,
 }: {
   channel: ExtendedChannel;
   onClick: React.MouseEventHandler<HTMLDivElement>;
+  onJoinOrRequest: (channel: ExtendedChannel) => void;
 }) {
   return (
     <div
@@ -98,10 +132,15 @@ function ChannelItem({
       </div>
 
       <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-        
         {!channel.isMember && (
-          <Button size="xs" variant="outline">
-            Join
+          <Button
+            size="xs"
+            variant="outline"
+            onClick={(e) => {
+              e.stopPropagation();
+              onJoinOrRequest(channel);
+            }}>
+            {channel.isPublic ? 'Join' : 'Request'}
           </Button>
         )}
         {channel.memberCount > 0 && (

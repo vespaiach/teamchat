@@ -13,7 +13,6 @@ export async function apiCall<T  = unknown>(url: string, options: RequestInit = 
 
   try {
     const response = await fetch(url, { ...options, headers });
-
     if (!response.ok) {
       const data = await response.json();
       showError(data.error || 'An unexpected error occurred');

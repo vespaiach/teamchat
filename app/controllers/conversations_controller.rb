@@ -22,8 +22,22 @@ class ConversationsController < ApplicationController
     end
   end
 
+  def join_or_request
+    conversation = Conversation.find(params[:id])
+    if conversation.is_public?
+      conversation.conversation_participants.create!(user: current_user, role: 'member')
+      render json: { message: 'You have joined the conversation successfully.' }, status: :ok
+    else
+      conversation.ConversationJoinRequest.create!(user: current_user, message: params[:message])
+      render json: { message: 'Your request to join the conversation has been sent.' }, status: :ok
+    end
+  end
+
   def index
-    render json: group_conversations, status: :ok
+    respond_to do |format|
+      format.html # renders show.html.erb
+      format.json { render group_conversations, status: :ok }
+    end
   end
 
   private
