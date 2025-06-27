@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Message < ApplicationRecord
-  belongs_to :conversation
+  belongs_to :conversation, class_name: 'Conversations::Conversation'
   belongs_to :sender, class_name: 'User'
   belongs_to :parent_message, class_name: 'Message', optional: true
 

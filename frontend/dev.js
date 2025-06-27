@@ -9,12 +9,11 @@ const ERB_MAPS = {
   'frontend/src/views/sign-in/index.tsx': path.resolve(__dirname, '../app/views/signin/new.html.erb'),
   'frontend/src/views/sign-up/index.tsx': path.resolve(__dirname, '../app/views/signup/new.html.erb'),
   'frontend/src/views/home/index.tsx': path.resolve(__dirname, '../app/views/home/show.html.erb'),
-  'frontend/src/views/channels/index.tsx': path.resolve(__dirname, '../app/views/channels/show.html.erb'),
   'frontend/src/views/forgot-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/new.html.erb'),
   'frontend/src/views/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),
   'frontend/src/views/check-email/index.tsx': path.resolve(__dirname, '../app/views/password_resets/instructions_sent.html.erb'),
   'frontend/src/views/password-reset-expired/index.tsx': path.resolve(__dirname, '../app/views/password_resets/expired.html.erb'),
-  'frontend/src/views/conversations/index.tsx': path.resolve(__dirname, '../app/views/conversations/show.html.erb'),
+  'frontend/src/views/conversations/index.tsx': path.resolve(__dirname, '../app/views/conversations/index.html.erb'),
 };
 
 const htmlInject = {
@@ -73,6 +72,9 @@ const ctx = await esbuild.context({
   entryNames: '[dir]-[hash]',
   chunkNames: 'common-[hash]',
   assetNames: 'assets/[name]-[hash]',
+  define: {
+    'process.env.NODE_ENV': '"development"',
+  }
 });
 
 await ctx.watch();

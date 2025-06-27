@@ -3,6 +3,7 @@ import { showError } from '~/global-contexts/toast';
 export async function apiCall<T  = unknown>(url: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
   const defaultHeaders = {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
     'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
   };
 

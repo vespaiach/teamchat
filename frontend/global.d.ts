@@ -13,20 +13,27 @@ declare global {
     lastName: string;
   }
 
-  interface Channel {
+  interface GroupChannel {
     id: number;
-    name: string | null;
+    name: string;
     description: string | null;
     isPublic: boolean;
-    isGroup: boolean;
     createdById: number;
-    createdAt: string;
-  }
-
-  interface ExtendedChannel extends Channel {
+    createdAt: Date;
     memberCount: number;
     hasUnreadMessages: boolean;
+  }
+
+  interface ExtendedGroupChannel extends GroupChannel {
     isMember: boolean;
+  }
+
+  interface DirectChannel {
+    id: number;
+    createdById: number;
+    createdAt: Date;
+    hasUnreadMessages: boolean;
+    participants: User[];
   }
 
   type ToastType = 'success' | 'error' | 'warning';

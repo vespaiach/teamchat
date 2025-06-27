@@ -1,102 +1,51 @@
-import { StrictMode } from 'react';
+import { StrictMode, Suspense, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-
 import { Logo } from '~/components/Logo';
 import { TextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
 import IconButton from '~/components/IconButton';
 import PlusIcon from '~/svgs/Plus';
+import StatusIndicator from '~/components/StatusIndicator';
+import ChevronDown from '~/svgs/ChevronDown';
+import { cx } from '~/utils/string';
+import GroupChannels from './SideBar/GroupChannels';
+import useGroupChannels from '~/hooks/useGroupChannels';
+import useDirectChannels from '~/hooks/useDirectChannels';
 
-// Mock data
-const channels = [
-  { id: 1, name: 'general', hasNewMessages: true, lastActivity: '2 min ago', memberCount: 12, isActive: true },
-  { id: 2, name: 'random', hasNewMessages: false, lastActivity: '1 hour ago', memberCount: 8, isActive: false },
-  { id: 3, name: 'development', hasNewMessages: true, lastActivity: '5 min ago', memberCount: 6, isActive: false },
-  { id: 4, name: 'design', hasNewMessages: false, lastActivity: '3 hours ago', memberCount: 4, isActive: false },
-  { id: 5, name: 'marketing', hasNewMessages: true, lastActivity: '15 min ago', memberCount: 5, isActive: false },
-];
+const messages = []
 
-const directMessages = [
-  {
-    id: 1,
-    name: 'John Doe',
-    status: 'online',
-    hasNewMessages: true,
-    lastMessage: 'Thanks for the update!',
-    avatar: 'JD',
-  },
-  {
-    id: 2,
-    name: 'Sarah Wilson',
-    status: 'online',
-    hasNewMessages: false,
-    lastMessage: 'See you in the meeting',
-    avatar: 'SW',
-  },
-  {
-    id: 3,
-    name: 'Mike Johnson',
-    status: 'away',
-    hasNewMessages: true,
-    lastMessage: 'Can we reschedule?',
-    avatar: 'MJ',
-  },
-  {
-    id: 4,
-    name: 'Emily Chen',
-    status: 'offline',
-    hasNewMessages: false,
-    lastMessage: 'Great work on the project',
-    avatar: 'EC',
-  },
-];
+export default function Conversations() {
+  const [selectedChannelId, setSelectedChannelId] = useState<number | null>(null);
+  const { groupChannels, groupChannelLoading } = useGroupChannels();
+  const { directChannels, directChannelLoading } = useDirectChannels();
 
-const messages = [
-  {
-    id: 1,
-    user: 'Sarah Wilson',
-    avatar: 'SW',
-    timestamp: '9:30 AM',
-    content: "Good morning team! Ready for today's standup?",
-    isOwnMessage: false,
-  },
-  {
-    id: 2,
-    user: 'Mike Johnson',
-    avatar: 'MJ',
-    timestamp: '9:32 AM',
-    content: 'Morning! Yes, I have some updates on the API integration.',
-    isOwnMessage: false,
-  },
-  {
-    id: 3,
-    user: 'You',
-    avatar: 'JD',
-    timestamp: '9:35 AM',
-    content: "Perfect! I've also finished the UI components we discussed yesterday. Should I share screenshots?",
-    isOwnMessage: true,
-  },
-  {
-    id: 4,
-    user: 'Emily Chen',
-    avatar: 'EC',
-    timestamp: '9:36 AM',
-    content: "That would be great! Also, I've updated the design system documentation.",
-    isOwnMessage: false,
-  },
-  {
-    id: 5,
-    user: 'Sarah Wilson',
-    avatar: 'SW',
-    timestamp: '9:40 AM',
-    content: "Excellent progress everyone. Let's connect in 5 minutes for the standup call.",
-    isOwnMessage: false,
-  },
-];
+  // Set default selected channel if not set
+  useEffect(() => {
+    if (selectedChannelId === null) {
+      const channelId = parseInt(new URLSearchParams(window.location.search).get('channel') ?? '0', 10);
 
-const NewMessageBadge = () => <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--primary)' }} />;
+      const channel = groupChannels.find((c) => c.id === channelId);
+      if (channel) {
+        setSelectedChannelId(channel.id);
+        return;
+      }
 
-export default function Chat() {
+      const dm = directChannels.find((c) => c.id === channelId);
+      if (dm) {
+        setSelectedChannelId(dm.id);
+        return;
+      }
+
+      if (groupChannels.length > 0) {
+        setSelectedChannelId(groupChannels[0].id);
+      }
+
+      if (directChannels.length > 0) {
+        setSelectedChannelId(directChannels[0].id);
+      }
+    }
+  }, [selectedChannelId, groupChannels, directChannels]);
+
   return (
     <div className="page-container flex">
       {/* Sidebar */}
@@ -141,50 +90,28 @@ export default function Chat() {
 
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
-          {/* Channels Section */}
-          <div className="p-3">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center">
-                <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-                Channels
-              </h3>
-              <IconButton
-                variant="ghost"
-                size="sm"
-                className="p-1 h-6 w-6"
-                aria-label="Add channel"
-                icon={<PlusIcon />}
-              />
-            </div>
-
-            <div className="space-y-1">
-              {channels.map((channel) => (
-                <div
-                  key={channel.id}
-                  className={`flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-colors duration-200 ${
-                    channel.isActive
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
-                  }`}>
-                  <div className="flex items-center space-x-2 flex-1 min-w-0">
-                    <span className="text-gray-500 dark:text-gray-400">#</span>
-                    <span className="text-sm font-medium truncate">{channel.name}</span>
-                    {channel.hasNewMessages && <NewMessageBadge />}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Suspense fallback={<div className="p-4 text-gray-500">Loading channels...</div>}>
+            <GroupChannels
+              channels={groupChannels}
+              loading={groupChannelLoading}
+              selectedChannelId={selectedChannelId}
+              onChannelSelect={(channel) => {
+                setSelectedChannelId(channel.id);
+              }}
+            />
+          </Suspense>
 
           {/* Direct Messages Section */}
-          <div className="p-3">
+          {/* <div className="p-3">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center">
-                <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+              <h3
+                className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-1 cursor-pointer"
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  setShowDMs(!showDMs);
+                }}>
+                <ChevronDown className={cx('h-3 w-3 transition-transform', !showDMs && 'rotate-180')} />
                 Direct Messages
               </h3>
               <IconButton
@@ -192,39 +119,35 @@ export default function Chat() {
                 size="sm"
                 className="p-1 h-6 w-6"
                 aria-label="Start direct message"
-                icon={
-                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                }
+                icon={<PlusIcon />}
               />
             </div>
 
-            <div className="space-y-1">
-              {directMessages.map((dm) => (
-                <div
-                  key={dm.id}
-                  className="flex items-center space-x-2 px-2 py-1.5 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                  <div className="relative">
-                    <div
-                      className="w-6 h-6 rounded flex items-center justify-center text-xs font-medium text-white"
-                      style={{ backgroundColor: 'var(--primary)' }}>
-                      {dm.avatar}
+            {showDMs && (
+              <div className="space-y-1">
+                {dms.map((dm) => (
+                  <div
+                    key={dm.id}
+                    className="flex items-center space-x-2 px-2 py-1.5 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <div className="relative">
+                      <div className="w-6 h-6 rounded flex items-center justify-center text-xs font-medium text-white bg-primary">
+                        {dm.avatar}
+                      </div>
+                      <div className="absolute -bottom-0.5 -right-0.5">
+                        <StatusIndicator status={dm.status} />
+                      </div>
                     </div>
-                    <div className="absolute -bottom-0.5 -right-0.5">
-                      <StatusIndicator status={dm.status} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{dm.name}</span>
+                        {dm.hasUnreadMessages && <NewMessageBadge />}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{dm.name}</span>
-                      {dm.hasNewMessages && <NewMessageBadge />}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                ))}
+              </div>
+            )}
+          </div> */}
         </div>
 
         {/* User Profile in Sidebar */}
@@ -423,6 +346,6 @@ export default function Chat() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Chat />
+    <Conversations />
   </StrictMode>
 );

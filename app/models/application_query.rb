@@ -6,5 +6,6 @@ class ApplicationQuery
   def resolve(...) = relation
   class << self
     def resolve(...) = new.resolve(...)
+    alias_method :call, :resolve
   end
 end

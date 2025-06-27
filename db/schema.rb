@@ -78,15 +78,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_25_134617) do
 
   create_table "conversations", force: :cascade do |t|
     t.string "name"
-    t.boolean "is_group", default: false, null: false
+    t.string "description"
     t.boolean "is_public", default: true, null: false
     t.bigint "created_by_id", null: false
+    t.string "type", default: "Conversations::GroupConversation", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_by_id"], name: "index_conversations_on_created_by_id"
-    t.index ["is_group"], name: "index_conversations_on_is_group"
     t.index ["is_public"], name: "index_conversations_on_is_public"
+    t.index ["type"], name: "index_conversations_on_type"
   end
 
   create_table "message_reactions", force: :cascade do |t|

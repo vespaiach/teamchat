@@ -7,7 +7,7 @@ import NewMessageBadge from '~/components/NewMessageBadge';
 import MemberIcon from '~/svgs/Member';
 import TeamIcon from '~/svgs/Team';
 import EditChannelModal from '~/views/home/EditChannelModal';
-import useConversationsWebSocket from '~/hooks/useConversationsWebSocket';
+import useConversationsWebSocket from '~/hooks/useGroupChannelsSocket';
 import { get } from '~/utils/remote';
 import Spinner from '~/svgs/Spinner';
 import { JoinChannelModal } from '~/views/JoinChannelModal';

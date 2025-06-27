@@ -28,5 +28,5 @@
       "~/*": ["./src/*"]
     },
   },
-  "include": ["src", "global.d.ts"]
+  "include": ["src", "global.d.ts", "api-response.d.ts"]
 }

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ConversationsController < ApplicationController
-  include Conversations
-
   def create
     @conversation = Conversation.new(conversation_params)
     if @conversation.save
@@ -35,8 +33,20 @@ class ConversationsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html # renders show.html.erb
-      format.json { render group_conversations, status: :ok }
+      format.html do
+        render 'conversations/index'
+      end
+      format.json do
+        if params[:type] == 'group'
+          @conversations = Conversations::GroupConversation.groups(current_user:)
+        elsif params[:type] == 'direct'
+          @conversations = Conversations::DirectConversation.directs(current_user:)
+        else
+          @conversations = Conversations::Conversation.all
+        end
+
+        render json: @conversations.as_json, status: :ok
+      end
     end
   end
 

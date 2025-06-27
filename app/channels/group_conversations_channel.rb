@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class ConversationsChannel < ApplicationCable::Channel
-  include Conversations
-
+class GroupConversationsChannel < ApplicationCable::Channel
   def subscribed
     stream_from "conversations_#{current_user.id}"
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConversationParticipant < ApplicationRecord
-  belongs_to :conversation
+  belongs_to :conversation, class_name: 'Conversations::Conversation'
   belongs_to :user
 
   validates :role, presence: true

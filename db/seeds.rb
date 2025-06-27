@@ -6,7 +6,7 @@ puts "🌱 Starting chat seeding with realistic conversations..."
 puts "🧹 Cleaning up existing data..."
 Message.unscoped.delete_all
 ConversationParticipant.unscoped.delete_all
-Conversation.unscoped.delete_all
+Conversations::Conversation.unscoped.delete_all
 User.unscoped.delete_all
 
 # Create 10 users
@@ -47,9 +47,8 @@ group_conversations = [
 ]
 
 group_conversations.each_with_index do |conv_data, index|
-  conversation = Conversation.create!(
+  conversation = Conversations::GroupConversation.create!(
     name: conv_data[:name],
-    is_group: true,
     created_by: created_users[conv_data[:admin]]
   )
 
@@ -81,9 +80,8 @@ private_conversations = [
 private_conversations.each_with_index do |conv_data, index|
   user1, user2 = conv_data[:participants].map { |i| created_users[i] }
 
-  conversation = Conversation.create!(
+  conversation = Conversations::DirectConversation.create!(
     name: nil, # Private conversations typically don't have names
-    is_group: false,
     created_by: user1
   )
 
@@ -116,14 +114,14 @@ def create_message(conversation, sender, content, created_at = nil)
 end
 
 # Messages for group conversations
-group_convos = Conversation.where(is_group: true).includes(:participants, :users)
+group_convos = Conversations::GroupConversation.all.includes(:participants)
 
 # Tech Team messages
 tech_team = group_convos.find_by(name: "techteam")
 if tech_team
-  participants = tech_team.users.to_a
+  participants = tech_team.participants.to_a
   base_time = 3.days.ago
-  
+
   create_message(tech_team, participants[0], "Hey team! Ready for the sprint planning meeting?", base_time)
   create_message(tech_team, participants[1], "Absolutely! I've prepared the user stories", base_time + 5.minutes)
   create_message(tech_team, participants[2], "Great! Should we review the backlog first?", base_time + 10.minutes)
@@ -137,9 +135,9 @@ end
 # Book Club messages
 book_club = group_convos.find_by(name: "bookclub")
 if book_club
-  participants = book_club.users.to_a
+  participants = book_club.participants.to_a
   base_time = 2.days.ago
-  
+
   create_message(book_club, participants[0], "Just finished 'The Midnight Library'! What did everyone think?", base_time)
   create_message(book_club, participants[1], "Loved it! The concept of infinite lives was fascinating", base_time + 1.hour)
   create_message(book_club, participants[2], "Same here! Made me think about my own life choices", base_time + 2.hours)
@@ -153,9 +151,9 @@ end
 # Weekend Plans messages
 weekend_plans = group_convos.find_by(name: "weekendplans")
 if weekend_plans
-  participants = weekend_plans.users.to_a
+  participants = weekend_plans.participants.to_a
   base_time = 1.day.ago
-  
+
   create_message(weekend_plans, participants[0], "Anyone up for hiking this Saturday?", base_time)
   create_message(weekend_plans, participants[1], "I'm in! Which trail were you thinking?", base_time + 30.minutes)
   create_message(weekend_plans, participants[2], "Mount Wilson? It's perfect weather for it", base_time + 45.minutes)
@@ -169,9 +167,9 @@ end
 # Project Alpha messages
 project_alpha = group_convos.find_by(name: "projectalpha")
 if project_alpha
-  participants = project_alpha.users.to_a
+  participants = project_alpha.participants.to_a
   base_time = 4.hours.ago
-  
+
   create_message(project_alpha, participants[0], "Update: The database migration completed successfully!", base_time)
   create_message(project_alpha, participants[1], "Excellent! Any performance improvements?", base_time + 10.minutes)
   create_message(project_alpha, participants[0], "Query times are down by 40%! 🎉", base_time + 15.minutes)
@@ -184,9 +182,9 @@ end
 # Coffee Lovers messages
 coffee_lovers = group_convos.find_by(name: "coffeelovers")
 if coffee_lovers
-  participants = coffee_lovers.users.to_a
+  participants = coffee_lovers.participants.to_a
   base_time = 6.hours.ago
-  
+
   create_message(coffee_lovers, participants[0], "Found this amazing new coffee shop downtown!", base_time)
   create_message(coffee_lovers, participants[1], "Ooh, what's it called?", base_time + 5.minutes)
   create_message(coffee_lovers, participants[0], "Bean There, Done That. They have single-origin beans from Ethiopia", base_time + 10.minutes)
@@ -199,12 +197,12 @@ if coffee_lovers
 end
 
 # Messages for private conversations
-private_convos = Conversation.where(is_group: false).includes(:users)
+private_convos = Conversations::DirectConversation.all.includes(:participants)
 
 private_convos.each_with_index do |conversation, index|
-  users = conversation.users.to_a
+  users = conversation.participants.to_a
   user1, user2 = users[0], users[1]
-  
+
   case index
   when 0 # Alice & Bob
     base_time = 1.day.ago
@@ -213,7 +211,7 @@ private_convos.each_with_index do |conversation, index|
     create_message(conversation, user1, "That's awesome! Celebrate with dinner tonight?", base_time + 2.hours)
     create_message(conversation, user2, "Absolutely! That new Italian place?", base_time + 2.hours + 30.minutes)
     create_message(conversation, user1, "Perfect! See you at 7 PM 🍝", base_time + 3.hours)
-    
+
   when 1 # Charlie & Diana
     base_time = 2.days.ago
     create_message(conversation, user1, "Did you see the game last night?", base_time)
@@ -221,7 +219,7 @@ private_convos.each_with_index do |conversation, index|
     create_message(conversation, user1, "I can't believe that final shot went in", base_time + 1.hour)
     create_message(conversation, user2, "Pure luck! Want to watch the playoffs together?", base_time + 1.hour + 30.minutes)
     create_message(conversation, user1, "Definitely! I'll bring the snacks 🍿", base_time + 2.hours)
-    
+
   when 2 # Eve & Frank
     base_time = 3.days.ago
     create_message(conversation, user1, "Thanks for recommending that book!", base_time)
@@ -229,14 +227,14 @@ private_convos.each_with_index do |conversation, index|
     create_message(conversation, user1, "Couldn't put it down! Do you have more recommendations?", base_time + 4.hours)
     create_message(conversation, user2, "Try 'The Seven Husbands of Evelyn Hugo' next", base_time + 5.hours)
     create_message(conversation, user1, "Added to my reading list! 📚", base_time + 6.hours)
-    
+
   when 3 # Grace & Henry
     base_time = 12.hours.ago
     create_message(conversation, user1, "Morning! Coffee before the meeting?", base_time)
     create_message(conversation, user2, "Great idea! The usual place?", base_time + 10.minutes)
     create_message(conversation, user1, "Yep! See you in 15 minutes", base_time + 15.minutes)
     create_message(conversation, user2, "On my way! ☕", base_time + 20.minutes)
-    
+
   when 4 # Ivy & Jack
     base_time = 5.hours.ago
     create_message(conversation, user1, "How's the new apartment?", base_time)
@@ -252,10 +250,10 @@ puts "✅ Generated realistic messages for all conversations"
 puts "\n🎉 Seeding completed successfully!"
 puts "📊 Summary:"
 puts "  - Users: #{User.count}"
-puts "  - Conversations: #{Conversation.count}"
-puts "  - Group conversations: #{Conversation.where(is_group: true).count}"
-puts "  - Private conversations: #{Conversation.where(is_group: false).count}"
+puts "  - Conversations: #{Conversations::Conversation.count}"
+puts "  - Group conversations: #{Conversations::GroupConversation.count}"
+puts "  - Private conversations: #{Conversations::DirectConversation.count}"
 puts "  - Conversation participants: #{ConversationParticipant.count}"
 puts "  - Messages: #{Message.count}"
-puts "\n🔐 All users have password: 123456"
+puts "\n🔐 All users have password: Qwer1234"
 puts "💬 All conversation names are now lowercase, no spaces/periods, under 30 chars"
