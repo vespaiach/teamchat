@@ -20,5 +20,5 @@ export default function useGroupChannels() {
     setGroupChannels,
     groupChannels,
     groupChannelLoading: loading,
-  }
+  };
 }

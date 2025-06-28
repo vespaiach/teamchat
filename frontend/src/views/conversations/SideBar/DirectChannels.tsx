@@ -1,25 +1,21 @@
 import { useState } from 'react';
 import IconButton from '~/components/IconButton';
 import NewMessageBadge from '~/components/NewMessageBadge';
-import PoundSignIcon from '~/components/PoundSignIcon';
-import ChevronDown from '~/svgs/ChevronDown';
-import ClosedLockIcon from '~/svgs/ClosedLock';
+import UserAvatar from '~/components/UserAvatar';
+import useDirectChannelPartner from '~/hooks/useDirectChannelPartner';
+import ChevronDownIcon from '~/svgs/ChevronDown';
 import PlusIcon from '~/svgs/Plus';
 import { cx } from '~/utils/string';
 
-export default function GroupChannels({
-  loading = false,
-  channels,
-  selectedChannelId,
-  onChannelSelect,
-}: {
+interface DirectMessageProps {
   loading?: boolean;
-  channels: ExtendedGroupChannel[];
+  channels: DirectChannel[];
   selectedChannelId: number | null;
-  onChannelSelect: (channel: ExtendedGroupChannel) => void;
-}) {
-  const [showChannels, setShowChannels] = useState(true);
+  onChannelSelect: (channel: DirectChannel) => void;
+}
 
+export default function DirectChannels({ loading, channels, selectedChannelId, onChannelSelect }: DirectMessageProps) {
+  const [showChannels, setShowChannels] = useState(true);
   return (
     <div className="p-3">
       <div className="flex items-center justify-between mb-3">
@@ -30,8 +26,8 @@ export default function GroupChannels({
           onClick={() => {
             setShowChannels(!showChannels);
           }}>
-          <ChevronDown className={cx('h-3 w-3 transition-transform', !showChannels && 'rotate-180')} />
-          Channels
+          <ChevronDownIcon className={cx('h-3 w-3 transition-transform', !showChannels && 'rotate-180')} />
+          Direct Messages
         </h3>
         <IconButton variant="ghost" size="sm" className="p-1 h-6 w-6" aria-label="Add channel" icon={<PlusIcon />} />
       </div>
@@ -39,12 +35,6 @@ export default function GroupChannels({
       {loading && (
         <div className="flex items-center justify-center h-12 text-gray-500 dark:text-gray-400">
           Loading channels...
-        </div>
-      )}
-
-      {!loading && channels.length === 0 && (
-        <div className="text-gray-500 dark:text-gray-400 text-sm text-center">
-          No channels available. Create or join a channel to start chatting.
         </div>
       )}
 
@@ -65,29 +55,34 @@ export default function GroupChannels({
 }
 
 interface ChannelProps {
-  channel: ExtendedGroupChannel;
+  channel: DirectChannel;
   selected?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 function ChannelItem({ channel, selected = false, onClick }: ChannelProps) {
+  const partner = useDirectChannelPartner(channel);
+  if (!partner) {
+    return null; // Handle case where partner is not found
+  }
+
   return (
     <div
       onClick={onClick}
       role="menuitem"
       tabIndex={0}
       className={cx(
-        'flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-colors duration-200',
-        selected
-          ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100'
-          : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+        'flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer  transition-colors duration-200',
+        selected ? 'bg-blue-100 dark:bg-blue-900/30' : 'hover:bg-gray-100 dark:hover:bg-gray-700'
       )}>
-      <div className="flex items-center space-x-2 flex-1 min-w-0">
-        <span className="text-gray-500 dark:text-gray-400">
-          {channel.isPublic ? <PoundSignIcon /> : <ClosedLockIcon />}
-        </span>
-        <span className="text-sm font-medium truncate">{channel.name}</span>
-        {channel.hasUnreadMessages && <NewMessageBadge />}
+      <div className="relative">
+        <UserAvatar user={partner} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center space-x-1">
+          <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{partner.name}</span>
+          {channel.hasUnreadMessages && <NewMessageBadge />}
+        </div>
       </div>
     </div>
   );

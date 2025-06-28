@@ -11,6 +11,7 @@ declare global {
     avatar?: string;
     firstName: string;
     lastName: string;
+    name: string;
   }
 
   interface GroupChannel {
@@ -49,16 +50,6 @@ declare global {
   var appErrors: ServerNotification[] | undefined;
 
   type OnlineStatus = 'online' | 'offline' | 'away' | 'busy';
-
-  type ApiResponse<T> =
-    | {
-        success: false;
-        error: string;
-      }
-    | {
-        success: true;
-        data: T;
-      };
 }
 
 export {};

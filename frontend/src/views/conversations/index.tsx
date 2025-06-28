@@ -1,18 +1,16 @@
-import { StrictMode, Suspense, useEffect, useState } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Logo } from '~/components/Logo';
 import { TextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
-import IconButton from '~/components/IconButton';
-import PlusIcon from '~/svgs/Plus';
 import StatusIndicator from '~/components/StatusIndicator';
-import ChevronDown from '~/svgs/ChevronDown';
-import { cx } from '~/utils/string';
 import GroupChannels from './SideBar/GroupChannels';
 import useGroupChannels from '~/hooks/useGroupChannels';
 import useDirectChannels from '~/hooks/useDirectChannels';
+import { AppStoreProvider } from '~/global-contexts/app-store';
+import DirectChannels from './SideBar/DirectChannels';
 
-const messages = []
+const messages = [];
 
 export default function Conversations() {
   const [selectedChannelId, setSelectedChannelId] = useState<number | null>(null);
@@ -90,64 +88,23 @@ export default function Conversations() {
 
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
-          <Suspense fallback={<div className="p-4 text-gray-500">Loading channels...</div>}>
-            <GroupChannels
-              channels={groupChannels}
-              loading={groupChannelLoading}
-              selectedChannelId={selectedChannelId}
-              onChannelSelect={(channel) => {
-                setSelectedChannelId(channel.id);
-              }}
-            />
-          </Suspense>
+          <GroupChannels
+            channels={groupChannels}
+            loading={groupChannelLoading}
+            selectedChannelId={selectedChannelId}
+            onChannelSelect={(channel) => {
+              setSelectedChannelId(channel.id);
+            }}
+          />
 
-          {/* Direct Messages Section */}
-          {/* <div className="p-3">
-            <div className="flex items-center justify-between mb-3">
-              <h3
-                className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-1 cursor-pointer"
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setShowDMs(!showDMs);
-                }}>
-                <ChevronDown className={cx('h-3 w-3 transition-transform', !showDMs && 'rotate-180')} />
-                Direct Messages
-              </h3>
-              <IconButton
-                variant="ghost"
-                size="sm"
-                className="p-1 h-6 w-6"
-                aria-label="Start direct message"
-                icon={<PlusIcon />}
-              />
-            </div>
-
-            {showDMs && (
-              <div className="space-y-1">
-                {dms.map((dm) => (
-                  <div
-                    key={dm.id}
-                    className="flex items-center space-x-2 px-2 py-1.5 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                    <div className="relative">
-                      <div className="w-6 h-6 rounded flex items-center justify-center text-xs font-medium text-white bg-primary">
-                        {dm.avatar}
-                      </div>
-                      <div className="absolute -bottom-0.5 -right-0.5">
-                        <StatusIndicator status={dm.status} />
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-1">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{dm.name}</span>
-                        {dm.hasUnreadMessages && <NewMessageBadge />}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div> */}
+          <DirectChannels
+            channels={directChannels}
+            loading={directChannelLoading}
+            selectedChannelId={selectedChannelId}
+            onChannelSelect={(channel) => {
+              setSelectedChannelId(channel.id);
+            }}
+          />
         </div>
 
         {/* User Profile in Sidebar */}
@@ -346,6 +303,8 @@ export default function Conversations() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Conversations />
+    <AppStoreProvider>
+      <Conversations />
+    </AppStoreProvider>
   </StrictMode>
 );

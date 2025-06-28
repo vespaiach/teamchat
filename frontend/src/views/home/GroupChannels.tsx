@@ -1,4 +1,4 @@
-import { Suspense, use, useEffect, useState } from 'react';
+import { useState } from 'react';
 import Box from '~/components/Box';
 import { Button } from '~/components/Button';
 import PlusIcon from '~/svgs/Plus';
@@ -7,25 +7,18 @@ import NewMessageBadge from '~/components/NewMessageBadge';
 import MemberIcon from '~/svgs/Member';
 import TeamIcon from '~/svgs/Team';
 import EditChannelModal from '~/views/home/EditChannelModal';
-import useConversationsWebSocket from '~/hooks/useGroupChannelsSocket';
-import { get } from '~/utils/remote';
 import Spinner from '~/svgs/Spinner';
 import { JoinChannelModal } from '~/views/JoinChannelModal';
+import useGroupChannels from '~/hooks/useGroupChannels';
 
-export default function Channels() {
+export default function GroupChannels() {
   const [showEditChannelModal, setShowEditChannelModal] = useState(false);
-  const [joinOrRequestChannel, setJoinOrRequestChannel] = useState<ExtendedChannel | null>(null);
-  const [channelsPromise, setChannelsPromise] = useState<Promise<ApiResponse<ExtendedChannel[]>>>(
-    new Promise(() => {})
-  );
+  const [joinOrRequestChannel, setJoinOrRequestChannel] = useState<ExtendedGroupChannel | null>(null);
+  const { groupChannels, groupChannelLoading } = useGroupChannels();
 
-  const handleJoinOrRequest = (channel: ExtendedChannel) => {
+  const handleJoinOrRequest = (channel: ExtendedGroupChannel) => {
     setJoinOrRequestChannel(channel);
   };
-
-  useEffect(() => {
-    setChannelsPromise(get<ExtendedChannel[]>('/conversations'));
-  }, []);
 
   return (
     <>
@@ -42,14 +35,14 @@ export default function Channels() {
             </Button>
           </>
         }>
-        <Suspense
-          fallback={
-            <div className="min-h-48 flex items-center justify-center gap-2">
-              <Spinner className="w-5 h-5" /> Loading channels...
-            </div>
-          }>
-          <ChannelList channelsPromise={channelsPromise} onJoinOrRequest={handleJoinOrRequest} />
-        </Suspense>
+        {groupChannelLoading && (
+          <div className="min-h-48 flex items-center justify-center gap-2">
+            <Spinner className="w-5 h-5" /> Loading channels...
+          </div>
+        )}
+        {!groupChannelLoading && (
+          <ChannelList channels={groupChannels} onJoinOrRequest={handleJoinOrRequest} />
+        )}
       </Box>
       <EditChannelModal isOpen={showEditChannelModal} onClose={setShowEditChannelModal} />
       <JoinChannelModal
@@ -64,41 +57,19 @@ export default function Channels() {
 }
 
 function ChannelList({
-  channelsPromise,
+  channels,
   onJoinOrRequest,
 }: {
-  onJoinOrRequest: (channel: ExtendedChannel) => void;
-  channelsPromise: Promise<ApiResponse<ExtendedChannel[]>>;
+  onJoinOrRequest: (channel: ExtendedGroupChannel) => void;
+  channels: ExtendedGroupChannel[];
 }) {
-  const resolvedData = use(channelsPromise);
-  const [channels, setChannels] = useState<ExtendedChannel[]>(resolvedData.success ? resolvedData.data : []);
-
-  useConversationsWebSocket((updatedOrNewChannel) => {
-    setChannels((l) => {
-      if (!l) return [updatedOrNewChannel];
-      const existingIndex = l.findIndex((c) => c.id === updatedOrNewChannel.id);
-      if (existingIndex !== -1) {
-        // Update existing channel
-        const updatedChannels = [...l];
-        updatedChannels[existingIndex] = updatedOrNewChannel;
-        return updatedChannels;
-      }
-      // Add new channel
-      return [updatedOrNewChannel, ...l];
-    });
-  });
-
-  if (!resolvedData.success) {
-    return <div className="text-red-500">Error loading channels</div>;
-  }
-
   return channels.map((channel) => (
     <ChannelItem
       key={channel.id}
       channel={channel}
       onJoinOrRequest={onJoinOrRequest}
       onClick={() => {
-        window.location.href = `/channels/${channel.id}`;
+        window.location.href = `/conversations?channel=${channel.id}`;
       }}
     />
   ));
@@ -109,9 +80,9 @@ function ChannelItem({
   onClick,
   onJoinOrRequest,
 }: {
-  channel: ExtendedChannel;
+  channel: ExtendedGroupChannel;
   onClick: React.MouseEventHandler<HTMLDivElement>;
-  onJoinOrRequest: (channel: ExtendedChannel) => void;
+  onJoinOrRequest: (channel: ExtendedGroupChannel) => void;
 }) {
   return (
     <div

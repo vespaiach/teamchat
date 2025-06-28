@@ -21,8 +21,7 @@ module Conversations
         created_by_id:,
         created_at: created_at.iso8601,
         has_unread_messages:,
-        participants:,
-        type: 'direct'
+        participants:
       }
     end
   end

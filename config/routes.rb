@@ -34,6 +34,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users, only: [] do
+    member do
+      get :avatar
+    end
+  end
+
 
   resource :profile, only: %i[show update]
 

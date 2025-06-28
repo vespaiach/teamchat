@@ -4,7 +4,7 @@ import { TextBox } from '~/components/TextBox';
 import Header from './Header';
 import NewMessageBadge from '~/components/NewMessageBadge';
 import { ToastContainer } from '~/global-contexts/toast';
-import Channels from './Channels';
+import GroupChannels from './GroupChannels';
 
 // Mock data for demonstration
 const channels = [
@@ -55,7 +55,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Channels />
+          <GroupChannels />
 
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-200 h-96">
