@@ -5,6 +5,8 @@ import Header from './Header';
 import NewMessageBadge from '~/components/NewMessageBadge';
 import { ToastContainer } from '~/global-contexts/toast';
 import GroupChannels from './GroupChannels';
+import DirectChannels from './DirectChannels';
+import Users from './Users';
 
 // Mock data for demonstration
 const channels = [
@@ -57,75 +59,11 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <GroupChannels />
 
-          <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-200 h-96">
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white"># general</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400">12 members</p>
-              </div>
-
-              <div className="p-4 h-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="mb-4">
-                    <svg
-                      className="h-12 w-12 text-gray-400 mx-auto"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-gray-500 dark:text-gray-400">Select a channel or user to start chatting</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DirectChannels />
 
           {/* Right Column - Users & DMs */}
           <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-200">
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Team Members</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {users.filter((u) => u.status === 'online').length} online
-                </p>
-              </div>
-
-              <div className="p-2">
-                {sortedUsers.map((user) => (
-                  <div
-                    key={user.id}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200">
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <div
-                          className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium text-white"
-                          style={{ backgroundColor: 'var(--primary)' }}>
-                          {user.avatar}
-                        </div>
-                        <div className="absolute -bottom-1 -right-1">
-                          <StatusIndicator status={user.status} />
-                        </div>
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-2">
-                          <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{user.name}</p>
-                          {user.hasNewMessages && <NewMessageBadge />}
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user.status}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
+            <Users />
             {/* Mobile Search - Hidden on Desktop */}
             <div className="md:hidden mt-4">
               <TextBox

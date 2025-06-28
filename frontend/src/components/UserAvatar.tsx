@@ -46,12 +46,15 @@ export default function UserAvatar({ user, size = 'small', online, className, on
         />
       )}
       {!avatar && (
-        <div className="h-full w-full flex items-center justify-center text-white bg-primary dark:bg-primary-dark rounded-full">
-          <span className="text-xs font-medium">{user.name.charAt(0).toUpperCase()}</span>
+        <div className="h-full w-full flex items-center justify-center text-sm font-medium text-white bg-primary dark:bg-primary-dark rounded-full">
+          <span className="text-xs font-medium">
+            {user.firstName[0].toUpperCase()}
+            {user.lastName[0].toUpperCase()}
+          </span>
         </div>
       )}
       {online !== undefined && online !== null && (
-        <div className="absolute -bottom-1 -right-1">
+        <div className="absolute -bottom-0.5 -right-0.5">
           <div
             className={cx(
               'w-3 h-3 rounded-full bg-green-500 border-2 border-white dark:border-gray-800',

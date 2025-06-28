@@ -16,4 +16,9 @@ class UsersController < ApplicationController
     Rails.logger.error("Error serving avatar for user #{params[:id]}: #{e.message}")
     render plain: 'Internal server error', status: :internal_server_error
   end
+
+  def index
+    users = User.all
+    render json: users.map(&:as_json), status: :ok
+  end
 end

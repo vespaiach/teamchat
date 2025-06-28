@@ -40,3 +40,7 @@ export function transformUser(user: UserResponse): User {
     name: `${user.first_name} ${user.last_name}`,
   };
 }
+
+export function transformUsers(users: UserResponse[]): User[] {
+  return users.map(transformUser);
+}

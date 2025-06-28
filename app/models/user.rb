@@ -39,13 +39,7 @@ class User < ApplicationRecord
   end
 
   def as_json(options = {})
-    result = super(options.merge(
-      only: [:id, :first_name, :last_name, :email, :created_at]
-    ))
-
-    result.merge!({
-      avatar: avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : ''
-    })
+    super(options.merge(only: [:id, :first_name, :last_name, :email, :created_at]))
   end
 
   def generate_remember_token!
