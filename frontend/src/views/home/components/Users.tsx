@@ -1,10 +1,12 @@
 import Box from '~/components/Box';
-import UserAvatar from '~/components/UserAvatar';
-import useUsers from '~/hooks/useUsers';
+import UserAvatar from '~/views/UserAvatar';
 import Spinner from '~/svgs/Spinner';
+import { useHomeStore } from '~/views/home/store';
+import ShowMoreOrLess from '~/components/ShowMoreOrLess';
 
 export default function Users() {
-  const { users, usersLoading } = useUsers();
+  const { users, usersLoading } = useHomeStore();
+
   return (
     <Box
       header={
@@ -15,13 +17,11 @@ export default function Users() {
       }>
       <div className="p-2">
         {usersLoading && (
-          <div className="min-h-48 flex items-center justify-center gap-2">
+          <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
             <Spinner className="w-5 h-5" /> Loading users...
           </div>
         )}
-        {users.map((user) => (
-          <UserItem key={user.id} user={user} online />
-        ))}
+        <ShowMoreOrLess items={users} renderItem={(user: User) => <UserItem key={user.id} user={user} online />} />
       </div>
     </Box>
   );

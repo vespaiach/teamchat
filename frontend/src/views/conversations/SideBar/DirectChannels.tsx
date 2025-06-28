@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import IconButton from '~/components/IconButton';
 import NewMessageBadge from '~/components/NewMessageBadge';
-import UserAvatar from '~/components/UserAvatar';
+import UserAvatar from '~/views/UserAvatar';
 import useDirectChannelPartner from '~/hooks/useDirectChannelPartner';
 import ChevronDownIcon from '~/svgs/ChevronDown';
 import PlusIcon from '~/svgs/Plus';

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { transformGroupChannel } from '~/utils/transformer';
 import { consumer } from '~/utils/ws';
 
 export default function useGroupChannelsSocket(receiveChannels: (channel: ExtendedGroupChannel) => void) {
@@ -8,22 +9,24 @@ export default function useGroupChannelsSocket(receiveChannels: (channel: Extend
   };
 
   useEffect(() => {
-    const channel = consumer.subscriptions.create({ channel: 'GroupConversationsChannel' }, {
-      connected: () => {
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Connected to GroupConversationsChannel');
-        }
-      },
-      disconnected: () => {
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Disconnected from GroupConversationsChannel');
-        }
-      },
-      // This will be called when the server sends a message to this channel
-      received: (data: { conversations: ExtendedGroupChannel }) => {
-        receiveRef.current(data.conversations);
-      },
-    });
+    const channel = consumer.subscriptions.create(
+      { channel: 'GroupConversationsChannel' },
+      {
+        connected: () => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('Connected to GroupConversationsChannel');
+          }
+        },
+        disconnected: () => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('Disconnected from GroupConversationsChannel');
+          }
+        },
+        received: (data: { conversation: GroupChannelResponse }) => {
+          receiveRef.current(transformGroupChannel(data.conversation));
+        },
+      }
+    );
 
     return () => {
       channel.unsubscribe();

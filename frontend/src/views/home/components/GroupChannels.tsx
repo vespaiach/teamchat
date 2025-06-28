@@ -6,15 +6,16 @@ import ClosedLockIcon from '~/svgs/ClosedLock';
 import NewMessageBadge from '~/components/NewMessageBadge';
 import MemberIcon from '~/svgs/Member';
 import TeamIcon from '~/svgs/Team';
-import EditChannelModal from '~/views/home/EditChannelModal';
+import EditChannelModal from '~/views/home/components/EditChannelModal';
 import Spinner from '~/svgs/Spinner';
 import { JoinChannelModal } from '~/views/JoinChannelModal';
-import useGroupChannels from '~/hooks/useGroupChannels';
+import { useHomeStore } from '~/views/home/store';
+import ShowMoreOrLess from '~/components/ShowMoreOrLess';
 
 export default function GroupChannels() {
   const [showEditChannelModal, setShowEditChannelModal] = useState(false);
   const [joinOrRequestChannel, setJoinOrRequestChannel] = useState<ExtendedGroupChannel | null>(null);
-  const { groupChannels, groupChannelLoading } = useGroupChannels();
+  const { groupChannels, groupChannelsLoading } = useHomeStore();
 
   const handleJoinOrRequest = (channel: ExtendedGroupChannel) => {
     setJoinOrRequestChannel(channel);
@@ -35,14 +36,12 @@ export default function GroupChannels() {
             </Button>
           </>
         }>
-        {groupChannelLoading && (
-          <div className="min-h-48 flex items-center justify-center gap-2">
+        {groupChannelsLoading && (
+          <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
             <Spinner className="w-5 h-5" /> Loading channels...
           </div>
         )}
-        {!groupChannelLoading && (
-          <ChannelList channels={groupChannels} onJoinOrRequest={handleJoinOrRequest} />
-        )}
+        {!groupChannelsLoading && <ChannelList channels={groupChannels} onJoinOrRequest={handleJoinOrRequest} />}
       </Box>
       <EditChannelModal isOpen={showEditChannelModal} onClose={setShowEditChannelModal} />
       <JoinChannelModal
@@ -63,16 +62,21 @@ function ChannelList({
   onJoinOrRequest: (channel: ExtendedGroupChannel) => void;
   channels: ExtendedGroupChannel[];
 }) {
-  return channels.map((channel) => (
-    <ChannelItem
-      key={channel.id}
-      channel={channel}
-      onJoinOrRequest={onJoinOrRequest}
-      onClick={() => {
-        window.location.href = `/conversations?channel=${channel.id}`;
-      }}
+  return (
+    <ShowMoreOrLess
+      items={channels}
+      renderItem={(channel) => (
+        <ChannelItem
+          key={channel.id}
+          channel={channel}
+          onJoinOrRequest={onJoinOrRequest}
+          onClick={() => {
+            window.location.href = `/conversations?channel=${channel.id}`;
+          }}
+        />
+      )}
     />
-  ));
+  );
 }
 
 function ChannelItem({

@@ -19,6 +19,6 @@ export default function useGroupChannels() {
   return {
     setGroupChannels,
     groupChannels,
-    groupChannelLoading: loading,
+    groupChannelsLoading: loading,
   };
 }

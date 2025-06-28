@@ -1,33 +1,36 @@
 import Box from '~/components/Box';
 import Spinner from '~/svgs/Spinner';
-import useDirectChannels from '~/hooks/useDirectChannels';
-import UserAvatar from '~/components/UserAvatar';
+import UserAvatar from '~/views/UserAvatar';
 import useDirectChannelPartner from '~/hooks/useDirectChannelPartner';
+import { useHomeStore } from '~/views/home/store';
+import ShowMoreOrLess from '~/components/ShowMoreOrLess';
 
 export default function DirectChannels() {
-  const { directChannels, directChannelLoading } = useDirectChannels();
+  const { directChannels, directChannelsLoading } = useHomeStore();
 
   return (
     <>
       <Box header={<h2 className="text-lg font-semibold text-gray-900 dark:text-white">Direct Messages</h2>}>
-        {directChannelLoading && (
-          <div className="min-h-48 flex items-center justify-center gap-2">
+        {directChannelsLoading && (
+          <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
             <Spinner className="w-5 h-5" /> Loading channels...
           </div>
         )}
-        {!directChannelLoading && directChannels.length === 0 && (
+        {!directChannelsLoading && directChannels.length === 0 && (
           <div className="text-center text-gray-500 dark:text-gray-400">
             No direct messages yet. Start a conversation with someone!
           </div>
         )}
-        {!directChannelLoading && <ChannelList channels={directChannels} />}
+        {!directChannelsLoading && <ChannelList channels={directChannels} />}
       </Box>
     </>
   );
 }
 
 function ChannelList({ channels }: { channels: DirectChannel[] }) {
-  return channels.map((channel) => <ChannelItem key={channel.id} channel={channel} />);
+  return (
+    <ShowMoreOrLess items={channels} renderItem={(channel) => <ChannelItem key={channel.id} channel={channel} />} />
+  );
 }
 
 function ChannelItem({ channel }: { channel: DirectChannel }) {

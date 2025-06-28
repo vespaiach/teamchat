@@ -19,6 +19,6 @@ export default function useDirectChannels() {
   return {
     setDirectChannels,
     directChannels,
-    directChannelLoading: loading,
+    directChannelsLoading: loading,
   };
 }
