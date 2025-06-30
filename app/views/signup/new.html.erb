@@ -1,52 +1,10 @@
-<div class="py-10 min-h-dvh flex items-center justify-center">
-  <div class="space-y-5 flex-1">
-
-    <%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6' })) do %>
-      <%= render(::LogoComponent.new) %>
-
-      <h4 class="text-center mt-6 mb-5 font-serif">Welcome! Sign Up</h4>
-
-      <%= form_with(model: @user, url: signup_index_path, class: 'flex flex-col items-stretch gap-1 mt-8', data: { controller: 'signup', action: 'submit->signup#validate' }) do |form| %>
-
-        <%= render(
-          ::TextInputComponent.new(
-            input_options: { type: 'text', placeholder: 'Enter first name', data: { signup_target: 'firstName' } },
-            p_options: { data: { signup_target: 'firstNameError' } },
-            id: 'first_name', label: 'First Name *', name: :first_name)) %>
-
-        <%= render(
-          ::TextInputComponent.new(
-            input_options: { type: 'text', placeholder: 'Enter last name', data: { signup_target: 'lastName' } },
-            p_options: { data: { signup_target: 'lastNameError' } },
-            id: 'last_name', label: 'Last Name *', name: :last_name)) %>
-
-        <%= render(
-          ::TextInputComponent.new(
-            input_options: { type: 'email', placeholder: 'Enter email address', data: { signup_target: 'email' } },
-            p_options: { data: { signup_target: 'emailError' } },
-            id: 'email', label: 'Email *', name: :email)) %>
-
-        <%= render(
-          ::TextInputComponent.new(
-            input_options: { type: 'password', placeholder: 'Enter password', data: { signup_target: 'password' } },
-            p_options: { data: { signup_target: 'passwordError' } },
-            id: 'password', label: 'Password *', name: :password)) %>
-
-        <%= render(
-          ::TextInputComponent.new(
-            input_options: { type: 'password', placeholder: 'Confirm password', data: { signup_target: 'passwordConfirmation' } },
-            p_options: { data: { signup_target: 'passwordConfirmationError' } },
-            id: 'password_confirmation', label: 'Confirm Password *', name: :password_confirmation)) %>
-
-        <div class="space-y-3 w-full">
-          <%= render(::ButtonComponent.new(text: 'Create Account', options: { type: 'submit' })) %>
-        </div>
-      <% end %>
-
-    <% end %>
-
-    <%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
-      <p class="text-sm">Already have an account? <a href="<%= signin_path %>" class="text-blue-600 hover:underline">Sign in here</a></p>
-    <% end %>
-  </div>
-</div>
+<!-- BUNDLE_START -->
+<%= content_for :head do %>
+<script type="module" defer src="/assets/sign-up-5B64LXSI.js"></script>
+<link rel="modulepreload" href="/assets/common-MG3T73AP.js">
+<link rel="modulepreload" href="/assets/common-7NBQWWPE.js">
+<link rel="modulepreload" href="/assets/common-HK4PXXCY.js">
+<link rel="modulepreload" href="/assets/common-TEW3MCA6.js">
+<link rel="modulepreload" href="/assets/common-7Z52CFTE.js">
+<% end %>
+<!-- BUNDLE_END -->

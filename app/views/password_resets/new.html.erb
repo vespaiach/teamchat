@@ -1,22 +1,9 @@
-<div class="py-10 min-h-dvh flex items-center justify-center">
-	<div class="space-y-5 flex-1">
-		<%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6' })) do %>
-			<%= render(::LogoComponent.new) %>
-			<h4 class="text-center mt-6 mb-5 font-serif">Reset Your Password</h4>
-
-			<%= form_with(url: password_resets_path, data: { controller: 'password-resets', action: 'submit->password-resets#validate' }, class: 'flex flex-col items-stretch gap-5 mt-8', local: true) do |form| %>
-				<%= render(
-					::TextInputComponent.new(
-						input_options: { type: 'email', placeholder: 'Enter email address', data: { password_resets_target: 'email' } },
-						p_options: { data: { password_resets_target: 'emailError' } },
-						id: 'email', label: 'Email *', name: :email)) %>
-
-				<%= form.submit 'Send Reset Instructions', class: 'primary-button' %>
-			<% end %>
-		<% end %>
-
-		<%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
-			<p class="text-sm">Recall your password? <a href="<%= signin_path %>" class="text-blue-600 hover:underline">Sign in</a></p>
-		<% end %>
-	</div>
-</div>
+<!-- BUNDLE_START -->
+<%= content_for :head do %>
+<script type="module" defer src="/assets/forgot-password-J7DPZWQM.js"></script>
+<link rel="modulepreload" href="/assets/common-7NBQWWPE.js">
+<link rel="modulepreload" href="/assets/common-HK4PXXCY.js">
+<link rel="modulepreload" href="/assets/common-TEW3MCA6.js">
+<link rel="modulepreload" href="/assets/common-7Z52CFTE.js">
+<% end %>
+<!-- BUNDLE_END -->

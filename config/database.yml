@@ -24,7 +24,7 @@ default: &default
 
 development:
   <<: *default
-  database: chatter_development
+  database: teamchat_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -58,7 +58,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: chatter_test
+  database: teamchat_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -84,18 +84,6 @@ production:
   primary: &primary_production
     <<: *default
     host: <%= ENV["DB_HOST"] %>
-    database: chatter_production
-    username: chatter
+    database: teamchat_production
+    username: teamchat 
     password: <%= ENV["POSTGRES_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: chatter_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: chatter_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: chatter_production_cable
-    migrations_paths: db/cable_migrate

@@ -13,27 +13,63 @@ Rails.application.routes.draw do
 
   get 'signin' => 'signin#new'
   post 'signin' => 'signin#create'
+
+  get 'signup' => 'signup#new'
+  post 'signup' => 'signup#create'
   delete 'signout' => 'signin#destroy'
 
-  resources :signup, only: %i[new create]
+  get 'forgot-password' => 'password_resets#new', as: :forgot_password_new
+  get 'check-email' => 'password_resets#instructions_sent', as: :instructions_sent
+  post 'forgot-password' => 'password_resets#create', as: :forgot_password_create
+
+  get 'reset-password/:token' => 'password_resets#edit', as: :reset_password_edit
+  get 'reset-password-expired' => 'password_resets#expired', as: :reset_password_expired
+  post 'reset-password/:token' => 'password_resets#update', as: :reset_password_update
+
+  resource :home, only: [:show], controller: 'home'
+
+  resources :conversations, only: %i[index create update] do
+    member do
+      post :join_or_request
+    end
+  end
+
+  resources :users, only: [:index] do
+    member do
+      get :avatar
+    end
+  end
+
 
   resource :profile, only: %i[show update]
 
   resources :rooms do
     member do
       post :join_request
+      get :join_requests
     end
-    resource :chats do
+    resource :chats
+    resource :chat_histories do
       member do
-        post :create_text
-        post :create_file
         get :index
       end
     end
   end
 
-  resources :password_resets, only: %i[new create edit update], param: :token
+  resources :join_requests, only: [] do
+    member do
+      patch :approve
+      patch :reject
+    end
+  end
+
+  resources :channels, only: [:show]
+
+  # This route is only available in development mode
+  if Rails.env.development?
+    resource :hot_reload, only: [:show], controller: 'hot_reload'
+  end
 
   # Defines the root path route ("/")
-  root 'rooms#index'
+  root 'home#show'
 end
