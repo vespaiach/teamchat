@@ -1,7 +1,6 @@
 import Box from '~/components/Box';
 import Spinner from '~/svgs/Spinner';
 import UserAvatar from '~/views/UserAvatar';
-import useDirectChannelPartner from '~/hooks/useDirectChannelPartner';
 import { useHomeStore } from '~/views/home/store';
 import ShowMoreOrLess from '~/components/ShowMoreOrLess';
 
@@ -27,18 +26,13 @@ export default function DirectChannels() {
   );
 }
 
-function ChannelList({ channels }: { channels: DirectChannel[] }) {
+function ChannelList({ channels }: { channels: ExtendedDirectChannel[] }) {
   return (
     <ShowMoreOrLess items={channels} renderItem={(channel) => <ChannelItem key={channel.id} channel={channel} />} />
   );
 }
 
-function ChannelItem({ channel }: { channel: DirectChannel }) {
-  const partner = useDirectChannelPartner(channel);
-  if (!partner) {
-    return null;
-  }
-
+function ChannelItem({ channel }: { channel: ExtendedDirectChannel }) {
   return (
     <div
       role="listitem"
@@ -49,11 +43,11 @@ function ChannelItem({ channel }: { channel: DirectChannel }) {
       className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <div className="relative flex-shrink-0">
-          <UserAvatar user={partner} online />
+          <UserAvatar user={channel.partner} online />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{partner.name}</p>
+            <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{channel.partner.name}</p>
             <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white rounded-full bg-primary dark:bg-primary-dark">
               3
             </span>

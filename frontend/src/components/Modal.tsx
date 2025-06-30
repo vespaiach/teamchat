@@ -11,7 +11,7 @@ const sizeClasses = {
 
 interface ModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (val: false) => void;
   title: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -32,8 +32,10 @@ export default function Modal({
   closeOnEscape = true,
   showCloseButton = true,
 }: ModalProps) {
-  const closeRef = useRef(onClose);
-  closeRef.current = onClose;
+  const closeRef = useRef(() => {});
+  closeRef.current = () => {
+    onClose(false);
+  };
 
   useEffect(() => {
     if (!isOpen || !closeOnEscape) return;
@@ -81,7 +83,7 @@ export default function Modal({
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>
-            {showCloseButton && <IconButton shape="circle" icon={<XIcon className="h-6 w-6" />} onClick={onClose} />}
+            {showCloseButton && <IconButton shape="circle" icon={<XIcon className="h-6 w-6" />} onClick={closeRef.current} />}
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OnlineStatusChannel < ApplicationCable::Channel
+class UsersChannel < ApplicationCable::Channel
   include OnlineStatus
 
   def subscribed

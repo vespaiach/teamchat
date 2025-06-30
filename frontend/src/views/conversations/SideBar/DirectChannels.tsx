@@ -2,20 +2,15 @@ import { useState } from 'react';
 import IconButton from '~/components/IconButton';
 import NewMessageBadge from '~/components/NewMessageBadge';
 import UserAvatar from '~/views/UserAvatar';
-import useDirectChannelPartner from '~/hooks/useDirectChannelPartner';
 import ChevronDownIcon from '~/svgs/ChevronDown';
 import PlusIcon from '~/svgs/Plus';
 import { cx } from '~/utils/string';
+import { useConversationsStore } from '~/views/conversations/store';
 
-interface DirectMessageProps {
-  loading?: boolean;
-  channels: DirectChannel[];
-  selectedChannelId: number | null;
-  onChannelSelect: (channel: DirectChannel) => void;
-}
-
-export default function DirectChannels({ loading, channels, selectedChannelId, onChannelSelect }: DirectMessageProps) {
+export default function DirectChannels() {
+  const { directChannels, directChannelsLoading, selectedChannelId, selectChannel } = useConversationsStore();
   const [showChannels, setShowChannels] = useState(true);
+
   return (
     <div className="p-3">
       <div className="flex items-center justify-between mb-3">
@@ -32,7 +27,7 @@ export default function DirectChannels({ loading, channels, selectedChannelId, o
         <IconButton variant="ghost" size="sm" className="p-1 h-6 w-6" aria-label="Add channel" icon={<PlusIcon />} />
       </div>
 
-      {loading && (
+      {directChannelsLoading && (
         <div className="flex items-center justify-center h-12 text-gray-500 dark:text-gray-400">
           Loading channels...
         </div>
@@ -40,11 +35,11 @@ export default function DirectChannels({ loading, channels, selectedChannelId, o
 
       {showChannels && (
         <div className="space-y-1">
-          {channels.map((channel) => (
+          {directChannels.map((channel) => (
             <ChannelItem
               key={channel.id}
               channel={channel}
-              onClick={() => onChannelSelect(channel)}
+              onClick={() => selectChannel(channel.id)}
               selected={channel.id === selectedChannelId}
             />
           ))}
@@ -55,17 +50,12 @@ export default function DirectChannels({ loading, channels, selectedChannelId, o
 }
 
 interface ChannelProps {
-  channel: DirectChannel;
+  channel: ExtendedDirectChannel;
   selected?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 function ChannelItem({ channel, selected = false, onClick }: ChannelProps) {
-  const partner = useDirectChannelPartner(channel);
-  if (!partner) {
-    return null; // Handle case where partner is not found
-  }
-
   return (
     <div
       onClick={onClick}
@@ -76,11 +66,11 @@ function ChannelItem({ channel, selected = false, onClick }: ChannelProps) {
         selected ? 'bg-blue-100 dark:bg-blue-900/30' : 'hover:bg-gray-100 dark:hover:bg-gray-700'
       )}>
       <div className="relative">
-        <UserAvatar user={partner} />
+        <UserAvatar user={channel.partner} />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center space-x-1">
-          <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{partner.name}</span>
+          <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{channel.partner.name}</span>
           {channel.hasUnreadMessages && <NewMessageBadge />}
         </div>
       </div>

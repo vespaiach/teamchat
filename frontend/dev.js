@@ -5,6 +5,10 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Get the mode from command line arguments (default to 'watch')
+const mode = process.argv[2] || 'watch';
+const isProduction = mode === 'build';
+
 const ERB_MAPS = {
   'frontend/src/views/sign-in/index.tsx': path.resolve(__dirname, '../app/views/signin/new.html.erb'),
   'frontend/src/views/sign-up/index.tsx': path.resolve(__dirname, '../app/views/signup/new.html.erb'),
@@ -66,17 +70,24 @@ const ctx = await esbuild.context({
   platform: 'browser',
   target: 'es2020',
   metafile: true,
-  sourcemap: true,
+  sourcemap: !isProduction, // Disable sourcemap in production
   splitting: true,
   plugins: [htmlInject],
   entryNames: '[dir]-[hash]',
   chunkNames: 'common-[hash]',
   assetNames: 'assets/[name]-[hash]',
   define: {
-    'process.env.NODE_ENV': '"development"',
+    'process.env.NODE_ENV': isProduction ? '"production"' : '"development"',
   }
 });
 
-await ctx.watch();
-
-console.log(`👀 Watching for changes...`);
+if (isProduction) {
+  // Production build mode
+  await ctx.rebuild();
+  console.log('✅ Production build completed!');
+  await ctx.dispose();
+} else {
+  // Development watch mode
+  await ctx.watch();
+  console.log(`👀 Watching for changes...`);
+}

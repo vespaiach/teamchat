@@ -4,10 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev-ts-node": "node --loader ts-node/esm dev.ts",
-    "dev": "node dev.js",
-    "build-hot-reload": "esbuild src/utils/hot-reload.ts --bundle --outfile=../public/hot-reload.js --platform=browser",
-    "build": "tsc -b && vite build",
+    "dev": "node dev.js watch",
+    "build": "node dev.js build",
     "lint": "eslint ."
   },
   "dependencies": {

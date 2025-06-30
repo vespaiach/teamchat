@@ -46,3 +46,8 @@ export function put<T = unknown>(url: string, body: Record<string, unknown>) {
     body: JSON.stringify(body),
   });
 }
+
+export function del<T = unknown>(url: string, params?: Record<string, string>) {
+  const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+  return apiCall<T>(url + queryString, { method: 'DELETE' });
+}

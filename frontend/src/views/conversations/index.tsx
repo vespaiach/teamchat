@@ -1,21 +1,17 @@
-import { StrictMode, useEffect, useState } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Logo } from '~/components/Logo';
 import { TextBox } from '~/components/TextBox';
 import { Button } from '~/components/Button';
-import StatusIndicator from '~/components/StatusIndicator';
-import GroupChannels from './SideBar/GroupChannels';
-import useGroupChannels from '~/hooks/useGroupChannels';
-import useDirectChannels from '~/hooks/useDirectChannels';
-import { AppStoreProvider } from '~/global-contexts/app-store';
-import DirectChannels from './SideBar/DirectChannels';
-
-const messages = [];
+import GroupChannels from '~/views/conversations/SideBar/GroupChannels';
+import DirectChannels from '~/views/conversations/SideBar/DirectChannels';
+import { ConversationsStoreProvider, useConversationsStore } from '~/views/conversations/store';
+import PlusIcon from '~/svgs/Plus';
+import MagnifierIcon from '~/svgs/Magnifier';
+import UserAvatar from '../UserAvatar';
 
 export default function Conversations() {
-  const [selectedChannelId, setSelectedChannelId] = useState<number | null>(null);
-  const { groupChannels, groupChannelLoading } = useGroupChannels();
-  const { directChannels, directChannelLoading } = useDirectChannels();
+  const { selectedChannelId, selectChannel, groupChannels, directChannels, loggedInUser } = useConversationsStore();
 
   // Set default selected channel if not set
   useEffect(() => {
@@ -24,104 +20,59 @@ export default function Conversations() {
 
       const channel = groupChannels.find((c) => c.id === channelId);
       if (channel) {
-        setSelectedChannelId(channel.id);
+        selectChannel(channel.id);
         return;
       }
 
       const dm = directChannels.find((c) => c.id === channelId);
       if (dm) {
-        setSelectedChannelId(dm.id);
+        selectChannel(dm.id);
         return;
       }
 
       if (groupChannels.length > 0) {
-        setSelectedChannelId(groupChannels[0].id);
+        selectChannel(groupChannels[0].id);
       }
 
       if (directChannels.length > 0) {
-        setSelectedChannelId(directChannels[0].id);
+        selectChannel(directChannels[0].id);
       }
     }
-  }, [selectedChannelId, groupChannels, directChannels]);
+  }, [selectedChannelId, groupChannels, directChannels, selectChannel]);
 
   return (
     <div className="page-container flex">
-      {/* Sidebar */}
       <div className="w-80 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-colors duration-200">
-        {/* Sidebar Header */}
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between mb-4">
             <Logo size={28} />
             <div className="flex items-center space-x-2">
-              {/* Compose button */}
-              <Button
-                variant="primary"
-                size="sm"
-                className="px-3"
-                leftIcon={
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                }>
+              <Button variant="primary" size="sm" className="px-3" leftIcon={<PlusIcon className="h-4 w-4" />}>
                 New
               </Button>
             </div>
           </div>
 
-          {/* Search */}
           <TextBox
             name="search"
             placeholder="Search TeamChat"
             size="sm"
-            icon={
-              <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            }
+            icon={<MagnifierIcon className="h-4 w-4 text-gray-400" />}
           />
         </div>
 
-        {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
-          <GroupChannels
-            channels={groupChannels}
-            loading={groupChannelLoading}
-            selectedChannelId={selectedChannelId}
-            onChannelSelect={(channel) => {
-              setSelectedChannelId(channel.id);
-            }}
-          />
-
-          <DirectChannels
-            channels={directChannels}
-            loading={directChannelLoading}
-            selectedChannelId={selectedChannelId}
-            onChannelSelect={(channel) => {
-              setSelectedChannelId(channel.id);
-            }}
-          />
+          <GroupChannels />
+          <DirectChannels />
         </div>
 
-        {/* User Profile in Sidebar */}
         <div className="p-3 border-t border-gray-200 dark:border-gray-700">
           <div className="flex items-center space-x-3 px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200">
             <div className="relative">
-              <div
-                className="w-8 h-8 rounded flex items-center justify-center text-sm font-medium text-white"
-                style={{ backgroundColor: 'var(--primary)' }}>
-                JD
-              </div>
-              <div className="absolute -bottom-1 -right-1">
-                <StatusIndicator status="online" />
-              </div>
+              <UserAvatar user={loggedInUser} />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900 dark:text-white">John Doe</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">{loggedInUser.name}</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">Available</p>
             </div>
           </div>
@@ -184,7 +135,7 @@ export default function Conversations() {
 
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {messages.map((message) => (
+          {[].map((message) => (
             <div
               key={message.id}
               className={`flex items-start space-x-3 ${
@@ -303,8 +254,8 @@ export default function Conversations() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AppStoreProvider>
+    <ConversationsStoreProvider>
       <Conversations />
-    </AppStoreProvider>
+    </ConversationsStoreProvider>
   </StrictMode>
 );

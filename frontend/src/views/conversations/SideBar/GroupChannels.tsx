@@ -6,18 +6,10 @@ import ChevronDown from '~/svgs/ChevronDown';
 import ClosedLockIcon from '~/svgs/ClosedLock';
 import PlusIcon from '~/svgs/Plus';
 import { cx } from '~/utils/string';
+import { useConversationsStore } from '~/views/conversations/store';
 
-export default function GroupChannels({
-  loading = false,
-  channels,
-  selectedChannelId,
-  onChannelSelect,
-}: {
-  loading?: boolean;
-  channels: ExtendedGroupChannel[];
-  selectedChannelId: number | null;
-  onChannelSelect: (channel: ExtendedGroupChannel) => void;
-}) {
+export default function GroupChannels() {
+  const { groupChannelsLoading, groupChannels, selectChannel, selectedChannelId } = useConversationsStore();
   const [showChannels, setShowChannels] = useState(true);
 
   return (
@@ -36,13 +28,13 @@ export default function GroupChannels({
         <IconButton variant="ghost" size="sm" className="p-1 h-6 w-6" aria-label="Add channel" icon={<PlusIcon />} />
       </div>
 
-      {loading && (
+      {groupChannelsLoading && (
         <div className="flex items-center justify-center h-12 text-gray-500 dark:text-gray-400">
           Loading channels...
         </div>
       )}
 
-      {!loading && channels.length === 0 && (
+      {!groupChannelsLoading && groupChannels.length === 0 && (
         <div className="text-gray-500 dark:text-gray-400 text-sm text-center">
           No channels available. Create or join a channel to start chatting.
         </div>
@@ -50,11 +42,11 @@ export default function GroupChannels({
 
       {showChannels && (
         <div className="space-y-1">
-          {channels.map((channel) => (
+          {groupChannels.map((channel) => (
             <ChannelItem
               key={channel.id}
               channel={channel}
-              onClick={() => onChannelSelect(channel)}
+              onClick={() => selectChannel(channel.id)}
               selected={channel.id === selectedChannelId}
             />
           ))}

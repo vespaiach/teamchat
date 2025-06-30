@@ -3,19 +3,17 @@ import useDirectChannels from '~/hooks/useDirectChannels';
 import useDirectChannelsSocket from '~/hooks/useDirectChannelsSocket';
 import useGroupChannels from '~/hooks/useGroupChannels';
 import useGroupChannelsSocket from '~/hooks/useGroupChannelsSocket';
-import useUserChannelsSocket from '~/hooks/useUserChannelsSocket';
-import useUsers from '~/hooks/useUsers';
 import getPredefinedData from '~/utils/predefined-data';
 import { transformUser } from '~/utils/transformer';
 
-interface HomeStore {
+interface ConversationsStore {
   groupChannels: ExtendedGroupChannel[];
   groupChannelsLoading: boolean;
   directChannels: ExtendedDirectChannel[];
   directChannelsLoading: boolean;
-  users: User[];
-  usersLoading: boolean;
   loggedInUser: User;
+  selectedChannelId: number | null;
+  selectChannel: (channelId: number) => void;
 }
 
 const userResponse = getPredefinedData<UserResponse>('logged-in-user');
@@ -23,22 +21,22 @@ if (!userResponse) {
   throw new Error('User data not found. Ensure the user data is embedded in the HTML.');
 }
 
-const HomeStoreContext = createContext({
+const ConversationsContext = createContext({
   groupChannels: [],
   groupChannelsLoading: true,
   directChannels: [],
   directChannelsLoading: true,
-  users: [],
-  usersLoading: true,
-  loggedInUser: transformUser(userResponse) as User,
-} as HomeStore);
+  loggedInUser: transformUser(userResponse!) as User,
+  selectedChannelId: null,
+  selectChannel: () => {},
+} as ConversationsStore);
 
-export function HomeStoreProvider({ children }: { children: React.ReactNode }) {
+export function ConversationsStoreProvider({ children }: { children: React.ReactNode }) {
+  const [selectedChannelId, setSelectedChannelId] = useState<number | null>(null);
   const [loggedInUser] = useState(transformUser(userResponse!));
   const { groupChannelsLoading, groupChannels, setGroupChannels } = useGroupChannels();
   const { directChannelsLoading, directChannels, setDirectChannels } = useDirectChannels();
-  const { usersLoading, users, setUsers } = useUsers();
-
+  
   const extendedDirectChannels = useMemo(() => {
     return directChannels.map((channel) => ({
       ...channel,
@@ -66,42 +64,26 @@ export function HomeStoreProvider({ children }: { children: React.ReactNode }) {
     });
   });
 
-  useUserChannelsSocket((user) => {
-    setUsers((prev) => {
-      const existingUser = prev.find((u) => u.id === user.id);
-      if (existingUser) {
-        return prev.map((u) => (u.id === user.id ? { ...u, ...user } : u));
-      }
-      return [...prev, user];
-    });
-  });
-
   return (
-    <HomeStoreContext.Provider
+    <ConversationsContext.Provider
       value={{
         groupChannels,
         groupChannelsLoading,
         directChannels: extendedDirectChannels,
         directChannelsLoading,
-        users,
-        usersLoading,
         loggedInUser,
+        selectedChannelId,
+        selectChannel: setSelectedChannelId,
       }}>
       {children}
-    </HomeStoreContext.Provider>
+    </ConversationsContext.Provider>
   );
 }
 
-export function useHomeStore() {
-  const context = useContext(HomeStoreContext);
+export function useConversationsStore() {
+  const context = useContext(ConversationsContext);
   if (!context) {
-    throw new Error('useHomeStore must be used within a HomeStoreProvider');
+    throw new Error('useConversationsStore must be used within a ConversationsContext');
   }
   return context;
 }
-
-// Sort users by online status (online, away, offline)
-// const sortedUsers = [...users].sort((a, b) => {
-//   const statusOrder = { online: 0, away: 1, offline: 2 };
-//   return statusOrder[a.status as keyof typeof statusOrder] - statusOrder[b.status as keyof typeof statusOrder];
-// });

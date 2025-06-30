@@ -37,6 +37,10 @@ declare global {
     participants: User[];
   }
 
+  interface ExtendedDirectChannel extends DirectChannel {
+    partner: User;
+  }
+
   type ToastType = 'success' | 'error' | 'warning';
 
   interface Toast {
