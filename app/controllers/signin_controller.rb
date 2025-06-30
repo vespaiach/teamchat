@@ -36,6 +36,6 @@ class SigninController < ApplicationController
     cookies.delete(:_teamchat_remember_token)
 
     flash[:success] = 'You have been logged out successfully.'
-    redirect_to signin_path
+    render json: { message: 'Logged out successfully' }, status: :ok
   end
 end

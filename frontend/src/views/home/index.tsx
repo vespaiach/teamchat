@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { TextBox } from '~/components/TextBox';
-import Header from '~/views/home/components/Header';
+import Header from '~/views/home/components/HomeHeader';
 import { ToastContainer } from '~/global-contexts/toast';
 import GroupChannels from '~/views/home/components/GroupChannels';
 import DirectChannels from '~/views/home/components/DirectChannels';

@@ -134,6 +134,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_25_134617) do
     t.string "first_name"
     t.string "last_name"
     t.string "email", null: false
+    t.string "time_zone", null: false
+    t.string "role"
+    t.string "department"
     t.string "password_digest", null: false
     t.string "password_reset_token"
     t.datetime "password_reset_sent_at"

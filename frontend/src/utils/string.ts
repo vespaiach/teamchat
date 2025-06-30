@@ -72,3 +72,21 @@ export function validateChannelName(name: string): string | null {
 
   return null;
 }
+
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+export function dateToMDY(date: Date): string {
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}

@@ -6,8 +6,11 @@ class AddUsersTable < ActiveRecord::Migration[8.0]
       t.string   :first_name
       t.string   :last_name
       t.string   :email,              null: false, index: { unique: true }
-      t.string   :password_digest,    null: false
+      t.string   :time_zone,          null: false
+      t.string   :role
+      t.string   :department
 
+      t.string   :password_digest,    null: false
       t.string   :password_reset_token
       t.datetime :password_reset_sent_at
       t.string   :remember_token

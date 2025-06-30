@@ -1,7 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { cx } from '~/utils/string';
 
-export interface TextBoxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface TextBoxProps
+  extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'size'> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -11,104 +12,119 @@ export interface TextBoxProps extends Omit<React.InputHTMLAttributes<HTMLInputEl
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
   required?: boolean;
+  type?: string;
+  value?: string;
+  disabled?: boolean;
+  name?: string;
+  placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-export const TextBox = forwardRef<HTMLInputElement, TextBoxProps>(
-  (
-    {
-      label,
-      error,
-      helperText,
-      variant = 'default',
-      size = 'md',
-      icon,
-      iconPosition = 'left',
-      fullWidth = true,
-      required = false,
-      className = '',
-      id,
-      ...props
-    },
-    ref
-  ) => {
-    const inputId = id || `textbox-${Math.random().toString(36).substr(2, 9)}`;
+// Size variants
+const sizeClasses = {
+  sm: 'px-3 py-2 text-sm',
+  md: 'px-3 py-3 text-base',
+  lg: 'px-4 py-4 text-lg',
+};
 
-    // Size variants
-    const sizeClasses = {
-      sm: 'px-3 py-2 text-sm',
-      md: 'px-3 py-3 text-base',
-      lg: 'px-4 py-4 text-lg',
-    };
+// Variant styles with dark mode support
+const variantClasses = {
+  default: 'border border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900 dark:text-white',
+  filled: 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white',
+  outlined: 'border-2 border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900 dark:text-white',
+};
 
-    // Variant styles with dark mode support
-    const variantClasses = {
-      default: 'border border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900 dark:text-white',
-      filled: 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white',
-      outlined: 'border-2 border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900 dark:text-white',
-    };
+export function TextBox(props: TextBoxProps) {
+  const {
+    label,
+    error,
+    helperText,
+    variant = 'default',
+    size = 'md',
+    icon,
+    iconPosition = 'left',
+    fullWidth = true,
+    required = false,
+    className = '',
+    id,
+    type = 'text',
+    value,
+    disabled = false,
+    name,
+    placeholder = '',
+    onChange,
+    onBlur,
+    ...rest
+  } = props;
 
-    // Base input classes with dark mode support
-    const baseInputClasses = cx(
-      'rounded-lg shadow-sm placeholder-gray-400 dark:placeholder-gray-500',
-      'focus:outline-none focus:ring-2 focus:border-transparent focus:ring-primary',
-      'transition duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed',
-      'dark:disabled:bg-gray-800 invalid:ring-primary',
-      fullWidth ? 'w-full' : '',
-      sizeClasses[size],
-      variantClasses[variant],
-      error ? 'border-red-500 focus:ring-red-500 dark:border-red-400 dark:focus:ring-red-400' : '',
-      icon ? (iconPosition === 'left' ? 'pl-10' : 'pr-10') : '',
-      className
-    );
+  const inputId = useMemo(() => id || `textbox-${Math.random().toString(36).substring(2, 9)}`, [id]);
 
-    return (
-      <div className={fullWidth ? 'w-full' : ''}>
-        {label && (
-          <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {label}
-            {required && <span className="text-red-500 dark:text-red-400 ml-1">*</span>}
-          </label>
+  // Base input classes with dark mode support
+  const baseInputClasses = cx(
+    'rounded-lg shadow-sm placeholder-gray-400 dark:placeholder-gray-500',
+    'focus:outline-none focus:ring-2 focus:border-transparent focus:ring-blue-600',
+    'transition duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed',
+    'dark:disabled:bg-gray-800 invalid:ring-primary',
+    fullWidth ? 'w-full' : '',
+    sizeClasses[size],
+    variantClasses[variant],
+    error ? 'border-red-500 focus:ring-red-500 dark:border-red-400 dark:focus:ring-red-400' : '',
+    icon ? (iconPosition === 'left' ? 'pl-10' : 'pr-10') : '',
+    className
+  );
+
+  return (
+    <div {...rest} className={fullWidth ? 'w-full' : ''}>
+      {label && (
+        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          {label}
+          {required && <span className="text-red-500 dark:text-red-400 ml-1">*</span>}
+        </label>
+      )}
+
+      <div className="relative">
+        {icon && (
+          <div
+            className={cx(
+              'absolute inset-y-0',
+              'flex items-center pointer-events-none text-gray-400 dark:text-gray-500',
+              iconPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3'
+            )}>
+            {icon}
+          </div>
         )}
 
-        <div className="relative">
-          {icon && (
-            <div
-              className={cx(
-                'absolute inset-y-0',
-                'flex items-center pointer-events-none text-gray-400 dark:text-gray-500',
-                iconPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3'
-              )}>
-              {icon}
-            </div>
-          )}
-
-          <input
-            ref={ref}
-            id={inputId}
-            className={baseInputClasses}
-            aria-invalid={error ? 'true' : 'false'}
-            aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined}
-            {...props}
-          />
-        </div>
-
-        {error && (
-          <p id={`${inputId}-error`} className="mt-1 text-sm text-red-600 dark:text-red-400">
-            {error}
-          </p>
-        )}
-
-        {helperText && !error && (
-          <p id={`${inputId}-helper`} className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            {helperText}
-          </p>
-        )}
+        <input
+          name={name}
+          disabled={disabled}
+          value={value}
+          required={required}
+          type={type}
+          id={inputId}
+          className={baseInputClasses}
+          aria-invalid={error ? 'true' : 'false'}
+          aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined}
+          placeholder={placeholder}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
       </div>
-    );
-  }
-);
 
-TextBox.displayName = 'TextBox';
+      {error && (
+        <p id={`${inputId}-error`} className="mt-1 text-sm text-red-600 dark:text-red-400">
+          {error}
+        </p>
+      )}
+
+      {helperText && !error && (
+        <p id={`${inputId}-helper`} className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          {helperText}
+        </p>
+      )}
+    </div>
+  );
+}
 
 // Password TextBox variant
 export interface PasswordTextBoxProps extends Omit<TextBoxProps, 'type'> {

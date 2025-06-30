@@ -7,10 +7,6 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
   get 'signin' => 'signin#new'
   post 'signin' => 'signin#create'
 
@@ -28,6 +24,8 @@ Rails.application.routes.draw do
 
   resource :home, only: [:show], controller: 'home'
 
+  resource :profile, only: %i[show update]
+
   resources :conversations, only: %i[index create update] do
     member do
       post :join_or_request
@@ -39,9 +37,6 @@ Rails.application.routes.draw do
       get :avatar
     end
   end
-
-
-  resource :profile, only: %i[show update]
 
   resources :rooms do
     member do
@@ -64,11 +59,6 @@ Rails.application.routes.draw do
   end
 
   resources :channels, only: [:show]
-
-  # This route is only available in development mode
-  if Rails.env.development?
-    resource :hot_reload, only: [:show], controller: 'hot_reload'
-  end
 
   # Defines the root path route ("/")
   root 'home#show'
