@@ -24,7 +24,11 @@ Rails.application.routes.draw do
 
   resource :home, only: [:show], controller: 'home'
 
-  resource :profile, only: %i[show update]
+  resource :profile, only: %i[show update] do
+    member do
+      post :avatar
+    end
+  end
 
   resources :conversations, only: %i[index create update] do
     member do
