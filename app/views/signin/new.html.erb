@@ -1,32 +1,10 @@
-<div class="min-h-dvh flex items-center">
-	<div class="space-y-5 flex-1">
-		<%= render(::BoxComponent.new(options: { class: 'px-6 pt-12 pb-6' })) do %>
-			<%= render(::LogoComponent.new) %>
-			
-			<h4 class="text-center mt-6 mb-5 font-serif">Welcome Back! Sign In</h4>
-
-			<%= form_with(url: signin_path, class: 'flex flex-col items-stretch gap-1 mt-8', scope: :session, local: true, data: { controller: 'signin', action: 'submit->signin#validate' }) do |form| %>
-				<%= render(
-					::TextInputComponent.new(
-						input_options: { type: 'email', placeholder: 'Input email address', data: { signin_target: 'emailInput' } },
-						p_options: { data: { signin_target: 'emailError' } },
-						id: 'email_address', label: 'Email Address *', name: :email)) %>
-				<%= render(
-					::TextInputComponent.new(
-						input_options: { type: 'password', placeholder: 'Input password', data: { signin_target: 'passwordInput' } },
-						p_options: { data: { signin_target: 'passwordError' } },
-						id: 'password', label: 'Password *', name: :password)) %>
-
-				<div class="space-y-4 w-full mt-4">
-					<%= render(::ButtonComponent.new(text: 'Log In', options: { type: 'submit' })) %>
-					<p class="text-sm">Forgot password? <a href="<%= new_password_reset_path %>" class="text-blue-600 hover:underline">Reset it here</a></p>
-				</div>
-			<% end %>
-		<% end %>
-
-
-		<%= render(::BoxComponent.new(options: { class: 'px-6 py-4' })) do %>
-			<p class="text-sm">Don't have an account? <a href="<%= new_signup_path %>" class="text-blue-600 hover:underline">Sign up here</a></p>
-		<% end %>
-	</div>
-</div>
+<!-- BUNDLE_START -->
+<%= content_for :head do %>
+<script type="module" defer src="/assets/sign-in-X7L5NMAY.js"></script>
+<link rel="modulepreload" href="/assets/common-VG2WOWNS.js">
+<link rel="modulepreload" href="/assets/common-GWISBBZY.js">
+<link rel="modulepreload" href="/assets/common-RK4D3L5Y.js">
+<link rel="modulepreload" href="/assets/common-LDXIWRYF.js">
+<link rel="modulepreload" href="/assets/common-LFUS5FUA.js">
+<% end %>
+<!-- BUNDLE_END -->

@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_18_104847) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_25_134617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "conversation_role", ["admin", "member"]
+  create_enum "message_status", ["delivered", "read"]
+  create_enum "message_type", ["text", "image", "audio", "video", "file"]
+  create_enum "request_status", ["pending", "approved", "rejected"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -42,59 +49,117 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_18_104847) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "chats", force: :cascade do |t|
+  create_table "conversation_join_requests", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
     t.bigint "user_id", null: false
-    t.bigint "room_id", null: false
+    t.enum "status", default: "pending", null: false, enum_type: "request_status"
     t.text "message"
-    t.jsonb "custom_data", default: {}, null: false
-    t.timestamptz "deleted_at"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_chats_on_room_id"
-    t.index ["user_id"], name: "index_chats_on_user_id"
+    t.index ["conversation_id", "user_id"], name: "index_join_requests_on_convo_user", unique: true
+    t.index ["conversation_id"], name: "index_conversation_join_requests_on_conversation_id"
+    t.index ["user_id"], name: "index_conversation_join_requests_on_user_id"
   end
 
-  create_table "room_users", force: :cascade do |t|
-    t.bigint "room_id", null: false
+  create_table "conversation_participants", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
     t.bigint "user_id", null: false
-    t.timestamptz "deleted_at"
+    t.enum "role", default: "member", null: false, enum_type: "conversation_role"
+    t.bigint "last_read_message_id"
+    t.datetime "joined_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id", "user_id"], name: "index_room_users_on_room_id_and_user_id", unique: true
-    t.index ["room_id"], name: "index_room_users_on_room_id"
-    t.index ["user_id"], name: "index_room_users_on_user_id"
+    t.index ["conversation_id", "user_id"], name: "index_convo_participants_on_convo_id_and_user_id", unique: true
+    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
+    t.index ["user_id"], name: "index_conversation_participants_on_user_id"
   end
 
-  create_table "rooms", force: :cascade do |t|
+  create_table "conversations", force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id", null: false
-    t.timestamptz "deleted_at"
+    t.string "description"
+    t.boolean "is_public", default: true, null: false
+    t.bigint "created_by_id", null: false
+    t.string "type", default: "Conversations::GroupConversation", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_rooms_on_user_id"
+    t.index ["created_by_id"], name: "index_conversations_on_created_by_id"
+    t.index ["is_public"], name: "index_conversations_on_is_public"
+    t.index ["type"], name: "index_conversations_on_type"
+  end
+
+  create_table "message_reactions", force: :cascade do |t|
+    t.bigint "message_id", null: false
+    t.bigint "user_id", null: false
+    t.string "emoji", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id", "user_id", "emoji"], name: "index_reactions_on_message_user_emoji", unique: true
+    t.index ["message_id"], name: "index_message_reactions_on_message_id"
+    t.index ["user_id"], name: "index_message_reactions_on_user_id"
+  end
+
+  create_table "message_statuses", force: :cascade do |t|
+    t.bigint "message_id", null: false
+    t.bigint "user_id", null: false
+    t.enum "status", default: "delivered", null: false, enum_type: "message_status"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id", "user_id"], name: "index_message_statuses_on_message_id_and_user_id", unique: true
+    t.index ["message_id"], name: "index_message_statuses_on_message_id"
+    t.index ["user_id"], name: "index_message_statuses_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "sender_id", null: false
+    t.text "content"
+    t.enum "message_type", default: "text", null: false, enum_type: "message_type"
+    t.bigint "parent_message_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id", "created_at"], name: "index_messages_on_convo_and_created_at"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["message_type"], name: "index_messages_on_message_type"
+    t.index ["parent_message_id"], name: "index_messages_on_parent_message_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email", null: false
+    t.string "time_zone", null: false
+    t.string "role"
+    t.string "department"
     t.string "password_digest", null: false
-    t.timestamptz "last_login_at"
-    t.timestamptz "deleted_at"
+    t.string "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string "remember_token"
+    t.datetime "remember_token_expires_at"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "online_status", default: false, null: false
-    t.string "password_reset_token"
-    t.timestamptz "password_reset_sent_at"
-    t.datetime "last_seen_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "chats", "rooms"
-  add_foreign_key "chats", "users"
-  add_foreign_key "room_users", "rooms"
-  add_foreign_key "room_users", "users"
-  add_foreign_key "rooms", "users"
+  add_foreign_key "conversation_join_requests", "conversations"
+  add_foreign_key "conversation_join_requests", "users"
+  add_foreign_key "conversation_participants", "conversations"
+  add_foreign_key "conversation_participants", "users"
+  add_foreign_key "conversations", "users", column: "created_by_id"
+  add_foreign_key "message_reactions", "messages"
+  add_foreign_key "message_reactions", "users"
+  add_foreign_key "message_statuses", "messages"
+  add_foreign_key "message_statuses", "users"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "messages", column: "parent_message_id"
+  add_foreign_key "messages", "users", column: "sender_id"
 end

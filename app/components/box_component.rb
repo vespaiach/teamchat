@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BoxComponent < ViewComponent::Base
+class BoxComponent <ViewComponent::Base
   def initialize(options: {})
     @options = options
   end

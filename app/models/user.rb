@@ -2,19 +2,16 @@
 
 class User < ApplicationRecord
   include OnlineStatus
-
-  # Modules
   has_secure_password
 
-  # Associations
-  has_one_attached :avatar
-  has_many :room_users
-  has_many :chats
-  has_many :created_rooms, class_name: 'Room', foreign_key: 'user_id'
-  has_many :joined_rooms, through: :room_users, source: :room
+  has_many :conversation_participants, dependent: :destroy
+  has_many :conversations, through: :conversation_participants
 
-  # Scopes
-  scope :chats_by_room, ->(room_id) { joins(:chats).where(rooms: { id: room_id }) }
+  has_many :messages, foreign_key: :sender_id, dependent: :nullify
+  has_many :message_reactions, dependent: :destroy
+  has_many :message_statuses, dependent: :destroy
+
+  has_one_attached :avatar
 
   # Validations
   validates :first_name, presence: true
@@ -39,5 +36,36 @@ class User < ApplicationRecord
 
   def online?
     user_online?(id)
+  end
+
+  def as_json(options = {})
+    super(options.merge(only: [:id, :first_name, :last_name, :email, :created_at, :time_zone, :role, :department]))
+  end
+
+  def generate_remember_token!
+    update!(
+      remember_token: SecureRandom.urlsafe_base64,
+      remember_token_expires_at: 1.year.from_now
+    )
+  end
+
+  def clear_remember_token!
+    update!(remember_token: nil, remember_token_expires_at: nil)
+  end
+
+  def remember_token_valid?
+    remember_token.present? && remember_token_expires_at&.future?
+  end
+
+  # Bypass type casting for password_reset_token
+  def password_reset_token
+    @attributes['password_reset_token']&.value_before_type_cast ||
+    @attributes['password_reset_token']&.value
+  end
+
+  # Bypass type casting for remember_token
+  def remember_token
+    @attributes['remember_token']&.value_before_type_cast ||
+    @attributes['remember_token']&.value
   end
 end

@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: oklch(57.7% 0.245 27.325);
+  --color-primary-hover: oklch(52% 0.245 27.325);
+  --color-primary-light: oklch(95% 0.05 27.325);
+
+  --color-dark-primary: oklch(65% 0.245 27.325);
+  --color-dark-primary-hover: oklch(70% 0.245 27.325);
+  --color-dark-primary-light: oklch(15% 0.05 27.325);
+}
+
+@layer components {
+  .page-container {
+    @apply min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200;
+  }
+}
