@@ -8,22 +8,24 @@ export default function Users() {
   const { users, usersLoading } = useHomeStore();
 
   return (
-    <Box
-      header={
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Team Members</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">3 online</p>
-        </div>
-      }>
-      <div className="p-2">
-        {usersLoading && (
-          <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
-            <Spinner className="w-5 h-5" /> Loading users...
+    <div className="lg:col-span-1">
+      <Box
+        headerRNode={
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Team Members</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">3 online</p>
           </div>
-        )}
-        <ShowMoreOrLess items={users} renderItem={(user: User) => <UserItem key={user.id} user={user} online />} />
-      </div>
-    </Box>
+        }>
+        <div className="p-2">
+          {usersLoading && (
+            <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
+              <Spinner className="w-5 h-5" /> Loading users...
+            </div>
+          )}
+          <ShowMoreOrLess items={users} renderItem={(user: User) => <UserItem key={user.id} user={user} online />} />
+        </div>
+      </Box>
+    </div>
   );
 }
 

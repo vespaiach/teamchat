@@ -17,9 +17,8 @@ export default function AvatarAndStats() {
   }, [loggedInUser]);
 
   return (
-    <Box>
+    <Box className="p-6">
       <div className="flex flex-col items-stretch md:flex-row gap-5">
-
         <div className="flex-1 flex flex-col sm:flex-row gap-4">
           <div className="relative w-32 h-32">
             {avatar && <img src={avatar} className="w-full h-full rounded-full object-cover object-center" />}

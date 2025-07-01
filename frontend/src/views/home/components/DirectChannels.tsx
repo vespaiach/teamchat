@@ -8,21 +8,23 @@ export default function DirectChannels() {
   const { directChannels, directChannelsLoading } = useHomeStore();
 
   return (
-    <>
-      <Box header={<h2 className="text-lg font-semibold text-gray-900 dark:text-white">Direct Messages</h2>}>
-        {directChannelsLoading && (
-          <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
-            <Spinner className="w-5 h-5" /> Loading channels...
-          </div>
-        )}
-        {!directChannelsLoading && directChannels.length === 0 && (
-          <div className="text-center text-gray-500 dark:text-gray-400">
-            No direct messages yet. Start a conversation with someone!
-          </div>
-        )}
-        {!directChannelsLoading && <ChannelList channels={directChannels} />}
+    <div className="lg:col-span-1">
+      <Box headerRNode={<h2 className="text-lg font-semibold text-gray-900 dark:text-white">Direct Messages</h2>}>
+        <div className="p-2">
+          {directChannelsLoading && (
+            <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
+              <Spinner className="w-5 h-5" /> Loading channels...
+            </div>
+          )}
+          {!directChannelsLoading && directChannels.length === 0 && (
+            <div className="text-center text-gray-500 dark:text-gray-400">
+              No direct messages yet. Start a conversation with someone!
+            </div>
+          )}
+          {!directChannelsLoading && <ChannelList channels={directChannels} />}
+        </div>
       </Box>
-    </>
+    </div>
   );
 }
 

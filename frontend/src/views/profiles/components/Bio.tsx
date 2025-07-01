@@ -98,7 +98,7 @@ export default function Bio() {
   };
 
   return (
-    <Box className="flex-1">
+    <Box className="flex-1 p-6">
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Personal Information</h2>
       <div className="space-y-4">
         <TextBox

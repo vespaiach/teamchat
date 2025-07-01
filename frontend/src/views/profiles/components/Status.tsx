@@ -8,7 +8,7 @@ export default function Status() {
   };
 
   return (
-    <Box className="flex-1">
+    <Box className="flex-1 p-6">
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Status</h2>
       <div className="space-y-4">
         <div
