@@ -12,6 +12,10 @@ declare global {
     firstName: string;
     lastName: string;
     name: string;
+    joinedAt: Date;
+    role: string | null;
+    department: string | null;
+    timezone: string;
   }
 
   interface GroupChannel {
@@ -53,7 +57,7 @@ declare global {
 
   var appErrors: ServerNotification[] | undefined;
 
-  type OnlineStatus = 'online' | 'offline' | 'away' | 'busy';
+  type OnlineStatus = 'online' | 'offline';
 }
 
 export {};

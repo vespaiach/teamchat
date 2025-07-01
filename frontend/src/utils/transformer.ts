@@ -38,6 +38,10 @@ export function transformUser(user: UserResponse): User {
     firstName: user.first_name,
     lastName: user.last_name,
     name: `${user.first_name} ${user.last_name}`,
+    joinedAt: new Date(user.created_at),
+    timezone: user.time_zone,
+    role: user.role,
+    department: user.department,
   };
 }
 

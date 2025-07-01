@@ -39,7 +39,7 @@ class User < ApplicationRecord
   end
 
   def as_json(options = {})
-    super(options.merge(only: [:id, :first_name, :last_name, :email, :created_at]))
+    super(options.merge(only: [:id, :first_name, :last_name, :email, :created_at, :time_zone, :role, :department]))
   end
 
   def generate_remember_token!

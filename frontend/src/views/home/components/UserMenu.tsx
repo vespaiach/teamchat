@@ -19,9 +19,9 @@ export default function UserMenu() {
 
   const handleLogout = async () => {
     setIsOpen(false);
-    await del('/signout')
+    await del('/signout');
     window.location.href = '/signin';
-  }
+  };
 
   return (
     <div className="relative">

@@ -116,7 +116,6 @@ export function SignIn() {
               name="email"
               label="Email"
               placeholder="Enter your email"
-              autoComplete="email"
               required
               error={emailError || undefined}
               disabled={isSubmitting}
@@ -128,7 +127,6 @@ export function SignIn() {
               name="password"
               label="Password"
               placeholder="Enter your password"
-              autoComplete="current-password"
               required
               error={passwordError || undefined}
               disabled={isSubmitting}

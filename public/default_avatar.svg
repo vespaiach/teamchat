@@ -1,0 +1,12 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="64" fill="#e5e7eb"/>
+  
+  <!-- User icon -->
+  <g transform="translate(32, 24)">
+    <!-- Head -->
+    <circle cx="32" cy="28" r="16" fill="#9ca3af"/>
+    <!-- Body -->
+    <path d="M16 80 C16 64, 22 52, 32 52 C42 52, 48 64, 48 80 L48 96 L16 96 Z" fill="#9ca3af"/>
+  </g>
+</svg>

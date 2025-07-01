@@ -11,6 +11,8 @@ import Spinner from '~/svgs/Spinner';
 import { JoinChannelModal } from '~/views/JoinChannelModal';
 import { useHomeStore } from '~/views/home/store';
 import ShowMoreOrLess from '~/components/ShowMoreOrLess';
+import { TextBox } from '~/components/TextBox';
+import MagnifierIcon from '~/svgs/Magnifier';
 
 export default function GroupChannels() {
   const [showEditChannelModal, setShowEditChannelModal] = useState(false);
@@ -22,9 +24,16 @@ export default function GroupChannels() {
   };
 
   return (
-    <>
+    <div className="lg:col-span-1">
+      <div className="md:hidden mb-6">
+        <TextBox
+          name="search-mobile"
+          placeholder="Search users, channels..."
+          icon={<MagnifierIcon className="h-5 w-5 text-gray-400" />}
+        />
+      </div>
       <Box
-        header={
+        headerRNode={
           <>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Channels</h2>
             <Button
@@ -36,12 +45,14 @@ export default function GroupChannels() {
             </Button>
           </>
         }>
-        {groupChannelsLoading && (
-          <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
-            <Spinner className="w-5 h-5" /> Loading channels...
-          </div>
-        )}
-        {!groupChannelsLoading && <ChannelList channels={groupChannels} onJoinOrRequest={handleJoinOrRequest} />}
+        <div className="p-2">
+          {groupChannelsLoading && (
+            <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
+              <Spinner className="w-5 h-5" /> Loading channels...
+            </div>
+          )}
+          {!groupChannelsLoading && <ChannelList channels={groupChannels} onJoinOrRequest={handleJoinOrRequest} />}
+        </div>
       </Box>
       <EditChannelModal isOpen={showEditChannelModal} onClose={setShowEditChannelModal} />
       <JoinChannelModal
@@ -51,7 +62,7 @@ export default function GroupChannels() {
           setJoinOrRequestChannel(null);
         }}
       />
-    </>
+    </div>
   );
 }
 

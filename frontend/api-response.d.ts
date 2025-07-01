@@ -25,6 +25,10 @@ declare global {
     avatar?: string;
     first_name: string;
     last_name: string;
+    created_at: string;
+    time_zone: string;
+    role: string | null;
+    department: string | null;
   }
 
   type ApiResponse<T> =

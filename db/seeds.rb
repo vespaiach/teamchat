@@ -30,7 +30,8 @@ created_users = users.map do |user_data|
     last_name: user_data[:last_name],
     email: user_data[:email],
     password: "Qwer1234",
-    password_confirmation: "Qwer1234"
+    password_confirmation: "Qwer1234",
+    time_zone: "America/Chicago",
   )
 end
 

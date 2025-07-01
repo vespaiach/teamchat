@@ -18,6 +18,7 @@ const ERB_MAPS = {
   'frontend/src/views/check-email/index.tsx': path.resolve(__dirname, '../app/views/password_resets/instructions_sent.html.erb'),
   'frontend/src/views/password-reset-expired/index.tsx': path.resolve(__dirname, '../app/views/password_resets/expired.html.erb'),
   'frontend/src/views/conversations/index.tsx': path.resolve(__dirname, '../app/views/conversations/index.html.erb'),
+  'frontend/src/views/profiles/index.tsx': path.resolve(__dirname, '../app/views/profiles/show.html.erb'),
 };
 
 const htmlInject = {

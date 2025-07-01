@@ -83,7 +83,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    host: <%= ENV["DB_HOST"] %>
+    host: localhost
     database: teamchat_production
-    username: teamchat 
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    username: teamchat_user
+    password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>

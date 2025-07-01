@@ -15,7 +15,7 @@ module Conversations
     # Manual attribute assignment for query results (fallback if attribute method doesn't work)
     def assign_query_attributes(attrs = {})
       self.member_count = attrs['member_count'] if attrs.key?('member_count')
-      self.has_unread_messages = attrs['has_unread_messages'] if attrs.key?('has_unread_messages') 
+      self.has_unread_messages = attrs['has_unread_messages'] if attrs.key?('has_unread_messages')
       self.is_member = attrs['is_member'] if attrs.key?('is_member')
       self.description = attrs['description'] if attrs.key?('description')
       self
