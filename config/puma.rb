@@ -26,18 +26,42 @@
 # Any libraries that use a connection pool or another resource pool should
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
-threads_count = ENV.fetch('RAILS_MAX_THREADS', 3)
-threads threads_count, threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch('PORT', 3000)
 
-# Allow puma to be restarted by `bin/rails restart` command.
-plugin :tmp_restart
+# config/puma.rb
 
-# Run the Solid Queue supervisor inside of Puma for single-server deployments
-plugin :solid_queue if ENV['SOLID_QUEUE_IN_PUMA']
+if ENV.fetch('RAILS_ENV', 'development') == 'production'
+  directory '/var/www/teamchat/current'
+  rackup '/var/www/teamchat/current/config.ru'
+  environment 'production'
 
-# Specify the PID file. Defaults to tmp/pids/server.pid in development.
-# In other environments, only set the PID file if requested.
-pidfile ENV['PIDFILE'] if ENV['PIDFILE']
+  pidfile '/var/www/teamchat/shared/tmp/pids/puma.pid'
+  state_path '/var/www/teamchat/shared/tmp/pids/puma.state'
+  stdout_redirect '/var/www/teamchat/shared/log/puma.stdout.log', '/var/www/teamchat/shared/log/puma.stderr.log', true
+
+  bind 'unix:///var/www/teamchat/shared/tmp/sockets/puma.sock'
+
+  workers 2
+  threads 1, 3
+
+  preload_app!
+
+  plugin :tmp_restart
+
+else
+  threads_count = ENV.fetch('RAILS_MAX_THREADS', 3)
+  threads threads_count, threads_count
+
+  # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+  port ENV.fetch('PORT', 3000)
+
+  # Allow puma to be restarted by `bin/rails restart` command.
+  plugin :tmp_restart
+
+  # Run the Solid Queue supervisor inside of Puma for single-server deployments
+  plugin :solid_queue if ENV['SOLID_QUEUE_IN_PUMA']
+
+  # Specify the PID file. Defaults to tmp/pids/server.pid in development.
+  # In other environments, only set the PID file if requested.
+  pidfile ENV['PIDFILE'] if ENV['PIDFILE']
+end
