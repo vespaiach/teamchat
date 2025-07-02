@@ -72,6 +72,7 @@ const ctx = await esbuild.context({
   target: 'es2020',
   metafile: true,
   sourcemap: !isProduction, // Disable sourcemap in production
+  minify: isProduction, // Enable minification for production builds
   splitting: true,
   plugins: [htmlInject],
   entryNames: '[dir]-[hash]',
