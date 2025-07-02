@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: teamchat_cache_development
+  database: cable
 
 test:
   <<: *default
-  database: teamchat_cache_test
+  database: cable
 
 production:
   <<: *default
-  database: teamchat_cache_production
+  database: cache

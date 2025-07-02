@@ -117,6 +117,7 @@ production:
     <<: *default
     host: localhost
     database: teamchat_cache_production
+    migrations_paths: db/cache_migrate
     username: teamchat_cache_user
     password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>
   queue:
