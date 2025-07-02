@@ -87,3 +87,9 @@ production:
     database: teamchat_production
     username: teamchat_user
     password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>
+  cable:
+    <<: *default
+    host: localhost
+    database: teamchat_cable_production
+    username: teamchat_cable_user
+    password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>
