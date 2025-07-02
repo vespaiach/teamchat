@@ -10,9 +10,12 @@ default: &default
 
 development:
   <<: *default
+  database: teamchat_queue_development
 
 test:
   <<: *default
+  database: teamchat_queue_test
 
 production:
   <<: *default
+  database: teamchat_queue_production

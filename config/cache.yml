@@ -6,13 +6,13 @@ default: &default
     namespace: <%= Rails.env %>
 
 development:
-  database: solid_cache_development
   <<: *default
+  database: teamchat_cache_development
 
 test:
-  database: solid_cache_test
   <<: *default
+  database: teamchat_cache_test
 
 production:
-  database: cache
   <<: *default
+  database: teamchat_cache_production

@@ -23,8 +23,18 @@ default: &default
 
 
 development:
-  <<: *default
-  database: teamchat_development
+  primary: &primary_development
+    <<: *default
+    database: teamchat_development
+  cable:
+    <<: *default
+    database: teamchat_cable_development
+  cache:
+    <<: *default
+    database: teamchat_cache_development
+  queue:
+    <<: *default
+    database: teamchat_queue_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -57,8 +67,18 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: teamchat_test
+  primary: &primary_test
+    <<: *default
+    database: teamchat_test
+  cable:
+    <<: *default
+    database: teamchat_cable_test
+  cache:
+    <<: *default
+    database: teamchat_cache_test
+  queue:
+    <<: *default
+    database: teamchat_queue_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -92,4 +112,16 @@ production:
     host: localhost
     database: teamchat_cable_production
     username: teamchat_cable_user
+    password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>
+  cache:
+    <<: *default
+    host: localhost
+    database: teamchat_cache_production
+    username: teamchat_cache_user
+    password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>
+  queue:
+    <<: *default
+    host: localhost
+    database: teamchat_queue_production
+    username: teamchat_queue_user
     password: <%= ENV["TEAMCHAT_DB_PASSWORD"] %>
