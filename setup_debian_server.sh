@@ -1,19 +1,5 @@
 #!/bin/bash
 
-# TeamChat Server Setup Script
-# This script sets up a Debian/Ubuntu server for hosting a Ruby on Rails application with PostgreSQL and Nginx.
-# 
-# Steps:
-# 1. Update and upgrade system packages
-# 2. Install required packages: curl, git, gnupg2, postgresql, nginx, Node.js
-# 3. Create an account to run the Rails app
-# 4. Install rbenv and Ruby 3.4.4
-# 5. Install Bundler and Rails gems
-# 6. Set up PostgreSQL users and databases
-# 7. Set up Puma systemd service
-# 8. Configure Nginx to serve the Rails app
-# 9. Start and enable services
-
 set -e  # Exit on any error
 
 # Configuration variables

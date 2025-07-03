@@ -131,7 +131,7 @@ setup_rails_db() {
     
     # Create databases (Rails way)
     print_status "Creating databases via Rails..."
-    bin/rails db:create
+    bin/rails db:prepare
     
     # Run migrations
     print_status "Running database migrations..."
@@ -168,8 +168,6 @@ setup_dependencies() {
 compile_assets() {
     print_status "Compiling production assets..."
     
-    export RAILS_ENV=production
-    
     # Clean previous assets
     print_status "Cleaning previous assets..."
     bin/rails assets:clean
@@ -193,92 +191,6 @@ compile_assets() {
     fi
     
     print_success "Assets compiled successfully"
-}
-
-# Setup application configuration
-setup_config() {
-    print_status "Setting up application configuration..."
-    
-    # Create necessary directories
-    mkdir -p tmp/pids tmp/cache tmp/sockets log storage
-    
-    # Set proper permissions
-    chmod 755 bin/*
-    
-    # Setup credentials if master key is provided as env var
-    if [ -n "$RAILS_MASTER_KEY" ] && [ ! -f "config/master.key" ]; then
-        echo "$RAILS_MASTER_KEY" > config/master.key
-        chmod 600 config/master.key
-        print_success "Master key configured"
-    fi
-    
-    print_success "Application configuration completed"
-}
-
-# Setup systemd services (optional)
-setup_services() {
-    read -p "Do you want to setup systemd services? (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        print_status "Setting up systemd services..."
-        
-        # Setup nginx configuration
-        setup_nginx
-        
-        print_success "Services configured"
-    fi
-}
-
-# Setup nginx configuration
-setup_nginx() {
-    app_name="teamchat"
-    app_path=$(pwd)
-    
-    nginx_config="/etc/nginx/sites-available/$app_name"
-    
-    print_status "Creating nginx configuration..."
-    
-    sudo tee "$nginx_config" > /dev/null <<EOF
-upstream teamchat_app {
-    server 127.0.0.1:3000;
-}
-
-server {
-    listen 80;
-    server_name teamchat.local;  # Change this to your domain
-    
-    root $app_path/public;
-    
-    # Serve static assets
-    location ~ ^/assets/ {
-        expires 1y;
-        add_header Cache-Control public;
-        add_header ETag "";
-        break;
-    }
-    
-    # Try to serve static files, then proxy to app
-    try_files \$uri @teamchat_app;
-    
-    location @teamchat_app {
-        proxy_pass http://teamchat_app;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-    }
-}
-EOF
-
-    # Enable the site
-    sudo ln -sf "$nginx_config" "/etc/nginx/sites-enabled/$app_name"
-    
-    # Test nginx configuration
-    if sudo nginx -t; then
-        print_success "Nginx configuration created and tested"
-    else
-        print_error "Nginx configuration test failed"
-    fi
 }
 
 # Verify database setup
