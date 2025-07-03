@@ -9,17 +9,56 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const mode = process.argv[2] || 'watch';
 const isProduction = mode === 'build';
 
-const ERB_MAPS = {
-  'frontend/src/views/sign-in/index.tsx': path.resolve(__dirname, '../app/views/signin/new.html.erb'),
-  'frontend/src/views/sign-up/index.tsx': path.resolve(__dirname, '../app/views/signup/new.html.erb'),
-  'frontend/src/views/home/index.tsx': path.resolve(__dirname, '../app/views/home/show.html.erb'),
-  'frontend/src/views/forgot-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/new.html.erb'),
-  'frontend/src/views/reset-password/index.tsx': path.resolve(__dirname, '../app/views/password_resets/edit.html.erb'),
-  'frontend/src/views/check-email/index.tsx': path.resolve(__dirname, '../app/views/password_resets/instructions_sent.html.erb'),
-  'frontend/src/views/password-reset-expired/index.tsx': path.resolve(__dirname, '../app/views/password_resets/expired.html.erb'),
-  'frontend/src/views/conversations/index.tsx': path.resolve(__dirname, '../app/views/conversations/index.html.erb'),
-  'frontend/src/views/profiles/index.tsx': path.resolve(__dirname, '../app/views/profiles/show.html.erb'),
-};
+// Function to dynamically generate ERB_MAPS by reading ERB files
+function generateErbMaps() {
+  const erbMaps = {};
+  const viewsDir = path.resolve(__dirname, '../app/views');
+  
+  // Function to recursively find all .erb files
+  function findErbFiles(dir) {
+    const files = [];
+    const items = fs.readdirSync(dir, { withFileTypes: true });
+    
+    for (const item of items) {
+      if (item.isDirectory()) {
+        files.push(...findErbFiles(path.join(dir, item.name)));
+      } else if (item.name.endsWith('.html.erb')) {
+        files.push(path.join(dir, item.name));
+      }
+    }
+    
+    return files;
+  }
+  
+  const erbFiles = findErbFiles(viewsDir);
+  
+  // Extract inject_assets entries from each ERB file
+  for (const erbFile of erbFiles) {
+    try {
+      const content = fs.readFileSync(erbFile, 'utf-8');
+      const injectAssetsMatch = content.match(/<%= inject_assets\(['"]([^'"]+)['"]\) %>/);
+      
+      if (injectAssetsMatch) {
+        const entryPoint = injectAssetsMatch[1];
+        erbMaps[entryPoint] = erbFile;
+      }
+    } catch (error) {
+      console.warn(`Warning: Could not read ${erbFile}:`, error.message);
+    }
+  }
+  
+  return erbMaps;
+}
+
+// Generate ERB_MAPS dynamically
+const ERB_MAPS = generateErbMaps();
+
+// Log the discovered mappings for debugging
+console.log('📂 Discovered ERB mappings:');
+Object.entries(ERB_MAPS).forEach(([entryPoint, erbFile]) => {
+  console.log(`  ${entryPoint} → ${path.relative(__dirname, erbFile)}`);
+});
+console.log('');
 
 const htmlInject = {
   name: 'html-inject',
@@ -46,15 +85,24 @@ const htmlInject = {
           modules += `\n<link rel="modulepreload" href="/assets/${fileName}">`;
         });
 
-        const erbFilePath = ERB_MAPS[meta.entryPoint];
+        // Try to find the matching entry point by converting the relative path
+        const normalizedEntryPoint = meta.entryPoint.startsWith('frontend/') 
+          ? meta.entryPoint 
+          : `frontend/${meta.entryPoint}`;
+        
+        const erbFilePath = ERB_MAPS[normalizedEntryPoint];
+        
+        if (!erbFilePath) {
+          console.warn(`Warning: No ERB file found for entry point ${meta.entryPoint}`);
+          return;
+        }
+        
         const erbContent = fs.readFileSync(erbFilePath, 'utf-8');
         const updatedContent = erbContent.replace(
-          /<!--\s*BUNDLE_START\s*-->[\s\S]*?<!--\s*BUNDLE_END\s*-->/,
-          `<!-- BUNDLE_START -->
-<%= content_for :head do %>
+          /<%= inject_assets\(['"]([^'"]+)['"]\) %>/,
+          `<%= content_for :head do %>
 ${modules}
-<% end %>
-<!-- BUNDLE_END -->`
+<% end %>`
         );
         fs.writeFileSync(erbFilePath, updatedContent);
         console.log(`Updated ${erbFilePath} with new modules.`);
@@ -63,10 +111,70 @@ ${modules}
   },
 };
 
+const manifestGenerator = {
+  name: 'manifest-generator',
+  setup(build) {
+    build.onEnd((result) => {
+      if (!result.metafile?.outputs) return;
+
+      const entries = Object.entries(result.metafile.outputs).filter(
+        ([key, val]) => key.endsWith('.js') && val.entryPoint
+      );
+      if (entries.length === 0) return;
+
+      // Create manifest file
+      const manifest = {
+        entryPoints: {},
+        timestamp: new Date().toISOString(),
+      };
+
+      // Map entry points to their outputs
+      entries.forEach(([output, meta]) => {
+        if (!meta.entryPoint) return;
+
+        const outputFileName = output.split('/').pop();
+        const imports = meta.imports
+          .map((dep) => {
+            const fileName = dep.path.split('/').pop();
+            return fileName
+              ? {
+                  fileName,
+                  path: dep.path,
+                }
+              : null;
+          })
+          .filter(Boolean);
+
+        // Try to find the matching entry point by converting the relative path
+        const normalizedEntryPoint = meta.entryPoint.startsWith('frontend/') 
+          ? meta.entryPoint 
+          : `frontend/${meta.entryPoint}`;
+
+        manifest.entryPoints[normalizedEntryPoint] = {
+          js: outputFileName,
+          path: output,
+          imports,
+        };
+      });
+
+      // Ensure public/tmp directory exists
+      const tmpDir = path.resolve(__dirname, '../public/tmp');
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+
+      // Write manifest file
+      const manifestPath = path.join(tmpDir, 'manifest.json');
+      fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+      console.log(`📝 Updated manifest file: ${manifestPath}`);
+    });
+  },
+};
+
 const ctx = await esbuild.context({
-  entryPoints: Object.keys(ERB_MAPS),
+  entryPoints: Object.keys(ERB_MAPS).map(entryPoint => path.resolve(__dirname, '..', entryPoint)),
   bundle: true,
-  outdir: 'public/assets/',
+  outdir: isProduction ? 'public/assets/' : 'public/tmp/',
   format: 'esm',
   platform: 'browser',
   target: 'es2020',
@@ -74,13 +182,13 @@ const ctx = await esbuild.context({
   sourcemap: !isProduction, // Disable sourcemap in production
   minify: isProduction, // Enable minification for production builds
   splitting: true,
-  plugins: [htmlInject],
+  plugins: isProduction ? [htmlInject] : [manifestGenerator],
   entryNames: '[dir]-[hash]',
   chunkNames: 'common-[hash]',
   assetNames: 'assets/[name]-[hash]',
   define: {
     'process.env.NODE_ENV': isProduction ? '"production"' : '"development"',
-  }
+  },
 });
 
 if (isProduction) {
