@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+const injectAssetsRegex = /<%=\s*inject_assets\(\s*['"]([^'"]+)['"]\s*\)\s*%>/;
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Get the mode from command line arguments (default to 'watch')
@@ -13,12 +15,12 @@ const isProduction = mode === 'build';
 function generateErbMaps() {
   const erbMaps = {};
   const viewsDir = path.resolve(__dirname, '../app/views');
-  
+
   // Function to recursively find all .erb files
   function findErbFiles(dir) {
     const files = [];
     const items = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     for (const item of items) {
       if (item.isDirectory()) {
         files.push(...findErbFiles(path.join(dir, item.name)));
@@ -26,18 +28,18 @@ function generateErbMaps() {
         files.push(path.join(dir, item.name));
       }
     }
-    
+
     return files;
   }
-  
+
   const erbFiles = findErbFiles(viewsDir);
-  
+
   // Extract inject_assets entries from each ERB file
   for (const erbFile of erbFiles) {
     try {
       const content = fs.readFileSync(erbFile, 'utf-8');
-      const injectAssetsMatch = content.match(/<%= inject_assets\(['"]([^'"]+)['"]\) %>/);
-      
+      const injectAssetsMatch = content.match(injectAssetsRegex);
+
       if (injectAssetsMatch) {
         const entryPoint = injectAssetsMatch[1];
         erbMaps[entryPoint] = erbFile;
@@ -46,7 +48,7 @@ function generateErbMaps() {
       console.warn(`Warning: Could not read ${erbFile}:`, error.message);
     }
   }
-  
+
   return erbMaps;
 }
 
@@ -58,11 +60,19 @@ console.log('📂 Discovered ERB mappings:');
 Object.entries(ERB_MAPS).forEach(([entryPoint, erbFile]) => {
   console.log(`  ${entryPoint} → ${path.relative(__dirname, erbFile)}`);
 });
-console.log('');
 
 const htmlInject = {
   name: 'html-inject',
   setup(build) {
+    build.onStart(() => {
+      // Clean up public/assets directory before building
+      const assetsDir = path.resolve(__dirname, '../public/assets');
+      if (fs.existsSync(assetsDir)) {
+        fs.rmSync(assetsDir, { recursive: true, force: true });
+        console.log('🧹 Cleaned up public/assets directory');
+      }
+    });
+
     build.onEnd((result) => {
       if (!result.metafile?.outputs) return;
 
@@ -86,20 +96,20 @@ const htmlInject = {
         });
 
         // Try to find the matching entry point by converting the relative path
-        const normalizedEntryPoint = meta.entryPoint.startsWith('frontend/') 
-          ? meta.entryPoint 
+        const normalizedEntryPoint = meta.entryPoint.startsWith('frontend/')
+          ? meta.entryPoint
           : `frontend/${meta.entryPoint}`;
-        
+
         const erbFilePath = ERB_MAPS[normalizedEntryPoint];
-        
+
         if (!erbFilePath) {
           console.warn(`Warning: No ERB file found for entry point ${meta.entryPoint}`);
           return;
         }
-        
+
         const erbContent = fs.readFileSync(erbFilePath, 'utf-8');
         const updatedContent = erbContent.replace(
-          /<%= inject_assets\(['"]([^'"]+)['"]\) %>/,
+          injectAssetsRegex,
           `<%= content_for :head do %>
 ${modules}
 <% end %>`
@@ -146,8 +156,8 @@ const manifestGenerator = {
           .filter(Boolean);
 
         // Try to find the matching entry point by converting the relative path
-        const normalizedEntryPoint = meta.entryPoint.startsWith('frontend/') 
-          ? meta.entryPoint 
+        const normalizedEntryPoint = meta.entryPoint.startsWith('frontend/')
+          ? meta.entryPoint
           : `frontend/${meta.entryPoint}`;
 
         manifest.entryPoints[normalizedEntryPoint] = {
@@ -172,7 +182,7 @@ const manifestGenerator = {
 };
 
 const ctx = await esbuild.context({
-  entryPoints: Object.keys(ERB_MAPS).map(entryPoint => path.resolve(__dirname, '..', entryPoint)),
+  entryPoints: Object.keys(ERB_MAPS).map((entryPoint) => path.resolve(__dirname, '..', entryPoint)),
   bundle: true,
   outdir: isProduction ? 'public/assets/' : 'public/tmp/',
   format: 'esm',

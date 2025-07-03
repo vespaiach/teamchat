@@ -44,3 +44,4 @@ copilot-instructions.md
 node_modules/
 *.map
 public/tmp/*
+public/tmp
