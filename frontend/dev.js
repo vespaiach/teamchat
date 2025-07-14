@@ -124,7 +124,7 @@ ${modules}
 const manifestGenerator = {
   name: 'manifest-generator',
   setup(build) {
-    build.onEnd((result) => {
+    build.onEnd(async (result) => {
       if (!result.metafile?.outputs) return;
 
       const entries = Object.entries(result.metafile.outputs).filter(
@@ -149,7 +149,7 @@ const manifestGenerator = {
             return fileName
               ? {
                   fileName,
-                  path: dep.path,
+                  path: `/tmp/${fileName}`,
                 }
               : null;
           })
@@ -162,7 +162,7 @@ const manifestGenerator = {
 
         manifest.entryPoints[normalizedEntryPoint] = {
           js: outputFileName,
-          path: output,
+          path: `/tmp/${outputFileName}`,
           imports,
         };
       });
@@ -177,6 +177,25 @@ const manifestGenerator = {
       const manifestPath = path.join(tmpDir, 'manifest.json');
       fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
       console.log(`📝 Updated manifest file: ${manifestPath}`);
+
+      // Send manifest to development API endpoint
+      try {
+        const response = await fetch('http://localhost:5000/development/manifest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ manifest }),
+        });
+
+        if (response.ok) {
+          console.log(`📡 Manifest sent to development API successfully`);
+        } else {
+          console.warn(`⚠️ Failed to send manifest to API: ${response.status} ${response.statusText}`);
+        }
+      } catch (error) {
+        console.warn(`⚠️ Error sending manifest to API:`, error.message);
+      }
     });
   },
 };

@@ -42,27 +42,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rooms do
-    member do
-      post :join_request
-      get :join_requests
-    end
-    resource :chats
-    resource :chat_histories do
-      member do
-        get :index
-      end
-    end
-  end
-
-  resources :join_requests, only: [] do
-    member do
-      patch :approve
-      patch :reject
-    end
-  end
-
-  resources :channels, only: [:show]
+  post 'development/manifest' => 'development#manifest', as: :development_manifest
 
   # Defines the root path route ("/")
   root 'home#show'

@@ -43,14 +43,14 @@ module ApplicationHelper
       # Add modulepreload links for dependencies first
       if entry_data['imports']
         entry_data['imports'].each do |import|
-          file_name = import['fileName']
-          html_parts << tag(:link, rel: 'modulepreload', href: "/tmp/#{file_name}")
+          file_path = import['path']
+          html_parts << tag(:link, rel: 'modulepreload', href: file_path)
         end
       end
 
       # Add the main script tag
-      main_js = entry_data['js']
-      html_parts << tag(:script, type: 'module', defer: true, src: "/tmp/#{main_js}")
+      main_js = entry_data['path']
+      html_parts << tag(:script, type: 'module', defer: true, src: main_js)
 
       html_parts.join("\n").html_safe
     rescue JSON::ParserError => e

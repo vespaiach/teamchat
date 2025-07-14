@@ -97,3 +97,12 @@ createRoot(document.getElementById('root')!).render(
     <CheckEmail />
   </StrictMode>
 );
+
+if (process.env.NODE_ENV === 'development') {
+  import('~/utils/development')
+    .then(({ default: subscribeToDevelopmentChannel }) => {
+      const channel = subscribeToDevelopmentChannel();
+      window.addEventListener('beforeunload', () => channel.unsubscribe());
+    })
+    .catch((err) => console.error('Failed to load development utilities:', err));
+}
