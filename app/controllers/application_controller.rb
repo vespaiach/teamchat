@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # allow_browser versions: :modern
   helper_method :current_user, :signed_in?, :server_notifications
 
-  before_action :require_login, unless: -> { %w[signin signup password_resets hot_reload].include?(controller_name) }
+  before_action :require_login, unless: -> { %w[signin signup password_resets development].include?(controller_name) }
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id] || authenticate_with_remember_token

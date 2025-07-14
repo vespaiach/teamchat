@@ -1,12 +1,2 @@
 <%= json_script_tag current_user, id: 'logged-in-user' %>
-<!-- BUNDLE_START -->
-<%= content_for :head do %>
-<script type="module" defer src="/assets/home-QOASXGSC.js"></script>
-<link rel="modulepreload" href="/assets/common-C63UUMWJ.js">
-<link rel="modulepreload" href="/assets/common-OQSLGE5K.js">
-<link rel="modulepreload" href="/assets/common-GJLHGDKW.js">
-<link rel="modulepreload" href="/assets/common-6IRAT4QG.js">
-<link rel="modulepreload" href="/assets/common-HPS6C7QP.js">
-<link rel="modulepreload" href="/assets/common-ATYGQR7Y.js">
-<% end %>
-<!-- BUNDLE_END -->
+<%= inject_assets('frontend/src/views/home/index.tsx') %>
