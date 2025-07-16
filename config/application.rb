@@ -17,6 +17,7 @@ module ChatChit
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    config.autoload_paths << Rails.root.join('subscribers').to_s
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -24,6 +25,6 @@ module ChatChit
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # config.eager_load_paths << Rails.root.join('subscribers')
   end
 end

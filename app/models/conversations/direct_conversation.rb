@@ -2,7 +2,7 @@
 
 module Conversations
   class DirectConversation < Conversation
-    scope :directs, DirectConversationsQuery
+    scope :list, DirectConversationsQuery
 
     # Virtual attributes for query results
     attr_accessor :has_unread_messages
@@ -20,7 +20,7 @@ module Conversations
         id:,
         created_by_id:,
         created_at: created_at.iso8601,
-        has_unread_messages:,
+        has_unread_messages: has_unread_messages.present?,
         participants:
       }
     end

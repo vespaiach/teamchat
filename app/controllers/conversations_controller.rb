@@ -2,7 +2,7 @@
 
 class ConversationsController < ApplicationController
   def create
-    @conversation = Conversation.new(conversation_params)
+    @conversation = Conversations::GroupConversation.new(conversation_params)
     if @conversation.save
       @conversation_participant = @conversation.conversation_participants.create(user: current_user, role: 'admin')
       render json: @conversation.as_json, status: :created
@@ -38,9 +38,9 @@ class ConversationsController < ApplicationController
       end
       format.json do
         if params[:type] == 'group'
-          @conversations = Conversations::GroupConversation.groups(current_user:)
+          @conversations = Conversations::GroupConversation.list(current_user:)
         elsif params[:type] == 'direct'
-          @conversations = Conversations::DirectConversation.directs(current_user:)
+          @conversations = Conversations::DirectConversation.list(current_user:)
         else
           @conversations = Conversations::Conversation.all
         end

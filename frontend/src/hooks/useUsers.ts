@@ -1,6 +1,6 @@
-import { get } from '~/utils/remote';
 import { useEffect, useState } from 'react';
-import { transformUsers } from '~/utils/transformer';
+import type { User } from '~/models/user';
+import { UserQuery } from '~/services/UserQuery';
 
 export default function useUsers() {
   const [users, setUsers] = useState<User[]>([]);
@@ -8,10 +8,7 @@ export default function useUsers() {
 
   useEffect(() => {
     (async () => {
-      const response = await get<UserResponse[]>('/users');
-      if (response.success) {
-        setUsers(transformUsers(response.data));
-      }
+      setUsers(await UserQuery.list())
       setLoading(false);
     })();
   }, []);

@@ -11,34 +11,34 @@ import MagnifierIcon from '~/svgs/Magnifier';
 import UserAvatar from '../UserAvatar';
 
 export default function Conversations() {
-  const { selectedChannelId, selectChannel, groupChannels, directChannels, loggedInUser } = useConversationsStore();
+  const { selectedChannelId, selectChannel, groupConversations, directConversations, loggedInUser } = useConversationsStore();
 
   // Set default selected channel if not set
   useEffect(() => {
     if (selectedChannelId === null) {
       const channelId = parseInt(new URLSearchParams(window.location.search).get('channel') ?? '0', 10);
 
-      const channel = groupChannels.find((c) => c.id === channelId);
+      const channel = groupConversations.find((c) => c.id === channelId);
       if (channel) {
         selectChannel(channel.id);
         return;
       }
 
-      const dm = directChannels.find((c) => c.id === channelId);
+      const dm = directConversations.find((c) => c.id === channelId);
       if (dm) {
         selectChannel(dm.id);
         return;
       }
 
-      if (groupChannels.length > 0) {
-        selectChannel(groupChannels[0].id);
+      if (groupConversations.length > 0) {
+        selectChannel(groupConversations[0].id);
       }
 
-      if (directChannels.length > 0) {
-        selectChannel(directChannels[0].id);
+      if (directConversations.length > 0) {
+        selectChannel(directConversations[0].id);
       }
     }
-  }, [selectedChannelId, groupChannels, directChannels, selectChannel]);
+  }, [selectedChannelId, groupConversations, directConversations, selectChannel]);
 
   return (
     <div className="page-container flex">

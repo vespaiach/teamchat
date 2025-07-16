@@ -14,6 +14,9 @@ module Conversations
     scope :private_only, -> { where(is_public: false) }
     scope :by_creator, -> { where(created_by_id: _1) }
 
+    after_create_commit :notify_creation
+    after_update_commit :notify_update
+
     # STI method - to be overridden in subclasses
     def group?
       false
@@ -31,6 +34,14 @@ module Conversations
 
     def ensure_direct_conversations_are_private
       self.is_public = false if direct?
+    end
+
+    def notify_creation
+      ActiveSupport::Notifications.instrument('created.conversation', conversation: self)
+    end
+
+    def notify_update
+      ActiveSupport::Notifications.instrument('updated.conversation', conversation: self)
     end
   end
 end

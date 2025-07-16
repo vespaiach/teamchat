@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { transformGroupChannel } from '~/utils/transformer';
+import { toGroupConversation, type APIGroupConversation, type GroupConversation } from '~/models/groupConversation';
 import { consumer } from '~/utils/ws';
 
-export default function useGroupChannelsSocket(receiveChannels: (channel: ExtendedGroupChannel) => void) {
-  const receiveRef = useRef<(channels: ExtendedGroupChannel) => void>(() => {});
+export default function useGroupChannelsSocket(receiveChannels: (channel: GroupConversation) => void) {
+  const receiveRef = useRef<(channels: GroupConversation) => void>(() => {});
   receiveRef.current = (channels) => {
     receiveChannels(channels);
   };
@@ -22,8 +22,8 @@ export default function useGroupChannelsSocket(receiveChannels: (channel: Extend
             console.log('Disconnected from GroupConversationsChannel');
           }
         },
-        received: (data: { conversation: GroupChannelResponse }) => {
-          receiveRef.current(transformGroupChannel(data.conversation));
+        received: (data: { conversation: APIGroupConversation }) => {
+          receiveRef.current(toGroupConversation(data.conversation));
         },
       }
     );

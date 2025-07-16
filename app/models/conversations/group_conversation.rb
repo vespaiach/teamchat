@@ -2,7 +2,7 @@
 
 module Conversations
   class GroupConversation < Conversation
-    scope :groups, GroupConversationsQuery
+    scope :list, GroupConversationsQuery
 
     # Virtual attributes for query results - using attribute method for proper mapping
     attribute :member_count, :integer
@@ -38,7 +38,7 @@ module Conversations
         created_by_id:,
         created_at: created_at.iso8601,
         member_count:,
-        has_unread_messages:,
+        has_unread_messages: has_unread_messages.present?,
         is_member:
       }
     end

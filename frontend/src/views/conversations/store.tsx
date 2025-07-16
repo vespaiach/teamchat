@@ -1,16 +1,16 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-import useDirectChannels from '~/hooks/useDirectChannels';
+import useDirectConversations from '~/hooks/useDirectConversations';
 import useDirectChannelsSocket from '~/hooks/useDirectChannelsSocket';
-import useGroupChannels from '~/hooks/useGroupChannels';
+import useGroupConversations from '~/hooks/useGroupConversations';
 import useGroupChannelsSocket from '~/hooks/useGroupChannelsSocket';
 import getPredefinedData from '~/utils/predefined-data';
 import { transformUser } from '~/utils/transformer';
 
 interface ConversationsStore {
-  groupChannels: ExtendedGroupChannel[];
-  groupChannelsLoading: boolean;
-  directChannels: ExtendedDirectChannel[];
-  directChannelsLoading: boolean;
+  groupConversations: ExtendedGroupChannel[];
+  groupConversationsLoading: boolean;
+  directConversations: ExtendedDirectChannel[];
+  directConversationsLoading: boolean;
   loggedInUser: User;
   selectedChannelId: number | null;
   selectChannel: (channelId: number) => void;
@@ -22,10 +22,10 @@ if (!userResponse) {
 }
 
 const ConversationsContext = createContext({
-  groupChannels: [],
-  groupChannelsLoading: true,
-  directChannels: [],
-  directChannelsLoading: true,
+  groupConversations: [],
+  groupConversationsLoading: true,
+  directConversations: [],
+  directConversationsLoading: true,
   loggedInUser: transformUser(userResponse!) as User,
   selectedChannelId: null,
   selectChannel: () => {},
@@ -34,15 +34,15 @@ const ConversationsContext = createContext({
 export function ConversationsStoreProvider({ children }: { children: React.ReactNode }) {
   const [selectedChannelId, setSelectedChannelId] = useState<number | null>(null);
   const [loggedInUser] = useState(transformUser(userResponse!));
-  const { groupChannelsLoading, groupChannels, setGroupChannels } = useGroupChannels();
-  const { directChannelsLoading, directChannels, setDirectChannels } = useDirectChannels();
+  const { groupConversationsLoading, groupConversations, setGroupChannels } = useGroupConversations();
+  const { directConversationsLoading, directConversations, setDirectChannels } = useDirectConversations();
   
   const extendedDirectChannels = useMemo(() => {
-    return directChannels.map((channel) => ({
+    return directConversations.map((channel) => ({
       ...channel,
       partner: channel.participants.find((user) => user.id !== loggedInUser.id)!,
     })) as ExtendedDirectChannel[];
-  }, [directChannels, loggedInUser.id]);
+  }, [directConversations, loggedInUser.id]);
 
   useGroupChannelsSocket((groupChannel) => {
     setGroupChannels((prev) => {
@@ -67,10 +67,10 @@ export function ConversationsStoreProvider({ children }: { children: React.React
   return (
     <ConversationsContext.Provider
       value={{
-        groupChannels,
-        groupChannelsLoading,
-        directChannels: extendedDirectChannels,
-        directChannelsLoading,
+        groupConversations,
+        groupConversationsLoading,
+        directConversations: extendedDirectChannels,
+        directConversationsLoading,
         loggedInUser,
         selectedChannelId,
         selectChannel: setSelectedChannelId,

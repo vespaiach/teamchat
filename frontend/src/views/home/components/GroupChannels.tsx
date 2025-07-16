@@ -17,7 +17,7 @@ import MagnifierIcon from '~/svgs/Magnifier';
 export default function GroupChannels() {
   const [showEditChannelModal, setShowEditChannelModal] = useState(false);
   const [joinOrRequestChannel, setJoinOrRequestChannel] = useState<ExtendedGroupChannel | null>(null);
-  const { groupChannels, groupChannelsLoading } = useHomeStore();
+  const { groupConversations, groupConversationsLoading } = useHomeStore();
 
   const handleJoinOrRequest = (channel: ExtendedGroupChannel) => {
     setJoinOrRequestChannel(channel);
@@ -46,12 +46,12 @@ export default function GroupChannels() {
           </>
         }>
         <div className="p-2">
-          {groupChannelsLoading && (
+          {groupConversationsLoading && (
             <div className="min-h-48 flex items-center justify-center gap-2 dark:text-gray-400">
               <Spinner className="w-5 h-5" /> Loading channels...
             </div>
           )}
-          {!groupChannelsLoading && <ChannelList channels={groupChannels} onJoinOrRequest={handleJoinOrRequest} />}
+          {!groupConversationsLoading && <ChannelList channels={groupConversations} onJoinOrRequest={handleJoinOrRequest} />}
         </div>
       </Box>
       <EditChannelModal isOpen={showEditChannelModal} onClose={setShowEditChannelModal} />

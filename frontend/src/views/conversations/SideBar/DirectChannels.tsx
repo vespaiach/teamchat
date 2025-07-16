@@ -8,7 +8,7 @@ import { cx } from '~/utils/string';
 import { useConversationsStore } from '~/views/conversations/store';
 
 export default function DirectChannels() {
-  const { directChannels, directChannelsLoading, selectedChannelId, selectChannel } = useConversationsStore();
+  const { directConversations, directConversationsLoading, selectedChannelId, selectChannel } = useConversationsStore();
   const [showChannels, setShowChannels] = useState(true);
 
   return (
@@ -27,7 +27,7 @@ export default function DirectChannels() {
         <IconButton variant="ghost" size="sm" className="p-1 h-6 w-6" aria-label="Add channel" icon={<PlusIcon />} />
       </div>
 
-      {directChannelsLoading && (
+      {directConversationsLoading && (
         <div className="flex items-center justify-center h-12 text-gray-500 dark:text-gray-400">
           Loading channels...
         </div>
@@ -35,7 +35,7 @@ export default function DirectChannels() {
 
       {showChannels && (
         <div className="space-y-1">
-          {directChannels.map((channel) => (
+          {directConversations.map((channel) => (
             <ChannelItem
               key={channel.id}
               channel={channel}

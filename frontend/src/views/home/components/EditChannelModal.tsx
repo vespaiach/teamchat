@@ -11,7 +11,7 @@ import { validateChannelName } from '~/utils/string';
 
 interface EditChannelModalProps {
   isOpen: boolean;
-  channel?: Channel;
+  channel?: GroupChannel;
   onClose: (visible: false) => void;
 }
 
@@ -19,7 +19,7 @@ export default function EditChannelModal({ isOpen, onClose, channel }: EditChann
   const [name, setName] = useState(channel?.name || '');
   const [nameError, setNameError] = useState('');
   const [description, setDescription] = useState(channel?.description || '');
-  const [isPrivate, setIsPrivate] = useState(channel?.isPrivate || false);
+  const [isPrivate, setIsPrivate] = useState(!channel?.isPublic);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isEditMode = Boolean(channel);
 
@@ -143,7 +143,7 @@ export default function EditChannelModal({ isOpen, onClose, channel }: EditChann
   );
 }
 
-async function submitData(data: Omit<Channel, 'id' | 'createdAt'> & { id?: number }) {
+async function submitData(data: Omit<GroupChannel, 'id' | 'createdAt'> & { id?: number }) {
   const method = data.id ? put : post;
   const response = await method<{ id: number; name: string }>('/conversations', data);
   return response.success;
