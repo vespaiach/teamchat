@@ -4,8 +4,8 @@ class ConversationSubscriber < ActiveSupport::Subscriber
   attach_to :conversation
 
   def created(event)
-    debugger
-    p "CONVERSATION CREATED: #{event.payload[:conversation].id}"
-    # Handle the conversation created event (e.g., send a notification)
+    conversation = event.payload[:conversation]
+
+    Rails.logger.info "ConversationSubscriber: Conversation created with ID #{conversation.id}"
   end
 end
